@@ -1,8 +1,13 @@
 <template>
   <div class="container">
     <div class="content">
-      <h2>Đăng ký thông tin cá nhân công dân</h2>
-      <button class="submit">Đăng ký</button>
+      <h2>Cập nhật thông tin cá nhân công dân</h2>
+      <form @submit.prevent="fetchData" class="search">
+        <input v-model="idSearch" class="input-search" type="text" placeholder="Nhập số CCCD"/>
+        <svg class="glass-find" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+        <button  @click.prevent="fetchData"  class="button-search"> Tìm kiếm </button>
+      </form>
+      <button class="submit">Cập nhật</button>
       <div>
         <div>
           <div class="infor">
@@ -15,7 +20,7 @@
                 </li>
                 <li>
                   Số CCCD:
-                  <input type="number" v-model="list.password" class="cccd" />
+                  <input type="number" v-model="list.citizen_id" class="cccd" />
                 </li>
                 <li class="gender-form">
                   <p>Giới tính:</p>
@@ -36,7 +41,7 @@
                 </li>
                 <li>
                   Quốc tịch:
-                  <input
+                  <input value="viet Nam"
                     class="nationality"
                     v-model="list.nationality"
                     type="text"
@@ -78,7 +83,7 @@
                   Số hộ khẩu:
                   <input
                     type="number"
-                    v-model="list.idFamily"
+                    v-model="list.family"
                     class="idFamily"
                     name=""
                     id=""
@@ -102,7 +107,7 @@
                     <p>
                       Tỉnh:<input
                         type="text"
-                        v-model="list.city"
+                        v-model="list.location"
                         class="city"
                         name=""
                         id=""
@@ -112,7 +117,7 @@
                       Thành phố/Huyện:
                       <input
                         type="text"
-                        v-model="list.district"
+                        v-model="list.location"
                         class="district"
                         name=""
                         id=""
@@ -122,7 +127,7 @@
                       Xã/Phường:
                       <input
                         type="text"
-                        v-model="list.town"
+                        v-model="list.location"
                         class="town"
                         name=""
                         id=""
@@ -173,7 +178,7 @@
             ></textarea>
           </div>
         </div>
-        <button @click.prevent="submit" class="submit">Đăng ký</button>
+        <button @click.prevent="submit" class="submit">Cập nhật</button>
       </div>
     </div>
   </div>
@@ -185,9 +190,8 @@ export default {
   data() {
     return {
       list: {
-        // citizen_id: "52",
+        citizenId: '',
         name: "",
-        password: "123",
         birth: "",
         idFamily: "",
         gender: false,
@@ -195,7 +199,6 @@ export default {
         religion: "",
         nationality: "",
         address: "",
-        //location_id: 123,
         quarter: "123",
         town: "",
         district: "",
@@ -205,19 +208,51 @@ export default {
         phone: null,
         email: "",
         married: false,
+        role: []
       },
+      idSearch: '',
     };
   },
   methods: {
+    async fetchData() {
+      try {
+        await this.$axios.get(
+            `http://localhost:8080/api/citizen/listCitizen/id=${this.idSearch}`
+          )
+          .then((res) => {
+            this.list.citizenId = res.data.citizen_id;
+            this.list.name = res.data.name;
+            this.list.birth = res.data.birth;
+            this.list.idFamily = res.data.family.id_Family;
+            this.list.gender = res.data.gender;
+            this.list.ethnic = res.data.ethnic;
+            this.list.religion = res.data.religion;
+            this.list.nationality = res.data.nationality;
+            this.list.address = res.data.address;
+            this.list.quarter = res.data.location.quarter;
+            this.list.town = res.data.location.town;
+            this.list.district = res.data.location.district;
+            this.list.city = res.data.location.city;
+            this.list.profession = res.data.profession;
+            this.list.criminalRecord = res.data.criminalRecord;
+            this.list.phone = res.data.phone;
+            this.list.email = res.data.email;
+            this.list.married = res.data.married;
+            this.list.role = res.data.role;
+            console.log(this.list);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async submit() {
-      // sau khi nhập dữ liệu, làm cách nào để đẩy dữ liệu lên server
       try {
         console.log(this.list);
         await this.$axios
-          .post("http://localhost:8080/api/v1/auth/register", this.list
+          .put(`http://localhost:8080/api/appointment/update/id=${this.idSearch}`,this.list
           )
           .then((res) => {
-            this.$router.push("/citizen/inforCitizen");
+            alert('Cập nhật thành công!')
           });
         console.log(this.list);
       } catch (error) {
@@ -247,7 +282,7 @@ html {
 .container h2 {
   padding: 10px;
   width: fit-content;
-  margin-bottom: 0;
+  margin-bottom: 60px;
 }
 
 ul {
@@ -308,6 +343,8 @@ input {
   padding: 5px;
   width: 200px;
   margin-left: 10px;
+  border-radius: 8px;
+  border: 0.8px solid black;
 }
 
 .city {
@@ -375,5 +412,37 @@ input {
   cursor: pointer;
   box-shadow: 3px 3px 3px 1px rgba(218, 169, 36, 0.25);
   top: 180px;
+}
+
+.glass-find{
+  width: 20px;
+  height: auto;
+  position: absolute;
+  left: 25px;  
+  top: 237px;
+}
+
+.input-search{
+  margin: 20px 0;
+  border-radius: 20px;
+  position: absolute;
+  left: 15px;  
+  top: 210px;
+  width: 200px;
+  height: 20px;
+  border: 1px solid black;
+  padding: 5px 5px 5px 35px;
+}
+
+.button-search{
+  position: absolute;
+  left: 275px;  
+  top: 235px;
+  background-color: green;
+  color: #fff;
+  padding: 5px 12px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
 }
 </style>

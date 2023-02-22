@@ -28,10 +28,10 @@
                 <nuxt-link to="/poli/addCitizen" >Thêm tài khoản</nuxt-link>
               </li>
               <li>
-                <a href="">Cập nhập thông tin</a>
+                <nuxt-link to="/poli/update" >Cập nhập thông tin</nuxt-link>
               </li>
               <li>
-                <a href="">Xoá tài khoản</a>
+                <nuxt-link to="/poli/deleteCitizen">Xoá tài khoản</nuxt-link>
               </li>
             </ul>
           </li>
@@ -59,7 +59,7 @@
             />
           </svg>
           <span class="nickname"
-            >Phan Thị Thanh Nhàn
+            >{{ name }}
             <nuxt-link to="/poli/changePass" class="passchange"
               >Đổi mật khẩu</nuxt-link
             >
@@ -90,6 +90,14 @@
       Logo,
       FooterPage,
     },
+    data(){
+      return{
+        name: ''
+      }
+    },
+    mounted(){
+      this.name = localStorage.getItem('name')
+    }
   }
   </script>
     
@@ -196,10 +204,10 @@
     background-color: green;
     color: #fff;
     position: absolute;
-    top: 152px;
-    right: 71px;
+    top: 150px;
+    right: 78px;
     padding: 10px;
-    width: 150px;
+    width: 170px;
   }
   
   .nickname:hover .passchange {

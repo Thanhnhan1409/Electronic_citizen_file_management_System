@@ -1,18 +1,16 @@
 <template>
     <div class="container">
       <div class="content">
-        <div class="form">
+        <form class="form">
             <h2>Đổi Mật khẩu</h2>
+            <!-- <p>Số CCCD:</p>
+            <input type="number" class="pass" placeholder="Nhập số CCCD" > -->
             <p>Mật khẩu cũ</p>
-            <input type="password" class="pass" name="" id="" placeholder="Nhập mật khẩu mới" >
+            <input type="password" v-model="changePass.oldPassword" class="pass"  placeholder="Nhập mật khẩu mới" >
             <p>Mật khẩu mới</p>
-            <input type="password" class="pass" name="" id="" placeholder="Nhập mật khẩu mới" >
-            <div class="show-pass">
-              <input type="checkbox" class="checkbox" name="" id="">
-              <span>Hiện mật khẩu</span>
-            </div>
-            <button class="change">Đổi mật khẩu</button>
-        </div>
+            <input type="password" v-model="changePass.newPassword" class="pass"  placeholder="Nhập mật khẩu mới" >
+            <button class="change" @click.prevent="submit" >Đổi mật khẩu</button>
+        </form>
       </div>
     </div>
   </template>
@@ -22,7 +20,42 @@
   export default {
     components: {
     },
-  
+    data(){
+      return{
+        changePass: {
+          citizen_id: '',
+          oldPassword: '',
+          newPassword: ''
+        }
+      }
+    },
+    mounted(){
+      this.changePass.citizen_id = localStorage.getItem('id');
+    },
+    methods:{
+      test: function(){
+        console.log('test1');
+      }
+      ,
+      async submit() {
+      try {
+        console.log('test1')
+        console.log(this.changePass);
+        await this.$axios
+          .put("http://localhost:8080/api/v1/auth/changePassword", this.changePass
+          )
+          .then((res) => {
+            console.log('test2')
+            this.$router.push("/poli/inforPoli");
+          });
+        console.log(this.changePass);
+      } catch (error) {
+        console.log('test3')
+        console.log(error);
+      }
+    },
+    }
+
   }
   </script>
   
@@ -63,7 +96,7 @@
     .form{
       padding: 40px 30px;
       background-color: #fff;
-      height: 400px;
+      height: 450px;
       width: 300px;
     }
   
@@ -80,20 +113,10 @@
       border-radius: 4px;
     }
   
-    .checkbox{
-      width: 20px;
-      height: auto;
-    }
-  
-    .show-pass{
-      text-align: end;
-      padding-top:10px;
-    }
-  
     .change{
-      width: 305px;
+      width: 320px;
       height: 35px;
-      margin-top:30px;
+      margin-top:50px;
       background: green;
       color: #fff;
       border: none;
