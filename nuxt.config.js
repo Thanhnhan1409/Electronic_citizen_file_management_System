@@ -84,8 +84,10 @@ export default {
     port: 3001 // Set the port to 3000
   },
 
+  plugins: [
+    { src: '~/plugins/localStorage.js', mode: 'client' }
+  ],
   state: {},
-
   mutations: {},
 
   actions: {},

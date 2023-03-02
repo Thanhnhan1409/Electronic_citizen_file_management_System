@@ -29,6 +29,7 @@
         }
       }
     },
+    // middleware: 'auth',
     mounted(){
       this.changePass.citizen_id = localStorage.getItem('id');
     },
@@ -46,7 +47,7 @@
           )
           .then((res) => {
             console.log('test2')
-            this.$router.push("/poli/inforPoli");
+            this.$router.push("/");
           });
         console.log(this.changePass);
       } catch (error) {

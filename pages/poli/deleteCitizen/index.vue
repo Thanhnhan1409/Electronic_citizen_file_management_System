@@ -2,7 +2,7 @@
     <div class="container">
       <h2>Xoá thông tin cá nhân</h2>
       <form @submit.prevent="fetchData" class="search">
-        <input v-model="idSearch" class="input-search" type="text" placeholder="Nhập số CCCD"/>
+        <input v-model="idSearch" class="input-search" type="text" placeholder="Nhập số CCCD" />
         <svg class="glass-find" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
         <button  @click.prevent="fetchData"  class="button-search"> Tìm kiếm </button>
       </form>
@@ -105,9 +105,11 @@
     };
   },
     mounted() {
-    this.checkGender();
+        this.idSearch = localStorage.getItem('id');
+        this.fetchData();
+        this.checkGender();
   },
-
+  // middleware: 'auth',
   methods: {
     async fetchData() {
       try {
@@ -129,7 +131,7 @@
             `http://localhost:8080/api/citizen/delete/id=${this.idSearch}`
             ).then(() =>{
                 alert('xoá thành công');
-                this.$router.push("/poli/inforPoli");
+                this.$router.push("/");
             })
           console.log(this.list)
       } catch (error) {
@@ -159,7 +161,7 @@
   
   .container h2 {
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 70px;
     width: fit-content;
   }
   
@@ -206,16 +208,16 @@
     width: 20px;
     height: auto;
     position: absolute;
-    right: 345px;  
-    top: 207px;
+    left: 23px;  
+    top: 237px;
   }
   
   .input-search{
     margin: 20px 0;
     border-radius: 20px;
     position: absolute;
-    right: 135px;  
-    top: 180px;
+    left: 15px;  
+    top: 210px;
     width: 200px;
     height: 20px;
     border: 1px solid black;
@@ -224,13 +226,28 @@
   
   .button-search{
     position: absolute;
-    right: 45px;  
-    top: 200px;
+    left: 275px;  
+    top: 233px;
     background-color: green;
     color: #fff;
     padding: 7px 12px;
     border: none;
     border-radius: 15px;
     cursor: pointer;
+  }
+
+  .submit{
+    padding: 7px 15px;
+    background-color: green;
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    position: absolute;
+    right: 30px;
+    top: 220px;
   }
   </style>

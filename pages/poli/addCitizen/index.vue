@@ -208,6 +208,7 @@ export default {
       },
     };
   },
+  // middleware: 'main',
   methods: {
     async submit() {
       // sau khi nhập dữ liệu, làm cách nào để đẩy dữ liệu lên server

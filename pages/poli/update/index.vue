@@ -20,7 +20,7 @@
                 </li>
                 <li>
                   Số CCCD:
-                  <input type="number" v-model="list.citizen_id" class="cccd" />
+                  <input type="number" v-model="list.citizenId" class="cccd" />
                 </li>
                 <li class="gender-form">
                   <p>Giới tính:</p>
@@ -83,7 +83,7 @@
                   Số hộ khẩu:
                   <input
                     type="number"
-                    v-model="list.family"
+                    v-model="list.idFamily"
                     class="idFamily"
                     name=""
                     id=""
@@ -107,7 +107,7 @@
                     <p>
                       Tỉnh:<input
                         type="text"
-                        v-model="list.location"
+                        v-model="list.city"
                         class="city"
                         name=""
                         id=""
@@ -117,7 +117,7 @@
                       Thành phố/Huyện:
                       <input
                         type="text"
-                        v-model="list.location"
+                        v-model="list.district"
                         class="district"
                         name=""
                         id=""
@@ -127,7 +127,7 @@
                       Xã/Phường:
                       <input
                         type="text"
-                        v-model="list.location"
+                        v-model="list.town"
                         class="town"
                         name=""
                         id=""
@@ -208,11 +208,12 @@ export default {
         phone: null,
         email: "",
         married: false,
-        role: []
+        // role: []
       },
       idSearch: '',
     };
   },
+  // middleware: 'nhan',
   methods: {
     async fetchData() {
       try {
@@ -220,7 +221,7 @@ export default {
             `http://localhost:8080/api/citizen/listCitizen/id=${this.idSearch}`
           )
           .then((res) => {
-            this.list.citizenId = res.data.citizen_id;
+            this.list.citizenId = res.data.citizenId;
             this.list.name = res.data.name;
             this.list.birth = res.data.birth;
             this.list.idFamily = res.data.family.id_Family;
@@ -238,8 +239,8 @@ export default {
             this.list.phone = res.data.phone;
             this.list.email = res.data.email;
             this.list.married = res.data.married;
-            this.list.role = res.data.role;
-            console.log(this.list);
+            // this.list.role = res.data.role;
+            console.log(res.data);
           });
       } catch (error) {
         console.log(error);
@@ -248,14 +249,19 @@ export default {
     async submit() {
       try {
         console.log(this.list);
+        console.log("test1");
         await this.$axios
-          .put(`http://localhost:8080/api/appointment/update/id=${this.idSearch}`,this.list
+          .put(`http://localhost:8080/api/citizen/update`,this.list
           )
           .then((res) => {
-            alert('Cập nhật thành công!')
+            console.log("test");
+            alert('Cập nhật thành công!');
+            this.list = res.data;
           });
+          console.log("test2");
         console.log(this.list);
       } catch (error) {
+        console.log("test3");
         console.log(error);
       }
     },

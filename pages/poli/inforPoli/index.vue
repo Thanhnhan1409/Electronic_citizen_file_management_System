@@ -86,6 +86,7 @@
   </template>
     
     <script>
+  // import { mapMutations } from 'vuex';
   export default {
     components: {
     },
@@ -93,10 +94,12 @@
     return {
       message: "",
       list: {},
-      listPoli: {},
+      listPoli: {
+      },
       id: '',
       gender:'',
-      idFamily: null
+      idFamily: null,
+      role:[],
     };
   },
     mounted() {
@@ -116,6 +119,7 @@
           .then((res) => {
             this.list = res['data'];
             localStorage.setItem('name', this.list.name)
+            
           });
       } catch (error) {
         console.log(error);
@@ -124,15 +128,21 @@
     async fetchDataPoli() {
       try {
         await this.$axios.get(
-            `http://localhost:8080/api/requirement/forwardRequest?idReq=${1}&idPoli=${this.id}`
+            `http://localhost:8080/api/politician/citizenId=${this.id}`
           )
           .then((res) => {
-            this.listPoli = res['data'];
+            this.listPoli = res['data'];  
+            localStorage.setItem('nameArea', this.listPoli.areaManage)
+            localStorage.setItem('levelManager', this.listPoli.levelManager)
+            console.log(this.listPoli);
+            
           });
       } catch (error) {
         console.log(error);
       }
     },
+    // ...mapMutations({
+    // }),
     checkGender(){
       if(this.list.gender === false)
         this.gender = 'Nữ'
