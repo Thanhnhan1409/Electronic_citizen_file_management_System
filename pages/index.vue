@@ -20,9 +20,6 @@
           <li class="nav-item see-inf">
             <nuxt-link to="/poli/seeInforCitizen/_seeInforCitizen" class="link">Xem thông tin</nuxt-link>
           </li>
-          <li class="nav-item send-inf">
-            <a href="" class="link"> Tìm kiếm và tra cứu</a>
-          </li>
           <li class="nav-item">
             <a href="" class="link">Quản lý thông tin</a>
             <ul class="management-child">
@@ -38,13 +35,13 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="" class="link">Nhận yêu cầu</a>
+            <nuxt-link to="/poli/requirement/_requirement" class="link">Nhận yêu cầu</nuxt-link>
           </li>
           <li class="nav-item">
             <a href="" class="link">Gửi thông báo</a>
           </li>
           <li class="nav-item">
-            <a href="" class="link">Xem lịch hẹn</a>
+            <nuxt-link to="/poli/appointment/_appointment"  class="link">Xem lịch hẹn</nuxt-link>
           </li>
           <li class="nav-item">
             <a href="" class="link">Gửi yêu cầu</a>
@@ -420,7 +417,7 @@ ul {
 .management-child {
   display: none;
   position: absolute;
-  left: 422px;
+  left: 222px;
   top: 156px;
   padding-top: 15px;
   text-align: start;

@@ -18,25 +18,22 @@
           <li class="nav-item see-inf">
             <nuxt-link to="/poli/seeInforCitizen/_seeInforCitizen" class="link">Xem thông tin</nuxt-link>
           </li>
-          <li class="nav-item send-inf">
-            <a href="" class="link"> Tìm kiếm và tra cứu</a>
-          </li>
           <li class="nav-item">
             <a href="" class="link">Quản lý thông tin</a>
-            <ul class="management-child">
+            <ul class="management-childs">
               <li>
-                <nuxt-link to="/poli/addCitizen" >Thêm tài khoản</nuxt-link>
+                <nuxt-link to="/poli/addCitizen" class="child" >Thêm tài khoản</nuxt-link>
               </li>
               <li>
-                <nuxt-link to="/poli/update" >Cập nhập thông tin</nuxt-link>
+                <nuxt-link to="/poli/update" class="child">Cập nhập thông tin</nuxt-link>
               </li>
               <li>
-                <nuxt-link to="/poli/deleteCitizen">Xoá tài khoản</nuxt-link>
+                <nuxt-link to="/poli/deleteCitizen" class="child">Xoá tài khoản</nuxt-link>
               </li>
             </ul>
           </li>
           <li class="nav-item">
-            <a href="" class="link">Nhận yêu cầu</a>
+            <nuxt-link to="/poli/requirement/_requirement" class="link">Nhận yêu cầu</nuxt-link>
           </li>
           <li class="nav-item">
             <a href="" class="link">Gửi thông báo</a>
@@ -231,24 +228,25 @@
     color: black;
   }
   
-  .management-child {
+  .management-childs {
     display: none;
     position: absolute;
-    left: 422px;
+    left: 270px;
     top: 156px;
-    padding-top: 15px;
+    padding: 15px 5px 0px 20px;
     text-align: start;
     width: 180px;
     height: 100px;
     background-color: green;
     color: #fff;
+    z-index: 1;
   }
   
-  .management-child li {
-    padding-top: 10px;
+  .management-childs li {
+    padding-top: 10px ;
   }
   
-  .nav-item:hover .management-child {
+  .nav-item:hover .management-childs {
     display: block;
   }
   
@@ -278,5 +276,15 @@
     fill: black;
     margin-left: 20px;
     border-radius: 5px;
+  }
+
+  .child{
+    padding: 5px 10px;
+  }
+
+  .child:hover{
+    background-color: #fff;
+    color: black;
+    border-radius: 7px;
   }
   </style>
