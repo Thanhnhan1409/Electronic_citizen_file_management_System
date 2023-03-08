@@ -77,12 +77,12 @@ export default {
   methods: {
     checkLevelManager() {
       if (this.level == "tỉnh")
-        this.url = "http://localhost:8080/api/citizen/listCitizen/city";
+        this.url = `http://localhost:8080/api/citizen/listCitizen/city=${encodeURIComponent(this.nameArea)}`;
       else if (this.level == "huyện")
-        this.url = "http://localhost:8080/api/citizen/listCitizen/district";
+        this.url = `http://localhost:8080/api/citizen/listCitizen/district=${encodeURIComponent(this.nameArea)}`;
       else if (this.level == "xã")
-        this.url = "http://localhost:8080/api/citizen/listCitizen/town";
-      else this.url = `http://localhost:8080/api/citizen/listCitizen/quarter`;
+        this.url = `http://localhost:8080/api/citizen/listCitizen/town=${encodeURIComponent(this.nameArea)}` ;
+      else this.url = `http://localhost:8080/api/citizen/listCitizen/quarter=${encodeURIComponent(this.nameArea)}`;
       console.log(this.url);
       console.log("tesst1");
     },
@@ -115,9 +115,7 @@ export default {
       try {
         console.log("aaa" + this.nameArea);
         await this.$axios
-          .post(`${this.url}`, {
-            string: this.nameArea,
-          })
+          .get(`${this.url}`,)
           .then((res) => {
             this.listCitizen = res.data;
             console.log(res);

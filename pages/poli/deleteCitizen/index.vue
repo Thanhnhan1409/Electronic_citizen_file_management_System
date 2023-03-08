@@ -118,7 +118,6 @@
           )
           .then((res) => {
             this.list = res['data'];
-            localStorage.setItem('name', this.list.name)
           });
       } catch (error) {
         console.log(error);

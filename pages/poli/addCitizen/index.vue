@@ -185,7 +185,6 @@ export default {
   data() {
     return {
       list: {
-        // citizen_id: "52",
         name: "",
         password: "123",
         birth: "",
@@ -195,7 +194,6 @@ export default {
         religion: "",
         nationality: "",
         address: "",
-        //location_id: 123,
         quarter: "123",
         town: "",
         district: "",
@@ -205,20 +203,21 @@ export default {
         phone: null,
         email: "",
         married: false,
+        imgUrl: "",
+        militaryService: false,
       },
     };
   },
-  // middleware: 'main',
   methods: {
     async submit() {
-      // sau khi nhập dữ liệu, làm cách nào để đẩy dữ liệu lên server
       try {
         console.log(this.list);
         await this.$axios
           .post("http://localhost:8080/api/v1/auth/register", this.list
           )
           .then((res) => {
-            this.$router.push("/citizen/inforCitizen");
+            alert("Đăng ký thành công!");
+            this.$router.push("/");
           });
         console.log(this.list);
       } catch (error) {
