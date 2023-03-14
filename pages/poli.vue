@@ -1,7 +1,8 @@
 <template>
     <div class="container">
-      <Logo />
-      <div class="header">
+      <Tableft/>
+      <InforCitizenNewVue/>
+      <!-- <div class="header">
         <ul class="content">
           <li class="nav-item">
             <svg
@@ -73,19 +74,18 @@
             </svg>
           </div>
         </div>
-      </div>
+      </div> -->
       <nuxt-child/>
-      <FooterPage />
     </div>
   </template>
     
     <script>
-  import Logo from '~/components/Logo.vue'
-  import FooterPage from '~/components/FooterPage.vue'
+  import Tableft from '~/components/Tableft.vue'
+  import InforCitizenNewVue from '../components/InforCitizenNew.vue'
   export default {
     components: {
-      Logo,
-      FooterPage,
+      Tableft,
+      InforCitizenNewVue
     },
     data(){
       return{

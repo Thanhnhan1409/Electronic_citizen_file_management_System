@@ -1,6 +1,6 @@
 <template>
     <div class="logo">
-        <img src="../static/logo.jpg" alt="">
+        <img src="../static/images/logo.png" alt="">
         <h1>HỆ THỐNG QUẢN LÝ HỒ SƠ ĐIỆN TỬ CÔNG DÂN</h1>
     </div>
 </template>

@@ -65,6 +65,7 @@ export default {
       genderEx: '',
       listTmp:[],
       isShow: true,
+      fUrl:"http://localhost:8080/api/citizen/listCitizen/"
     };
   },
   mounted() {
@@ -77,12 +78,12 @@ export default {
   methods: {
     checkLevelManager() {
       if (this.level == "tỉnh")
-        this.url = `http://localhost:8080/api/citizen/listCitizen/city=${encodeURIComponent(this.nameArea)}`;
+        this.url = `${this.fUrl}city=${encodeURIComponent(this.nameArea)}`;
       else if (this.level == "huyện")
-        this.url = `http://localhost:8080/api/citizen/listCitizen/district=${encodeURIComponent(this.nameArea)}`;
+        this.url = `${this.fUrl}district=${encodeURIComponent(this.nameArea)}`;
       else if (this.level == "xã")
-        this.url = `http://localhost:8080/api/citizen/listCitizen/town=${encodeURIComponent(this.nameArea)}` ;
-      else this.url = `http://localhost:8080/api/citizen/listCitizen/quarter=${encodeURIComponent(this.nameArea)}`;
+        this.url = `${this.fUrl}town=${encodeURIComponent(this.nameArea)}` ;
+      else this.url = `${this.fUrl}quarter=${encodeURIComponent(this.nameArea)}`;
       console.log(this.url);
       console.log("tesst1");
     },
@@ -93,7 +94,7 @@ export default {
     },
     searchInforCitizen(){
       console.log("testSearch")
-      this.isShow = false;
+      // this.isShow = false;
       this.listTmp.splice(0,this.listTmp.length)
       console.log(this.idSearch)
       for(let i=0; i < this.listCitizen.length; i++){
@@ -104,8 +105,6 @@ export default {
         }
       }
       
-        
-
     },
     seeInfor: function () {
       this.idCitizen = this.listCitizen.citizen_id;
@@ -142,7 +141,7 @@ body {
 }
 .container {
   max-width: 1250px;
-  margin-left: auto;
+  margin-left: 252px;
   margin-right: auto;
   padding-left: 10px;
   padding-right: 10px;
@@ -202,7 +201,7 @@ h2 small {
 }
 
 .responsive-table .col-5 {
-  flex-basis: 35%;
+  flex-basis: 25%;
 }
 
 .responsive-table div {

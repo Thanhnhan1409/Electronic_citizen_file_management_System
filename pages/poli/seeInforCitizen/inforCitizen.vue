@@ -1,81 +1,17 @@
 <template>
   <div class="container">
     <h2>Thông tin công dân</h2>
-    <div>
-      <div>
-        <div class="infor">
-          <img
-            src="https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/326538807_878801156697098_8566777046600716424_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=kXnmArmPyF4AX-HBWWm&_nc_ht=scontent.fdad1-2.fna&oh=00_AfCV4UkBupefj4sYTgZWeeY5Pcz2ngffrYmkt44nqVyO8w&oe=63EBB4D2"
-            alt=""
-          />
-          <div class="infor-content">
-            <ul class="list-infor">
-              <li>
-                Họ và tên: <span>{{ listInfor.name }}</span>
-              </li>
-              <li>
-                Số CCCD:
-                <span>{{ listInfor.citizen_id }}</span>
-              </li>
-              <li>
-                Giới tính:
-                <span :keyup="gender(listInfor)"> {{ genderEx }}</span>
-              </li>
-              <li>
-                Quốc tịch:
-                <span>{{ listInfor.nationality }}</span>
-              </li>
-              <li>
-                Nghề nghiệp:
-                <span>{{ listInfor.profession }}</span>
-              </li>
-              <li>
-                Số điện thoại:
-                <span>{{ listInfor.phone }}</span>
-              </li>
-            </ul>
-            <ul class="list-infor">
-              <li>
-                Ngày sinh:
-                <span>{{ listInfor.birth }}</span>
-              </li>
-              <li>
-                Dân tộc:
-                <span>{{ listInfor.ethnic }}</span>
-              </li>
-              <li>
-                Số hộ khẩu:
-                <span>{{ listInfor.family?.id_Family }}</span>
-              </li>
-              <li>
-                Tôn giáo:
-                <span>{{ listInfor.religion }}</span>
-              </li>
-              <li>
-                Quê quán:
-                <span>{{ listInfor.address }}</span>
-              </li>
-              <li>
-                Email:
-                <span>123@gmail.com</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="crimiantion">
-        <h3>Tiền án tiền sự</h3>
-        <div class="crimimal-content">
-          Nội dung: {{ listInfor.criminalRecord }}
-        </div>
-      </div>
+    <InForCitizen :list-infor="listInfor" :genderEx="genderEx"
+    @gender="gender"></InForCitizen>
     </div>
-  </div>
 </template>
       
-    <script>
+<script>
+import InForCitizen from '../../../components/InForCitizen.vue';
 export default {
-  components: {},
+  components: {
+    InForCitizen
+  },
   data() {
     return {
       listInfor: {},

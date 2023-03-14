@@ -79,7 +79,7 @@ export default {
     watchLoggedIn: true,
     rewriteRedirect: true
   },
-
+  
   server: {
     port: 3001 // Set the port to 3000
   },

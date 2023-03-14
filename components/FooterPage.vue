@@ -21,9 +21,10 @@
     background-color: green;
     text-align: center;
     padding: 15px;
-    position: absolute;
+    position: fixed;
     right: 0;
     left: 0;
+    bottom: 0;
   
   }
   
