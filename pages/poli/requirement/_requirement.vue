@@ -2,11 +2,13 @@
   <div class="container">
     <div id="overlay" class=" display-hide "></div>
     <h2> Danh sách các yêu cầu</h2>
-    <button @click="renderAllAppoitment" class="button-all">Tất cả</button>
-    <button @click="renderWaitingAppoitment" class="button-waiting">Đang xử lý</button>
-    <button @click="renderExceptAppoitment" class="button-except">Chấp nhận</button>
-    <button @click="renderDeniedtAppoitment" class="button-denied">Từ chối</button>
-    <ul class="responsive-table">
+    <div class="button-display">
+      <button @click="renderAllAppoitment" class="button-all">Tất cả</button>
+      <button @click="renderWaitingAppoitment" class="button-waiting">Đang xử lý</button>
+      <button @click="renderExceptAppoitment" class="button-except">Chấp nhận</button>
+      <button @click="renderDeniedtAppoitment" class="button-denied">Từ chối</button>
+    </div>
+    <ul class="responsive-table req-content">
       <li class="table-header">
         <div class="col col-0">STT</div>
         <div class="col col-1">Số CCCD</div>
@@ -201,22 +203,29 @@ body {
 
 .container {
   max-width: 1250px;
-  margin-left: auto;
-  margin-right: auto;
+  margin:80px 20px 0 280px;
   padding-left: 10px;
   padding-right: 10px;
 }
 
 h2 {
-  font-size: 26px;
-  margin: 50px 0 80px 0;
+  font-size: 18px;
+  position: absolute;
+  left: 300px;
+  top: 100px;
+  /* margin: 50px 0 80px 0; */
   text-align: center;
 }
 
 h2 small {
   font-size: 0.5em;
 }
-
+.req-content{
+  padding: 100px 0 20px 0; 
+  box-shadow: 3px 3px 10px rgb(206, 203, 203);
+  border-radius: 10px;
+  background-color: #fff;
+}
 .responsive-table {
   padding-left: 0;
 }
@@ -262,7 +271,7 @@ h2 small {
 }
 
 .responsive-table .col-6 {
-  flex-basis: 15%;
+  flex-basis: 18%;
 }
 
 .responsive-table .col-7 {
@@ -274,53 +283,65 @@ h2 small {
   cursor: pointer;
 }
 
+.button-display{
+  position: absolute;
+  right: 40px;
+  top: 110px;
+}
 
 .button-all {
-  position: absolute;
+  /* position: absolute;
   top: 270px;
-  left: 120px;
+  left: 120px; */
   border-radius: 10px;
   padding: 7px 15px;
   border: none;
   color: #fff;
   background-color: green;
   cursor: pointer;
+  width: 70px;
 }
 
 .button-waiting {
-  position: absolute;
+  /* position: absolute;
   top: 270px;
-  left: 190px;
+  left: 190px; */
   border-radius: 10px;
   padding: 7px 15px;
   border: none;
   color: #fff;
   background-color: green;
   cursor: pointer;
+  width: 120px;
+
 }
 
 .button-except {
-  position: absolute;
+  /* position: absolute;
   top: 270px;
-  left: 287px;
+  left: 287px; */
   border-radius: 10px;
   padding: 7px 15px;
   border: none;
   color: #fff;
   background-color: green;
   cursor: pointer;
+  width: 100px;
+
 }
 
 .button-denied {
-  position: absolute;
+  /* position: absolute;
   top: 270px;
-  left: 385px;
+  left: 385px; */
   border-radius: 10px;
   padding: 7px 15px;
   border: none;
   color: #fff;
   background-color: green;
   cursor: pointer;
+  width: 90px;
+
 }
 
 .button-handle {
@@ -350,6 +371,7 @@ h2 small {
 
 .display-flex {
   display: flex !important;
+  justify-content: space-evenly;  
 }
 
 .display-hide {

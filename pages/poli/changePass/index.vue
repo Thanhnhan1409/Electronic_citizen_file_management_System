@@ -47,7 +47,9 @@
           )
           .then((res) => {
             console.log('test2')
-            this.$router.push("/");
+            //index=>inforPoli
+            this.$router.push("/poli/inforPoli");
+            
           });
         console.log(this.changePass);
       } catch (error) {
@@ -73,7 +75,7 @@
     }
   
     .container{
-      width: 100%;
+      margin-left: 280px;
     }
   
     .content{
@@ -95,10 +97,14 @@
     }
   
     .form{
+      margin-top: 80px;
       padding: 40px 30px;
       background-color: #fff;
-      height: 450px;
-      width: 300px;
+      height: 400px;
+      width: 325px;
+      border-radius: 10px;
+      box-shadow: 3px 3px 10px rgb(184, 182, 182);
+      
     }
   
     .form h2{

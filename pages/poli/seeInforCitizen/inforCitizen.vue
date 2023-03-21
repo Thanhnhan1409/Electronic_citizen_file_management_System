@@ -1,16 +1,18 @@
 <template>
   <div class="container">
-    <h2>Thông tin công dân</h2>
-    <InForCitizen :list-infor="listInfor" :genderEx="genderEx"
-    @gender="gender"></InForCitizen>
+    <Tableft />
+    <button @click.prevent="deleteCitizen" class="poli-delInfo" >Xóa tài khoản</button>
+    <InforCitizenNew :listInfor="listInfor" :genderEx="genderEx" @gender="gender" />  
     </div>
 </template>
       
 <script>
-import InForCitizen from '../../../components/InForCitizen.vue';
+import Tableft from '@/components/Tableft.vue';
+import InforCitizenNew from '@/components/InforCitizenNew.vue';
 export default {
   components: {
-    InForCitizen
+    Tableft,
+    InforCitizenNew
   },
   data() {
     return {
@@ -40,11 +42,42 @@ export default {
       if (list.gender === false) return (this.genderEx = "nữ");
       else return (this.genderEx = "nam");
     },
+    async deleteCitizen() {
+      try {
+        confirm("Bạn có muốn xoá tài khoản không?")
+        await this.$axios.delete(
+            `http://localhost:8080/api/citizen/delete/id=${this.id}`
+            ).then(() =>{
+                alert('xoá thành công');
+                //index=>inforPoli
+                this.$router.push("/poli/inforPoli");
+            
+            })
+          console.log(this.list)
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>
+<style scoped>
+ .poli-delInfo{
+    border: none;
+    border-radius: 10px;
+    padding: 8px 20px;
+    background-color: green;
+    color: #fff;
+    font-weight: 550;
+    position: absolute;
+    right: 40px;
+    top: 120px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+</style>
       
-      <style scoped>
+      <!-- <style scoped>
 body {
   margin: 0;
 }
@@ -118,4 +151,4 @@ img {
   min-height: 100px;
   margin-bottom: 10px;
 }
-</style>
+</style> -->

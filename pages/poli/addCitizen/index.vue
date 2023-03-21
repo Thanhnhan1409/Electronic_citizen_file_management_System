@@ -3,44 +3,46 @@
     <div class="content">
       <h2>Đăng ký thông tin cá nhân công dân</h2>
       <button @click.prevent="submit" class="submit">Đăng ký</button>
-      <AddCitizen :list="list" ></AddCitizen>
+      <AddAccount :listInfor="list"/>
       </div>
   </div>
 </template>
 
 <script>
 import AddCitizen from '../../../components/AddCitizen.vue';
-import auth from '../../../middleware/auth';
+import AddAccount from '../../../components/AddAccount.vue';
 export default {
   components:{
-    AddCitizen
+    AddCitizen,
+    AddAccount
   },
   data() {
     return {
       list: {
-        name: "",
-        password: "123",
-        birth: "",
-        idFamily: "",
-        gender: false,
-        ethnic: "",
-        religion: "",
-        nationality: "",
-        address: "",
-        quarter: "123",
-        town: "",
-        district: "",
-        city: "",
-        profession: "",
-        criminalRecord: "",
-        phone: null,
-        email: "",
-        married: false,
-        imgUrl: "",
-        militaryService: false,
+        // name: "",
+        // password: "123",
+        // birth: "",
+        // idFamily: "",
+        // gender: false,
+        // ethnic: "",
+        // religion: "",
+        // nationality: "",
+        // address: "",
+        // quarter: "123",
+        // town: "",
+        // district: "",
+        // city: "",
+        // profession: "",
+        // criminalRecord: "",
+        // phone: null,
+        // email: "",
+        // married: false,
+        // imgUrl: "",
+        // militaryService: false,
       },
     };
   },
+  // middleware:['auth'],
   methods: {
     async submit() {
       try {
@@ -50,7 +52,9 @@ export default {
           )
           .then((res) => {
             alert("Đăng ký thành công!");
-            this.$router.push("/");
+            //index=>inforPoli
+            this.$router.push("/poli/inforPoli");
+            
           });
         console.log(this.list);
       } catch (error) {
@@ -75,12 +79,14 @@ html {
 .container {
   padding: 0;
   overflow: hidden;
+  margin-top: 50px;
+  padding-bottom: 40px;
 }
 
 .container h2 {
   padding: 10px;
-  width: fit-content;
-  margin-bottom: 0;
+  margin-left: 300px;
+  margin-bottom: -10px;
 }
 
 ul {
@@ -105,14 +111,14 @@ input {
   background-color: green;
   color: #fff;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 550;
   border: none;
   border-radius: 10px;
   margin-bottom: 40px;
   position: absolute;
-  right: 2%;
+  right: 60px;
   cursor: pointer;
   box-shadow: 3px 3px 3px 1px rgba(218, 169, 36, 0.25);
-  top: 180px;
+  top: 190px;
 }
 </style>

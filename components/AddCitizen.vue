@@ -8,7 +8,7 @@
               <ul class="list-infor">
                 <li>
                   Họ và tên:
-                  <input type="text" v-model="list.name" class="name" />
+                  <input type="text" v-model="list.name" />
                 </li>
                 <li>
                   Số CCCD:

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="logo-login">
-      <img src="../static/images/logo.png" alt="" />
+      <img src="../static/images/logo.jpg" alt="" />
       <h2>Hệ thống quản lý hồ sơ điện tử công dân</h2>
     </div>
     <div class="card">
@@ -75,7 +75,7 @@ export default {
             this.$router.push('/error');
             console.log("test1 ");
           }
-          else this.$router.push('/');
+          else this.$router.push('/poli/inforPoli');
         })
 
       } catch (error) {
@@ -125,7 +125,9 @@ img {
   background-color: #fff;
   height: 380px;
   width: 300px;
-  border: 0.5px solid black;
+  /* border: 0.5px solid black; */
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px rgb(205, 204, 204);
 }
 
 .form h2 {

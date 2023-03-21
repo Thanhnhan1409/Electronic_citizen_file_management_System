@@ -4,7 +4,8 @@ export default function ({app,redirect}) {
 //     if (localStorage.getItem('auth._token.local') == null) {
     if (!app.$auth.loggedIn) {
       alert("chua")
-      return redirect('/login');
+      console.log("test middleware")
+      return redirect('/');
   }
     // }
     

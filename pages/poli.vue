@@ -1,7 +1,8 @@
 <template>
     <div class="container">
       <Tableft/>
-      <InforCitizenNewVue/>
+      <Navbar/>
+      <!-- <InforCitizenNewVue/> -->
       <!-- <div class="header">
         <ul class="content">
           <li class="nav-item">
@@ -82,6 +83,7 @@
     <script>
   import Tableft from '~/components/Tableft.vue'
   import InforCitizenNewVue from '../components/InforCitizenNew.vue'
+  import Navbar from '../components/Navbar.vue'
   export default {
     components: {
       Tableft,

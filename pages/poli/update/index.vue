@@ -2,28 +2,27 @@
   <div class="container">
     <div class="content">
       <h2>Cập nhật thông tin cá nhân công dân</h2>
-      <form @submit.prevent="fetchData" class="search">
-        <input v-model="idSearch" class="input-search" type="text" placeholder="Nhập số CCCD"/>
-        <svg class="glass-find" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
-        <button  @click.prevent="fetchData"  class="button-search"> Tìm kiếm </button>
-      </form>
-      <AddCitizen :list="list"></AddCitizen>
+      <SearchVue v-model="idSearch" @search="handleSearch" class="search--form"/>
+      <AddAccount :list-infor="list"></AddAccount>
       <button  @click.prevent="submit" class="submit">Cập nhật</button>
       </div>
   </div>
 </template>
 
 <script>
-import AddCitizen from "../../../components/AddCitizen.vue";
+import AddCitizen from "@/components/AddCitizen.vue";
+import SearchVue from "@/components/Search.vue";
+import AddAccount from "@/components/AddAccount.vue";
 export default {
   components:{
-    AddCitizen
+    AddCitizen,
+    SearchVue,
+    AddAccount
   },
   data() {
     return {
       list: { },
       idSearch: '',
-      namePage: "Cập nhật"
     };
   },
   // middleware: 'nhan',
@@ -65,6 +64,10 @@ export default {
         console.log(error);
       }
     },
+    handleSearch(id){
+      this.idSearch = id;
+      this.fetchData();
+    }
   },
 };
 </script>
@@ -78,6 +81,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .container {
@@ -88,7 +92,7 @@ body {
 .container h2 {
   padding: 10px;
   width: fit-content;
-  margin-bottom: 60px;
+  margin:80px 0 20px 300px;
 }
 
 img {
@@ -106,50 +110,23 @@ input {
 }
 
 .submit {
-  padding: 10px 30px;
+  padding: 10px 20px;
   background-color: green;
   color: #fff;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 550;
   border: none;
   border-radius: 10px;
   margin-bottom: 40px;
   position: absolute;
-  right: 2%;
+  right: 80px;
   cursor: pointer;
   box-shadow: 3px 3px 3px 1px rgba(218, 169, 36, 0.25);
-  top: 180px;
+  top: 190px;
 }
-
-.glass-find{
-  width: 20px;
-  height: auto;
+.search--form{
   position: absolute;
-  left: 25px;  
-  top: 237px;
-}
-
-.input-search{
-  margin: 20px 0;
-  border-radius: 20px;
-  position: absolute;
-  left: 15px;  
-  top: 210px;
-  width: 200px;
-  height: 20px;
-  border: 1px solid black;
-  padding: 5px 5px 5px 35px;
-}
-
-.button-search{
-  position: absolute;
-  left: 275px;  
-  top: 235px;
-  background-color: green;
-  color: #fff;
-  padding: 5px 12px;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
+  right: -80px;
+  top: -200px;
 }
 </style>

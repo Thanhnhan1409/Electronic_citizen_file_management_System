@@ -10,15 +10,15 @@
       <button @click.prevent="fetchData" class="button-search"> Tìm kiếm </button>
     </form>
     <button @click.prevent="deleteData" class="submit">Xoá tài khoản</button>
-    <InForCitizen :list-infor="list" :genderEx="genderEx" @gender="gender"></InForCitizen>
+    <InforCitizenNew :list-infor="list" :genderEx="genderEx" @gender="gender"></InforCitizenNew>
   </div>
 </template>
     
 <script>
-import InForCitizen from '../../../components/InForCitizen.vue';
+import InforCitizenNew from '../../../components/InforCitizenNew.vue';
 export default {
   components: {
-    InForCitizen
+    InforCitizenNew
   },
   data() {
     return {
@@ -41,6 +41,7 @@ export default {
         )
           .then((res) => {
             this.list = res['data'];
+          console.log(this.list)
           });
       } catch (error) {
         console.log(error);
@@ -53,7 +54,9 @@ export default {
           `http://localhost:8080/api/citizen/delete/id=${this.idSearch}`
         ).then(() => {
           alert('xoá thành công');
-          this.$router.push("/");
+          //index=>inforPoli
+          this.$router.push("/poli/inforPoli");
+            
         })
         console.log(this.list)
       } catch (error) {
@@ -73,10 +76,10 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .container {
-  margin: 0;
   padding: 0;
 }
 
@@ -95,23 +98,27 @@ img {
   height: 210px;
   margin-right: 20px;
 }
-
+.search{
+  position: absolute;
+  right: 400px;
+  top: -100px;
+}
 .glass-find {
   width: 20px;
   height: auto;
   position: absolute;
-  left: 23px;
-  top: 237px;
+  left: 33px;
+  top: 239px;
 }
 
 .input-search {
   margin: 20px 0;
   border-radius: 20px;
   position: absolute;
-  left: 15px;
-  top: 210px;
+  left: 25px;
+  top: 213px;
   width: 200px;
-  height: 20px;
+  height: 18px;
   border: 1px solid black;
   padding: 5px 5px 5px 35px;
 }
@@ -126,6 +133,7 @@ img {
   border: none;
   border-radius: 15px;
   cursor: pointer;
+  width: 80px;
 }
 
 .submit {

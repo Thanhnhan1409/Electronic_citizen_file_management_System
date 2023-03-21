@@ -1,4 +1,90 @@
 <template>
+  <div class="container">
+    <Tableft/>
+    <Navbar/>
+    <InforCitizenNew :listInfor="list" :genderEx="genderEx" @gender="gender" />
+    <InforPoli :listPoli="listPoli" />
+  </div>
+</template>
+<script>
+import Tableft from '@/components/Tableft.vue';
+import InforCitizenNew from '@/components/InforCitizenNew.vue';
+import InforPoli from '@/components/InforPoli.vue';
+import Navbar from '@/components/Navbar.vue';
+export default {
+  components: {
+    InforCitizenNew,
+    Tableft,
+    InforPoli
+  },
+  data() {
+    return {
+      message: "",
+      list: {},
+      listPoli: {},
+      id: "",
+      genderEx: "",
+      idFamily: null,
+      role: [],
+      name: "",//lưu tên user
+    };
+  },
+  // middleware: "auth",
+  mounted() {
+    this.id = localStorage.getItem("id");
+    this.fetchData();
+    this.fetchDataPoli();
+    // this.gender();
+    this.getFamilyId();
+    this.name = localStorage.getItem("name");
+  },
+  methods: {
+    async fetchData() {
+      try {
+        await this.$axios
+          .get(`http://localhost:8080/api/citizen/listCitizen/id=${this.id}`)
+          .then((res) => {
+            this.list = res["data"];
+            localStorage.setItem("name", this.list.name);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async fetchDataPoli() {
+      try {
+        await this.$axios
+          .get(`http://localhost:8080/api/politician/citizenId=${this.id}`)
+          .then((res) => {
+            this.listPoli = res["data"];
+            localStorage.setItem('nameArea', this.listPoli.areaManage)
+            localStorage.setItem('level', this.listPoli.levelManager)
+            localStorage.setItem('idPolicitian', this.listPoli.politician_id)
+            console.log(this.listPoli);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    logout() {
+      localStorage.clear();
+      localStorage.removeItem("auth._token.local");
+      //login=>index
+      this.$router.push("/");
+    },
+    gender(list) {
+            if (list.gender === false) return (this.genderEx = "nữ");
+            else return (this.genderEx = "nam");
+        },
+    getFamilyId() {
+      for (let item in this.list) {
+        console.log(item);
+      }
+    },
+  },
+};
+</script>
+<!-- <template>
     <div class="container">
       <h2>Thông tin cá nhân</h2>
       <div>
@@ -213,4 +299,4 @@
     height: 210px;
     margin-right: 20px;
   }
-  </style>
+  </style> -->
