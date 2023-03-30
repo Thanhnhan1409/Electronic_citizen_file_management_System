@@ -2,7 +2,7 @@
   <div class="container">
     <Tableft/>
     <Navbar/>
-    <InforCitizenNew :listInfor="list" :genderEx="genderEx" @gender="gender" />
+    <InforCitizenNew :listInfor="list"/>
     <InforPoli :listPoli="listPoli" />
   </div>
 </template>
@@ -23,7 +23,6 @@ export default {
       list: {},
       listPoli: {},
       id: "",
-      genderEx: "",
       idFamily: null,
       role: [],
       name: "",//lưu tên user
@@ -72,10 +71,6 @@ export default {
       //login=>index
       this.$router.push("/");
     },
-    gender(list) {
-            if (list.gender === false) return (this.genderEx = "nữ");
-            else return (this.genderEx = "nam");
-        },
     getFamilyId() {
       for (let item in this.list) {
         console.log(item);
@@ -84,6 +79,7 @@ export default {
   },
 };
 </script>
+<style src="../../../static/asset/styles.css"></style>
 <!-- <template>
     <div class="container">
       <h2>Thông tin cá nhân</h2>

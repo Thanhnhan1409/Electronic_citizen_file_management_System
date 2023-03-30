@@ -4,9 +4,8 @@
       <h2>Danh sách công dân tại {{ this.level }} {{ this.nameArea }}</h2>
       <Search v-model="idSearch" @search="handleSearch" class="seeInfor--form"/>
       <button @click="isShow = true" class="button-show">Hiển thị toàn bộ</button>
-      <ListInforCitizen v-show="isShow" :items="listCitizen" :genderEx="genderEx" @handleClick="handleClick" @gender="gender" />
-      <ListInforCitizen v-show="!isShow" :items="listTmp" :genderEx="genderEx" @handleClick="handleClick" @gender="gender" />
-
+      <ListInforCitizen v-show="isShow" :items="listCitizen"  @handleClick="handleClick"/>
+      <ListInforCitizen v-show="!isShow" :items="listTmp" @handleClick="handleClick"/>
     </div>
 
   </div>
@@ -29,7 +28,6 @@ export default {
       id: null,
       idCitizen: null,
       idSearch: '',
-      genderEx: '',
       isShow: true,
       fUrl: "http://localhost:8080/api/citizen/listCitizen/"
     };
@@ -79,11 +77,7 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    },
-    gender(gender) {
-      if (gender === false) return (this.genderEx = "nữ");
-      else return (this.genderEx = "nam");
-    },
+    }
   },
 };
 </script>
@@ -132,12 +126,13 @@ h2 small {
 
 .button-show {
   position: absolute;
-  top: 85px;
-  left: 700px;
+  top: 125px;
+  left: 300px;
   border-radius: 10px;
   padding: 7px 10px;
   border: none;
   color: #fff;
   background-color: green;
   cursor: pointer;
-}</style>
+}
+</style>

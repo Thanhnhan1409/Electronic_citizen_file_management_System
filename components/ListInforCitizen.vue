@@ -10,14 +10,14 @@
                 <div class="col col-5">Địa chỉ</div>
             </li>
         </ul>
-        <ul class="responsive-table content" v-for="item in items" :key="item.id">
+        <ul class="responsive-table content" v-for="(item,index) in items" :key="item.citizen_id">
             <li class="table-row display" @click.prevent="handleClick(item.citizen_id)">
-                <div class="col col-0" data-label="STT">1</div>
+                <div class="col col-0" data-label="STT">{{ index + 1 }}</div>
                 <div class="col col-1" data-label="Số CCCD">
                     {{ item.citizen_id }}
                 </div>
                 <div class="col col-2" data-label="Tên">{{ item.name }}</div>
-                <div class="col col-3" :keyup=gender(item.gender) data-label="Giới tính">{{ genderEx }}</div>
+                <div class="col col-3" data-label="Giới tính">{{ item.gender? "Nam": "Nữ" }}</div>
                 <div class="col col-4" data-label="Số điện thoại">
                     {{ item.phone }}
                 </div>
@@ -32,18 +32,11 @@ export default {
     items: {
       type: Array,
       default: () => [],
-    },
-    genderEx:{
-        type:String,
-        default:''
     }
   },
   methods:{
     handleClick(id){
       this.$emit('handleClick',id);
-    },
-    gender(gender){
-      this.$emit('gender',gender);
     }
   }
 }
@@ -121,5 +114,7 @@ flex-basis: 25%;
 text-align: center;
 cursor: pointer;
 }
-
+.table-row:hover {
+  color: green;
+}
 </style>

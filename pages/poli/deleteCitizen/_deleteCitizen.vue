@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="container">
     <h2>Xoá thông tin cá nhân</h2>
     <form @submit.prevent="fetchData" class="search">
@@ -10,12 +10,12 @@
       <button @click.prevent="fetchData" class="button-search"> Tìm kiếm </button>
     </form>
     <button @click.prevent="deleteData" class="submit">Xoá tài khoản</button>
-    <InforCitizenNew :list-infor="list" :genderEx="genderEx" @gender="gender"></InforCitizenNew>
+    <InforCitizenNew :list-infor="list"></InforCitizenNew>
   </div>
 </template>
     
 <script>
-import InforCitizenNew from '../../../components/InforCitizenNew.vue';
+import InforCitizenNew from '@/components/InforCitizenNew.vue';
 export default {
   components: {
     InforCitizenNew
@@ -24,8 +24,7 @@ export default {
     return {
       message: "",
       list: {},
-      idSearch: '',
-      genderEx: ''
+      idSearch: ''
     };
   },
   mounted() {
@@ -62,11 +61,7 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    },
-    gender(list) {
-      if (list.gender === false) return (this.genderEx = "nữ");
-      else return (this.genderEx = "nam");
-    },
+    }
   },
 }
 </script>
@@ -150,4 +145,4 @@ img {
   right: 30px;
   top: 220px;
 }
-</style>
+</style> -->

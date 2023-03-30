@@ -86,6 +86,7 @@ export default {
   }
 };
 </script>
+<style src="../static/asset/styles.css"></style>
 <style scoped>
 body {
   padding: 0;
@@ -100,6 +101,7 @@ html {
 
 .container {
   width: 100%;
+  margin: 0;
 }
 
 .content {
@@ -128,6 +130,7 @@ img {
   /* border: 0.5px solid black; */
   border-radius: 10px;
   box-shadow: 3px 3px 10px rgb(205, 204, 204);
+  margin-bottom: 50px;
 }
 
 .form h2 {
@@ -137,32 +140,11 @@ img {
 }
 
 input {
-  width: 300px;
+  width: 280px;
   height: 30px;
   border: 1px solid green;
   border-radius: 4px;
-}
-
-.checkbox {
-  width: 20px;
-  height: auto;
-}
-
-.showButton {
-  text-align: end;
-  padding-top: 10px;
-}
-
-.show-pass {
-  text-align: end;
-  padding-top: 10px;
-  background-color: green;
-  color: #fff;
-  margin-top: 10px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
+  margin: 10px 0;
 }
 
 .login {

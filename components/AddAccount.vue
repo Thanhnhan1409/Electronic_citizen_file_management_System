@@ -11,7 +11,7 @@
                     </div>
                     <div>
                         Ngày sinh:
-                        <input type="datetime" v-model="listInfor.birth" name="" id="">
+                        <input type="date" v-model="listInfor.birth" name="" id="">
                     </div>
                 </li>
                 <li class="content--item div-center">
@@ -116,12 +116,6 @@ export default {
 }
 </script>
 <style scoped>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 ul li {
     list-style: none;
     padding: 0;
@@ -131,6 +125,7 @@ ul li {
 
 .container {
     margin-left: 280px;
+    margin-top: 140px;
 }
 
 .overlay-hidden {
@@ -173,12 +168,11 @@ ul li {
 }
 
 .infor--content h2 {
-    font-family: 'Segoe UI Variable';
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
     line-height: 27px;
-
+    margin: 0;
     color: #4B4545;
 }
 

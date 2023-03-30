@@ -26,7 +26,7 @@
                 <li class="content--item div-center">
                     <div class="left">
                         Giới tính:
-                        <span :keyup="gender(listInfor)">{{ genderEx }}</span>
+                        <span>{{ listInfor.gender? 'Nam': "Nữ"}}</span>
                     </div>
                     <div>
                         Dân tộc:
@@ -79,7 +79,7 @@
                     
                     <div>
                        Tình trạng hôn nhân:
-                        <span></span>
+                        <span>{{ listInfor.married? "Đã kết hôn" : "Chưa kết hôn" }}</span>
                     </div>
                 </li>
             </ul>
@@ -88,12 +88,8 @@
 </template>
 <script>
 export default{
-    props:['listInfor', 'genderEx'],
-    methods: {
-      gender(list) {
-        this.$emit('gender',list)
-      },
-    },
+    props:['listInfor'],
+
 }
 </script>
 <style scoped>
@@ -166,7 +162,7 @@ ul li{
 
 }
 .infor--content h2{
-    font-family: 'Segoe UI Variable';
+    margin: 20px 0;
     font-style: normal;
     font-weight: 600;
     font-size: 20px;

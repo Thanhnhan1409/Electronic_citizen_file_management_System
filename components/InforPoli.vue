@@ -56,14 +56,15 @@ ul li{
 }
 
 .poli--content{
-    margin:0 30px;
+    margin:0 30px 50px 30px;
     padding: 30px;
     background-color: #fff;
     border-radius: 13px;
     box-shadow: 3px 2px 10px rgb(217, 213, 213);
 }
 .poli--content h2{
-    font-family: 'Segoe UI Variable';
+    /* font-family: 'Segoe UI Variable'; */
+    margin: 20px 0;
     font-style: normal;
     font-weight: 600;
     font-size: 20px;

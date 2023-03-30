@@ -219,7 +219,8 @@ ul li{
     justify-content: space-between;
     align-items: center;
     right: 20px;
-    top: 110px;
+    top: 100px;
+    margin-right: 20px;
     background-color: #ffffff;
     transition: all 0.3s linear;
     cursor: pointer;

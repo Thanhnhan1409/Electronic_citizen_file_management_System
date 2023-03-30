@@ -1,18 +1,21 @@
 <template>
   <div class="container">
     <Tableft />
-    <button @click.prevent="deleteCitizen" class="poli-delInfo" >Xóa tài khoản</button>
-    <InforCitizenNew :listInfor="listInfor" :genderEx="genderEx" @gender="gender" />  
+    <button @click.prevent="openPopUp" class="poli-delInfo" >Xóa tài khoản</button>
+    <PopupConfirm @action="deleteCitizen"/>
+    <InforCitizenNew :listInfor="listInfor" />  
     </div>
 </template>
       
 <script>
 import Tableft from '@/components/Tableft.vue';
 import InforCitizenNew from '@/components/InforCitizenNew.vue';
+import PopupConfirm from '@/components/PopupConfirm.vue';
 export default {
   components: {
     Tableft,
-    InforCitizenNew
+    InforCitizenNew,
+    PopupConfirm
   },
   data() {
     return {
@@ -38,13 +41,8 @@ export default {
         console.log(error);
       }
     },
-    gender(list) {
-      if (list.gender === false) return (this.genderEx = "nữ");
-      else return (this.genderEx = "nam");
-    },
     async deleteCitizen() {
       try {
-        confirm("Bạn có muốn xoá tài khoản không?")
         await this.$axios.delete(
             `http://localhost:8080/api/citizen/delete/id=${this.id}`
             ).then(() =>{
@@ -58,6 +56,13 @@ export default {
         console.log(error);
       }
     },
+    openPopUp(item) {
+      document.querySelector('#overlay').classList.remove('display-hide');
+      document.querySelector('#popup--confirm-change').classList.remove('display-hide');
+      document.querySelector('#popup--confirm-change').classList.add('display-block');
+      document.querySelector('#popup--confirm-change').classList.add('display-block');
+      this.idReq = item.id_requirement ;
+    }
   },
 };
 </script>
@@ -70,10 +75,11 @@ export default {
     color: #fff;
     font-weight: 550;
     position: absolute;
-    right: 40px;
-    top: 120px;
+    right: 80px;
+    top: 300px;
     font-size: 18px;
     cursor: pointer;
+    z-index: 2;
   }
 </style>
       
