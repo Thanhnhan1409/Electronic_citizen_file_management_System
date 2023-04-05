@@ -36,9 +36,22 @@ export default {
 </script>
 <style scoped>
 .display-block {
-  display: block !important;
+  animation: zoom 0.2s ease forwards !important;
 }
-
+@keyframes zoom {
+  from{
+    opacity: 0;
+    visibility: hidden;
+    display: hidden;
+    transform: scale(0.6);
+  }
+  to{
+    opacity: 1;
+    visibility: visible;
+    display: block;
+    transform: scale(1.0);
+  }
+}
 .display-flex {
   display: flex !important;
   justify-content: space-evenly;
@@ -80,7 +93,17 @@ export default {
   cursor: pointer;
   fill: #818281;
 }
-
+.popup--icon-close:hover{
+    animation: turn 0.5s ease infinite ;
+}
+@keyframes turn {
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(359deg);
+  }
+}
 .popup--button button {
   margin-top: 15px;
   padding: 5px 10px;

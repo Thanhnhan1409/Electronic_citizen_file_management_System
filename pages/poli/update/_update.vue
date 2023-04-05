@@ -11,13 +11,11 @@
 </template>
 
 <script>
-import AddCitizen from "@/components/AddCitizen.vue";
 import SearchVue from "@/components/Search.vue";
 import AddAccount from "@/components/AddAccount.vue";
 import PopupConfirm from "@/components/PopupConfirm.vue";
 export default {
   components: {
-    AddCitizen,
     SearchVue,
     AddAccount,
     PopupConfirm

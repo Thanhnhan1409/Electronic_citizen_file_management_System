@@ -4,6 +4,7 @@
     <button @click.prevent="openPopUp" class="poli-delInfo" >Xóa tài khoản</button>
     <PopupConfirm @action="deleteCitizen"/>
     <InforCitizenNew :listInfor="listInfor" />  
+    <Criminalrecord :crimiantion="listInfor.crimiantion"/>
     </div>
 </template>
       
@@ -11,11 +12,13 @@
 import Tableft from '@/components/Tableft.vue';
 import InforCitizenNew from '@/components/InforCitizenNew.vue';
 import PopupConfirm from '@/components/PopupConfirm.vue';
+import Criminalrecord from '@/components/Criminalrecord.vue';
 export default {
   components: {
     Tableft,
     InforCitizenNew,
-    PopupConfirm
+    PopupConfirm,
+    Criminalrecord
   },
   data() {
     return {
