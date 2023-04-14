@@ -10,9 +10,6 @@
   </template>
   
   <script>
-import Tableft from '../../components/Tableft.vue';
-import InforCitizenNew from '../../components/InforCitizenNew.vue';
-import InforPoli from '../../components/InforPoli.vue';
   export default {
     data() {
       return {
@@ -49,12 +46,7 @@ import InforPoli from '../../components/InforPoli.vue';
       this.$router.push("/admin/listInforAll/poliInfor");
       console.log(this.idCitizen);
     },
-    },
-    components: {
-      Search,
-      ListCitizen,
-      TabLeft
-    },
+    }
   }
   </script>
   

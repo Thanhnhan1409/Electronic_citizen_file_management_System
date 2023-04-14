@@ -3,7 +3,7 @@
         <div class="overlay-hidden"></div>
         
         <div class="img--personal div-center">
-            <img  src="../static/images/logo.png" alt="">
+            <img  src="../../static/images/logo.png" alt="">
             <span>{{ listInfor.name }}</span>
         </div>
         <div class="infor--content">
@@ -54,9 +54,13 @@
                     </div>
                 </li>
                 <li class="content--item div-center">
-                    <div>
+                    <div class="left">
                         Địa chỉ:
                         <span>{{ listInfor.address }}</span>
+                    </div>
+                    <div>
+                       Tham gia NVQS:
+                        <span>{{ listInfor.militaryService? "Đã tham gia" : "Chưa tham gia" }}</span>
                     </div>
                 </li>
                 <li class="content--item div-center">

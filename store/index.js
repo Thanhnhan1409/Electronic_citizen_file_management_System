@@ -1,24 +1,15 @@
-import { createStore} from 'vuex'
-export const state = () => ({
-    levelManager: ""
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
+  state: {
+    curDate: []
+  },
+  mutations: {
+    updateCurDate(state, curDate) {
+      state.curDate = curDate;
+    }
+  }
 })
-
- export const mutations ={
-    setLevel(state, level){
-        state.levelManager = level;
-    }
- }
-
- export const getters = {
-    getLevelManager(state){
-        return state.Manager
-    }
- }
-
- export const store = createStore({
-    state,
-    mutations,
-    getters
-  })
-
- 

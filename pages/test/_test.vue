@@ -1,66 +1,30 @@
 <template>
     <div class="container">
-        <Tableft />
-        <InforCitizenNew :listInfor="listInfor" :genderEx="genderEx" @gender="gender" />
-        <InforPoli :listPoli="listPoli"/>
+        <!-- <Search/>
+        <input type="date" v-model="selectedDate">
+<input type="hidden" v-model="timezoneOffset"> -->
+          <Notification/>
     </div>
 </template>
 <script>
-import Tableft from '../../components/Tableft.vue';
-import InforCitizenNew from '../../components/InforCitizenNew.vue';
-import InforPoli from '../../components/InforPoli.vue';
+import moment from 'moment-timezone';
+
 export default {
-    components: {
-        InforCitizenNew,
-        Tableft,
-        InforPoli
-    },
     data() {
         return {
-            listInfor: [],
-            genderEx: '',
-            id: null,
-            listPoli:[]
-        }
-    },
-    mounted() {
-        this.id = localStorage.getItem("id");
-        this.fetchDataCitizen();
-        this.fetchDataPoli();
+            selectedDate: "",
+            timezoneOffset: "", // định dạng múi giờ
+        };
     },
     methods: {
-        async fetchDataCitizen() {
-            try {
-                await this.$axios
-                    .get(`http://localhost:8080/api/citizen/listCitizen/id=${this.id}`)
-                    .then((res) => {
-                        this.listInfor = res["data"];
-                        console.log(this.listInfor);
-                    });
-            } catch (error) {
-                console.log(error);
-            }
+        handleDateChange() {
+            const formattedDate = moment(this.selectedDate).format("YYYY-MM-DD");
+            const formattedTimezone = moment.tz(this.timezoneOffset).format("Z");
+            // Sử dụng formattedDate và formattedTimezone trong yêu cầu API hoặc xử lý dữ liệu ngày tháng
+            // ...
         },
-        gender(list) {
-            if (list.gender === false) return (this.genderEx = "nữ");
-            else return (this.genderEx = "nam");
-        },
-        async fetchDataPoli() {
-      try {
-        await this.$axios.get(
-            `http://localhost:8080/api/politician/citizenId=${this.id}`
-          )
-          .then((res) => {
-            this.listPoli = res['data'];  
-            localStorage.setItem('nameArea', this.listPoli.areaManage)
-            localStorage.setItem('levelManager', this.listPoli.levelManager)
-            console.log(this.listPoli);
-            
-          });
-      } catch (error) {
-        console.log(error);
-      }
     },
-    },
-}
+    components: { Notification }
+};
+
 </script>

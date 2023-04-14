@@ -1,8 +1,9 @@
 <template>
     <div class="container">
+        <!-- <div id="overlay" class="display-hide"></div> -->
         <div class="overlay-hidden"></div>
         <div class="tableft">
-            <img class="img--logo" src="../static/images/logo.png" alt="">
+            <img class="img--logo" src="../../static/images/logo.png" alt="">
             <h3>HỆ THỐNG QUẢN LÝ HỒ SƠ ĐIỆN TỬ CÔNG DÂN</h3>
             <ul class="tableft__list--options">
                 <li class="tableft--option">
@@ -74,15 +75,17 @@
                     </nuxt-link>
                 </li>
                 <li class="tableft--option">
+                    <nuxt-link to="/poli/statistical/_statistical" class="link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                            <path
+                                d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H288V368c0-26.5 21.5-48 48-48H448V96c0-35.3-28.7-64-64-64H64zM448 352H402.7 336c-8.8 0-16 7.2-16 16v66.7V480l32-32 64-64 32-32z" />
+                        </svg>
+                        Thống kê và báo cáo
+                    </nuxt-link>
 
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                        <path
-                            d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H288V368c0-26.5 21.5-48 48-48H448V96c0-35.3-28.7-64-64-64H64zM448 352H402.7 336c-8.8 0-16 7.2-16 16v66.7V480l32-32 64-64 32-32z" />
-                    </svg>
-                    Thống kê và báo cáo
                 </li>
             </ul>
-            <div @click.prevent="openPopUp" class="tableft-logout link">
+            <div @click.prevent="isShowPopup = true" class="tableft-logout link">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                     <path
                         d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z" />
@@ -90,19 +93,40 @@
                 Đăng xuất
             </div>
         </div>
-        <PopupConfirm @action="logout" :title="title" />
+        <!-- <div id="popup--confirm-change" class=" display-hide ">
+            <div class="icon-close">
+                <svg @click.prevent="closePopUp" class="popup--icon-close" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 320 512">
+                    <path
+                        d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z" />
+                </svg>
+            </div>
+            <p>Bạn có muốn đăng xuất không?</p>
+            <div class="popup--button">
+                <button class="cancel" @click.prevent="closePopUp">Hủy</button>
+                <button class="confirm" @click.prevent="logout">Xác nhận</button>
+            </div>
+        </div> -->
+        <PopupConfirm 
+            :title="'đăng xuất'"
+            @action="logout"
+            v-show="isShowPopup"
+            @closePopup=" closePopup"
+            >
+
+        </PopupConfirm>
     </div>
 </template>
 <script>
-import PopupConfirm from './PopupConfirm.vue'
 export default {
     data() {
         return {
-            title: "đăng xuất"
+            // title: "đăng xuất"
+            isShowPopup: false
         }
     },
     components: {
-        PopupConfirm
+        // PopupConfirm
     },
     methods: {
         async logout() {
@@ -113,19 +137,28 @@ export default {
                         console.log('test logout2')
                         this.$router.push('/')
                     })
+                this.closePopUp()
             } catch (error) {
                 console.log('test logout3')
                 console.log(error)
             }
-
         },
-        openPopUp(item) {
-            document.querySelector('#overlay').classList.remove('display-hide');
-            document.querySelector('#popup--confirm-change').classList.remove('display-hide');
-            document.querySelector('#popup--confirm-change').classList.add('display-block');
-            document.querySelector('#popup--confirm-change').classList.add('display-block');
-            this.idReq = item.id_requirement;
-        }
+        closePopup() {
+            this.isShowPopup = false;
+        },
+        // openPopUp(item) {
+        //     document.querySelector('#overlay').classList.remove('display-hide');
+        //     document.querySelector('#popup--confirm-change').classList.remove('display-hide');
+        //     document.querySelector('#popup--confirm-change').classList.add('display-block');
+        //     document.querySelector('#popup--confirm-change').classList.add('display-block');
+        //     this.idReq = item.id_requirement;
+        // },
+        // closePopUp() {
+        //     document.querySelector('#overlay').classList.add('display-hide');
+        //     document.querySelector('#popup--confirm-change').classList.add('display-hide');
+        //     document.querySelector('#popup--confirm-change').classList.remove('display-block');
+        //     document.querySelector('#popup--confirm-change').classList.remove('display-block');
+        // },
     }
 }
 </script>
@@ -284,6 +317,111 @@ svg {
 .tableft-logout:hover svg {
     fill: #127E23;
     transform: scale(1.2);
+
+}
+
+.display-block {
+    display: block !important;
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: -100%;
+    opacity: 0.6;
+    background-color: rgb(139, 142, 144);
+    animation: overlay 0.5s ease forwards;
+    z-index: 10;
+}
+
+.display-flex {
+    display: flex !important;
+    justify-content: space-evenly;
+}
+
+.display-hide {
+    display: none !important;
+}
+
+#popup--confirm-change {
+    width: 280px;
+    height: auto;
+    background-color: #fff;
+    padding: 20px 25px;
+    border-radius: 10px;
+    position: fixed;
+    z-index: 90;
+    top: 40%;
+    left: 45%;
+    box-shadow: 3px 3px 10px 3px rgb(129, 129, 129);
+    /* display: block !important; */
+
+}
+
+#popup--confirm-change p {
+    font-weight: 600;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.popup--icon-close {
+    width: 10px;
+    height: auto;
+    cursor: pointer;
+    fill: #818281;
+    padding: 2px 0 0 5px;
+}
+
+.popup--button button {
+    margin-top: 15px;
+    padding: 5px 10px;
+    cursor: pointer;
+    width: 135px;
+    border: 0.3px solid black;
+}
+
+.popup--button {
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+
+}
+
+.cancel {
+    background-color: #fff;
+    border: 0.3px solid black;
+    color: green;
+
+}
+
+.confirm {
+    background-color: green;
+    color: #fff;
+    border: 1.3px solid #fff;
+    margin-left: 5px;
+}
+
+.popup--button button:hover {
+    transform: scale(1.02);
+    box-shadow: 3px 3px 10px 3px rgb(212, 213, 212);
+}
+
+.icon-close {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    border-radius: 50%;
+    transition: all 0.5s ease;
+}
+
+.icon-close:hover {
+    background-color: #d8d9d8;
 
 }
 </style>

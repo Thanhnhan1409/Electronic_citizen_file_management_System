@@ -42,8 +42,8 @@ export default {
 }
 </script>
 
+<style scoped src="../../static/asset/styles.css"></style>
 <style scoped>
-
 body {
 font-family: "lato", sans-serif;
 }
@@ -52,34 +52,6 @@ h2 {
 font-size: 26px;
 margin: 50px 0 80px 0;
 text-align: center;
-}
-
-h2 small {
-font-size: 0.5em;
-}
-
-.responsive-table {
-padding-left: 0;
-}
-
-.responsive-table li {
-border-radius: 3px;
-padding: 25px 30px;
-display: flex;
-justify-content: space-between;
-margin-bottom: 25px;
-}
-
-.responsive-table .table-header {
-background-color: rgb(159, 188, 159);
-font-size: 14px;
-text-transform: uppercase;
-letter-spacing: 0.03em;
-}
-
-.responsive-table .table-row {
-background-color: #ffffff;
-box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
 }
 
 .responsive-table .col-0 {
@@ -109,12 +81,9 @@ flex-basis: 10%;
 .responsive-table .col-5 {
 flex-basis: 25%;
 }
-
-.responsive-table div {
-text-align: center;
-cursor: pointer;
-}
-.table-row:hover {
+.table-row:hover{
+  font-weight: 600;
+  text-decoration: underline;
   color: green;
 }
 </style>

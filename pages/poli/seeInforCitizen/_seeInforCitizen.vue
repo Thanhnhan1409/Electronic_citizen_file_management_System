@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="seeInfor--content">
-      <h2>Danh sách công dân tại {{ this.level }} {{ this.nameArea }}</h2>
+      <h2 class="title">Danh sách công dân tại {{ this.level }} {{ this.nameArea }}</h2>
       <Search v-model="idSearch" @search="handleSearch" class="seeInfor--form"/>
       <button @click="isShow = true" class="button-show">Hiển thị toàn bộ</button>
       <ListInforCitizen v-show="isShow" :items="listCitizen"  @handleClick="handleClick"/>
@@ -12,13 +12,7 @@
 </template>
 
 <script>
-import ListInforCitizen from '@/components/ListInforCitizen.vue';
-import Search from '@/components/Search.vue';
 export default {
-  components: {
-    ListInforCitizen,
-    Search
-  },
   data() {
     return {
       listCitizen: [],
@@ -50,11 +44,11 @@ export default {
       this.isShow = false;
     },
     checkLevelManager() {
-      if (this.level == "tỉnh")
+      if (this.level == "city")
         this.url = `${this.fUrl}city=${encodeURIComponent(this.nameArea)}`;
-      else if (this.level == "huyện")
+      else if (this.level == "district")
         this.url = `${this.fUrl}district=${encodeURIComponent(this.nameArea)}`;
-      else if (this.level == "xã")
+      else if (this.level == "town")
         this.url = `${this.fUrl}town=${encodeURIComponent(this.nameArea)}`;
       else this.url = `${this.fUrl}quarter=${encodeURIComponent(this.nameArea)}`;
       console.log(this.url);
@@ -95,20 +89,16 @@ export default {
 }
 
 .container {
-  max-width: 1250px;
   margin: 0 40px 0 280px;
   padding: 0 20px;
 }
 
-h2 {
-  font-size: 18px;
+.title {
+  font-size: 22px;
   margin: 20px;
+  margin-bottom: 70px;
   color: #4B4545;
   /* text-align: center; */
-}
-
-h2 small {
-  font-size: 0.5em;
 }
 
 .seeInfor--content {
@@ -117,22 +107,30 @@ h2 small {
   box-shadow: 4px 4px 10px 3px rgb(221, 221, 221);
   background-color: #fff;
   border-radius: 10px;
+  position: relative;
 }
 .seeInfor--form{
   position: absolute;
-  right: -20px;
-  top: -180px;
+    right: 0px;
+    top: 80px;
+    margin: 0;
+    width: fit-content;
 }
 
 .button-show {
   position: absolute;
-  top: 125px;
-  left: 300px;
+  top: 80px;
+  left: 20px;
   border-radius: 10px;
   padding: 7px 10px;
   border: none;
   color: #fff;
   background-color: green;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+.button-show:hover{
+  transform: scale(1.03);
+  box-shadow: 3px 3px 10px 3px rgb(221, 221, 221);
 }
 </style>

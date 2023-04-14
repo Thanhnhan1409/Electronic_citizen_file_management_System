@@ -3,7 +3,7 @@
         <div class="content">
             <h2>Tiền án, tiền sự</h2>
         <div class="content-crim">
-            {{ criminalRecord}}
+            {{criminalRecord}}
         </div>
         </div>
         
@@ -37,6 +37,7 @@ h2{
     min-height: 70px;
     margin-bottom: 20px;
     border-radius: 5px;
+    padding: 10px 20px;
     /* border: 1px solid ; */
 } 
 </style>
