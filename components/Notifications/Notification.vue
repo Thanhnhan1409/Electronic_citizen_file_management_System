@@ -74,7 +74,7 @@ export default {
 .noti-container {
   overflow: hidden;
   z-index: 999;
-  position: absolute;
+  position: fixed;
   top: 10px;
   right: 10px;
   width: 350px;

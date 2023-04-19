@@ -79,6 +79,7 @@ export default {
             this.isShowPopup = false;
           });
       } catch (error) {
+        this.isShowPopup = false;
         this.status = "thất bại";
         this.showNoti = "Ok";
         setTimeout(() => {

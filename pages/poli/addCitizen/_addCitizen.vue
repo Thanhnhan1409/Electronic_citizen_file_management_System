@@ -1,8 +1,7 @@
 <template>
-  <div class="container">
-    <h2>Đăng ký thông tin cá nhân công dân</h2>
+  <div class="container-add">
+    <h2 class="title">Đăng ký thông tin cá nhân công dân</h2>
     <div class="content">
-      <!-- <button @click.prevent="isShowPopup=true" class="submit">Đăng ký</button> -->
       <AddAccount
         :listInfor="list"
         :action="'Đăng ký'"
@@ -58,6 +57,7 @@ export default {
           });
         console.log(this.list);
       } catch (error) {
+        this.isShowPopup = false;
         this.status = "thất bại";
         this.showNoti = "Ok";
         setTimeout(() => {
@@ -78,7 +78,7 @@ export default {
 
 <style scoped src="../../../static/asset/styles.css"></style>
 <style scoped>
-.container h2 {
+.title {
   position: relative;
   left: 330px;
   top: 70px;
@@ -96,23 +96,8 @@ input {
   margin-left: 10px;
 }
 
-.submit {
-  padding: 8px 20px;
-  background-color: green;
-  color: #fff;
-  font-weight: 550;
-  border: none;
-  border-radius: 10px;
-  margin-bottom: 40px;
-  position: absolute;
-  right: 80px;
-  cursor: pointer;
-  top: 190px;
-  z-index: 2;
-  transition: all 0.2s ease;
-}
-.submit:hover {
-  background-color: rgb(40, 136, 40);
-  box-shadow: 3px 3px 10px 3px rgb(209, 208, 208);
+.content{
+  position: relative;
+  top: 65px;
 }
 </style>

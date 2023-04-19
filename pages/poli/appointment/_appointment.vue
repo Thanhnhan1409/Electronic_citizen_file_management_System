@@ -262,9 +262,9 @@ export default {
   width: 98%;
 }
 .app-title {
-  font-size: 20px;
+  font-size: 22px;
   position: absolute !important;
-  top: 25px;
+  top: 20px;
   left: 20px;
   z-index: 2;
   text-align: center;

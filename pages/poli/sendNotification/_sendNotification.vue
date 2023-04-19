@@ -94,8 +94,8 @@
     </PopupConfirm>
     <Notification
       :status="status"
-      :object="'tài khoản'"
-      :action="'Cập nhật'"
+      :object="'thông báo'"
+      :action="'Gửi'"
       :isShowNoti="showNoti"
       v-if="showNoti == 'Ok'"
     >
@@ -135,6 +135,7 @@ export default {
     async postData() {
       try {
         this.listIdCitizen = this.stringIdCitizen.split(", ");
+        this.isShowPopup = false;
         // console.log("danh sach ng duoc gui yeu cau" + this.listIdCitizen);
         await this.$axios
           .post(`http://localhost:8080/api/notification/newNotification`, {
@@ -143,7 +144,7 @@ export default {
             author_id: this.author_id,
           })
           .then((res) => {
-            console.log("aaaNhan test2");
+            // this.isShowPopup = false;
             this.status = "thành công";
             this.showNoti = "Ok";
             setTimeout(() => {
@@ -152,8 +153,9 @@ export default {
             this.list = res.data;
             // this.$router.push("/poli/inforPoli");
           });
-        this.hiddenPopup();
+        // this.hiddenPopup();
       } catch (error) {
+        // this.isShowPopup = false;
         this.status = "thất bại";
         this.showNoti = "Ok";
         setTimeout(() => {
@@ -182,21 +184,21 @@ export default {
         console.log(error);
       }
     },
-    displayPopup() {
-      document
-        .querySelector(".add-notificaito--popup")
-        .classList.add("display-block");
-      document.querySelector(".overlay-Popup").classList.add("display-block");
-    },
-    hiddenPopup() {
-      document
-        .querySelector(".add-notificaito--popup")
-        .classList.remove("display-block");
-      document
-        .querySelector(".overlay-Popup")
-        .classList.remove("display-block");
-      this.fetchListNotification();
-    },
+    // displayPopup() {
+    //   document
+    //     .querySelector(".add-notificaito--popup")
+    //     .classList.add("display-block");
+    //   document.querySelector(".overlay-Popup").classList.add("display-block");
+    // },
+    // hiddenPopup() {
+    //   document
+    //     .querySelector(".add-notificaito--popup")
+    //     .classList.remove("display-block");
+    //   document
+    //     .querySelector(".overlay-Popup")
+    //     .classList.remove("display-block");
+    //   this.fetchListNotification();
+    // },
     openPopupConfirm() {
       this.isShow = false;
       this.isShowPopup = true;

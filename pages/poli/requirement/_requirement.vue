@@ -284,7 +284,7 @@ export default {
 .list-requirements {
   margin-top: 60px;
   /* margin-left: 10px; */
-  padding: 130px 0 20px 0;
+  padding: 100px 0 20px 0;
   box-shadow: 4px 4px 10px 3px rgb(221, 221, 221);
   background-color: #fff;
   border-radius: 10px;
@@ -294,11 +294,11 @@ export default {
 .title {
   position: absolute !important;
   font-size: 22px;
-  margin: 50px 0 80px 0;
+  margin: 50px 0 60px 0;
   z-index: 2;
   color: #4b4545;
   left: 20px;
-  top: 30px;
+  top: 20px;
 }
 .req-combobox {
   position: absolute;

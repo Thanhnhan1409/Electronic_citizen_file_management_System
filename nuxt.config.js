@@ -27,6 +27,7 @@ export default {
     '@plugins/chart.js',
     { src: '~/plugins/localStorage.js', mode: 'client' },
     '@plugins/components.js',
+    '@plugins/vue-multiselect.js',
     {src: '~/plugins/vee-validate.js', ssr: true },
     {src: '~/plugins/validate.js', ssr: true }
   ],
@@ -42,6 +43,7 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth',
+    'nuxt-vue-multiselect'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
