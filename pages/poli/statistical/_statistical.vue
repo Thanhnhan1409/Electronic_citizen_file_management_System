@@ -42,7 +42,7 @@
                 <div class="total" @click="pushToListCriminal">
                     <div class="total-data">
                         <p>Tổng số tội phạm:</p>
-                        <h2>123</h2>
+                        <h2>{{countCriminal}}</h2>
                     </div>
                     <div class="total-gender criminal">
                         <div>
@@ -57,7 +57,7 @@
                 </div>
 
             </div>
-            <div class="card">
+            <!-- <div class="card">
                 <div class="total">
                     <div class="total-data">
                         <p>Tổng số người dân:</p>
@@ -75,7 +75,7 @@
                     </div>
                 </div>
 
-            </div>
+            </div> -->
         </div>
         <div class="area-charts">
             <div class="area-charts--item">
@@ -127,7 +127,7 @@ export default {
                 datasets: [
                     {
                         label: '',
-                        data: [23,30],
+                        data:this.listMarried,
                         backgroundColor: [
                             '#ED3232',
                             '#189EFF',
@@ -173,7 +173,7 @@ export default {
                     yAxes: [{
                         ticks: {
                             min: 0,
-                            max: this.countCitizen
+                            max: 20
                         }
                     }]
                 },
@@ -200,9 +200,11 @@ export default {
             listAge: [1, 3, 2],
             totalCitizens: 120,
             countMilitariers: null,
+            countCriminal: 0,
             idPoli: null,
-            countMarried: 0,
-            countNoMarry: 0,
+            listMarried:[10,4],
+            countMarried:0,
+            countSingle: 0,
             countCitizen:0
         }
     },
@@ -212,9 +214,11 @@ export default {
         this.nameArea = localStorage.getItem('nameArea');
         this.getQuantityOfAge()
         this.countMilitariers = localStorage.getItem('countMilitariers')
-        this.getListMilitery()
-        // this.getCountNoMarry()
-        // this.getCountMarried()
+        this.getCountMilitery()
+        this.getCountNoMarry()
+        this.getCountMarried()
+        this.getQuantityCitizen();
+        this.getCountCriminal();
     },
     methods: {
         async getOpinions() {
@@ -251,7 +255,7 @@ export default {
             }
 
         },
-        async getListMilitery() {
+        async getCountMilitery() {
             try {
                 await this.$axios(`http://localhost:8080/api/citizen/report/militaryService/poliId=${this.idPoli}`)
                     .then((res) => {
@@ -268,7 +272,8 @@ export default {
             try {
                 await this.$axios(`http://localhost:8080/api/citizen/report/married/poliId=${this.idPoli}/?isMarried=true`)
                     .then((res) => {
-                        this.countMarried = res.data.count;
+                        this.countMarried=res.data.count;
+                        this.listMarried.push(this.countMarried)
                     })
             } catch (error) {
                 console.log(error);
@@ -279,16 +284,26 @@ export default {
             try {
                 await this.$axios(`http://localhost:8080/api/citizen/report/married/poliId=${this.idPoli}/?isMarried=false`)
                     .then((res) => {
-                        this.countNoMarry = res.data.count;
+                        this.countSingle=res.data.count;
+                        this.listMarried.push(this.countSingle);
                     })
             } catch (error) {
                 console.log(error);
             }
 
         },
-        pushToList() {
-            this.$router.push("/poli/seeInforCitizen/_seeInforCitizen");
-        },
+        async getCountCriminal() {
+          try {
+            console.log("test militarie");
+            await this.$axios
+              .get(`http://localhost:8080/api/citizen/report/criminalRecord/poliId=${this.idPoli}`)
+              .then((res) => {
+                    this.countCriminal = res.data.count;
+              });
+          } catch (error) {
+            console.log(error);
+          }
+      },
         pushToListMilitariers() {
             this.$router.push("/poli/statistical/listOfMilitarier");
         },
@@ -310,7 +325,7 @@ export default {
 
 .card {
     /* height: 190px; */
-    width: 24%;
+    width: 32.6%;
 }
 
 .total {
