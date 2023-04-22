@@ -27,8 +27,7 @@
                     </div>
                     <div class="total-gender military">
                         <div>
-                            <span>Nam:</span>
-                            <span>12</span>
+                        
                         </div>
                         <div>
                             <span>Nữ:</span>
