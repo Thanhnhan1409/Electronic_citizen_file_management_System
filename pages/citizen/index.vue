@@ -3,24 +3,12 @@
         <Tableft />
         <Navbar />
         <InforCitizenNew :listInfor="list" />
-        <!-- 
-         <Criminalrecord/> -->
-
-
+        <Criminalrecord :Criminalrecord="list.Criminalrecord"/>
     </div>
 </template>
 <script>
-import Tableft from '@/components/Tableft.vue';
-import InforCitizenNew from '@/components/InforCitizenNew.vue';
-import Navbar from '@/components/Navbar.vue';
-import Criminalrecord from '../../components/Criminalrecord.vue';
-export default {
-    components: {
-        InforCitizenNew,
-        Tableft,
-        Criminalrecord,
 
-    },
+export default {
     data() {
         return {
             message: "",
@@ -31,7 +19,6 @@ export default {
             name: "",
         };
     },
-
     mounted() {
         this.id = localStorage.getItem("id");
         this.fetchData();
@@ -44,18 +31,17 @@ export default {
                 await this.$axios
                     .get(`http://localhost:8080/api/citizen/listCitizen/id=${this.id}`)
                     .then((res) => {
-                        this.list = res["data"];
-                        localStorage.setItem("name", this.list.name);
-                    });
-            } catch (error) {
+                    this.list = res["data"];
+                    localStorage.setItem("name", this.list.name);
+                });
+            }
+            catch (error) {
                 console.log(error);
             }
         },
-
         logout() {
             localStorage.clear();
             localStorage.removeItem("auth._token.local");
-
             this.$router.push("/");
         },
         getFamilyId() {
@@ -67,4 +53,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

@@ -50,16 +50,7 @@
   </div>
 </template>
 <script>
-
-import PopupConfirm from '../../../components/PopupConfirm.vue';
-import Tableft from '../../../components/Tableft.vue';
-
 export default {
-  components: {
-    Tableft,
-    
-    
-},
     data() {
       return {
         listRequirement: [],    

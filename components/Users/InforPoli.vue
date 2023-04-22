@@ -32,27 +32,15 @@ export default{
     props:['listPoli']
 }
 </script>
+
+<style scoped src="../../static/asset/styles.css"></style>
 <style scoped>
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+
 ul li{
     list-style: none;
     padding: 0;
     margin: 0;
     
-}
-.container{
-    margin-left: 280px;
-    margin-top: 50px;
-}
-.div-center{
-    display: flex;
-    text-align: center;
-    justify-content: flex-start;
-    align-items: center;
 }
 
 .poli--content{

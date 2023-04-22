@@ -9,26 +9,61 @@
         <form @submit.prevent="login">
           <div class="form">
             <h2>Đăng nhập</h2>
-            <p>Tài Khoản</p>
-            <input v-model="citizen_id" type="text" class="box" name="" id="" placeholder="Nhập số CCCD" required />
-            <p>Mật khẩu</p>
-            <input class="box" :type="showPassword ? 'text' : 'password'" v-model="password" placeholder="Nhập mật khẩu"
-              required />
+            <p>Tài Khoản <small style="color: #c7422e">*</small></p>
+            <input
+              v-model="citizen_id"
+              type="text"
+              class="box"
+              v-validate="'required|min:1|max:255'"
+              :class="{
+                input: true,
+                'is-danger': errors.has('Tài khoản'),
+              }"
+              name="Tài khoản"
+              id=""
+              placeholder="Nhập số CCCD"
+              autocomplete="on"
+            />
+            <span v-show="errors.has('Tài khoản')" class="err">{{
+              errors.first("Tài khoản")
+            }}</span>
+            <p>Mật khẩu <small style="color: #c7422e">*</small></p>
+            <input
+              class="box"
+              :type="showPassword ? 'text' : 'password'"
+              v-model="password"
+              placeholder="Nhập mật khẩu"
+              autocomplete="on"
+              v-validate="'required|min:1|max:255'"
+              :class="{
+                input: true,
+                'is-danger': errors.has('Mật khẩu'),
+              }"
+              name="Mật khẩu"
+            />
+            <span v-show="errors.has('Mật khẩu')" class="err">{{
+              errors.first("Mật khẩu")
+            }}</span>
+          <p class="err" v-show="errDesc" >*Hãy chắc rằng bạn đã nhập đúng tài khoản và mật khẩu. Xin vui lòng thử lại </p>
             <button class="login">Đăng nhập</button>
           </div>
         </form>
       </div>
     </div>
+    <Notification
+      :status="status"
+      :object="'tài khoản'"
+      :action="'Đăng nhập'"
+      :isShowNoti="showNoti"
+      v-if="showNoti == 'Ok'"
+    >
+    </Notification>
     <FooterPage />
   </div>
 </template>
-    
+
 <script>
-import FooterPage from "~/components/FooterPage.vue";
 export default {
-  components: {
-    FooterPage,
-  },
   data() {
     return {
       check: false,
@@ -37,6 +72,10 @@ export default {
       showPassword: false,
       list: {},
       role: [],
+      status: "",
+      showNoti: "",
+      errDesc: false,
+
     };
   },
   onmounted() {
@@ -53,37 +92,54 @@ export default {
     async login() {
       try {
         localStorage.removeItem("auth._token.local");
-        await this.$auth.loginWith('local', {
-          data: {
-            citizen_id: this.citizen_id,
-            password: this.password,
-          }
-        }).then(res => {
-          localStorage.setItem("id", this.citizen_id)
-          this.role = res.data.role;
-          console.log(this.role);
-          for (let item of this.role) {
-            console.log(item);
-            if (item == 'CITIZEN') {
-              this.check = true;
-              console.log(this.check)
-              break;
+        this.errDesc=false;
+        await this.$auth
+          .loginWith("local", {
+            data: {
+              citizen_id: this.citizen_id,
+              password: this.password,
+            },
+          })
+          .then((res) => {
+            localStorage.setItem("id", this.citizen_id);
+            this.role = res.data.role;
+            console.log(this.role);
+            for (let item of this.role) {
+              console.log(item);
+              if (item == "CITIZEN") {
+                this.check = true;
+                console.log(this.check);
+                break;
+              }
             }
-          }
-          console.log("test ");
-          if (this.check == false) {
-            this.$router.push('/error');
-            console.log("test1 ");
-          }
-          else this.$router.push('/citizen');
-        })
-
+            console.log("test ");
+            if (this.check == false) {
+              this.status = "thất bại";
+              this.showNoti = "Ok";
+              setTimeout(() => {
+                this.showNoti = "";
+              }, 1500);
+              console.log("test1 ");
+            } else {
+              this.status = "thành công";
+              this.showNoti = "Ok";
+              setTimeout(() => {
+                this.showNoti = "";
+                this.$router.push("/citizen");
+              }, 1000);
+            }
+          });
       } catch (error) {
+        this.errDesc=true;
+        this.status = "thất bại";
+        this.showNoti = "Ok";
+        setTimeout(() => {
+          this.showNoti = "";
+        }, 1500);
         console.error(error);
       }
     },
-
-  }
+  },
 };
 </script>
 <style src="../static/asset/styles.css"></style>
@@ -125,12 +181,13 @@ img {
 .form {
   padding: 10px 40px 40px;
   background-color: #fff;
-  height: 350px;
+  height: 380px;
   width: 280px;
   /* border: 0.5px solid black; */
   border-radius: 10px;
   box-shadow: 3px 3px 10px rgb(205, 204, 204);
   margin-bottom: 50px;
+  position: relative;
 }
 
 .form h2 {
@@ -150,18 +207,23 @@ input {
 .login {
   width: 283px;
   height: 35px;
-  margin-top: 30px;
+  /* margin-top: 50px; */
   background: green;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-weight: 600;
+  position: absolute;
+  bottom: 40px;
 }
-
 .box {
   padding: 5px 10px;
 }
+.err {
+  font-size: 12px;
+  display: flex;
+  justify-content: flex-start;
+  color: #ff4433;
+}
 </style>
-
- 

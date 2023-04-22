@@ -20,9 +20,12 @@ export default {
     css: [],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-    // plugins: [
-    //     { src: '~/plugins/vuex.js', mode: 'client' }
-    // ],
+    plugins: [
+        '@plugins/components.js',
+        '@plugins/vue-multiselect.js',
+        {src: '~/plugins/vee-validate.js', ssr: true },
+        {src: '~/plugins/validate.js', ssr: true }
+    ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
     components: true,

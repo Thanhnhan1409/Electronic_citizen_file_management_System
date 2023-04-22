@@ -1,8 +1,9 @@
 <template>
     <div class="container">
-        <div class="overlay-hidden">
+        <div class="overlay-hidden"></div>
+        
         <div class="img--personal div-center">
-            <img  src="../static/images/logo.png" alt="">
+            <img  src="../../static/images/logo.png" alt="">
             <span>{{ listInfor.name }}</span>
         </div>
         <div class="infor--content">
@@ -53,9 +54,13 @@
                     </div>
                 </li>
                 <li class="content--item div-center">
-                    <div>
+                    <div class="left">
                         Địa chỉ:
                         <span>{{ listInfor.address }}</span>
+                    </div>
+                    <div>
+                       Tham gia NVQS:
+                        <span>{{ listInfor.militaryService? "Đã tham gia" : "Chưa tham gia" }}</span>
                     </div>
                 </li>
                 <li class="content--item div-center">
@@ -67,7 +72,7 @@
                 <li class="content--item div-center">
                     <div class="left">
                         Điện thoại:
-                        <span>{{ listInfor.phone }}</span>
+                        <span>{{ listInfor.address }}</span>
                     </div>
                     <div>
                         Email:
@@ -84,8 +89,6 @@
             </ul>
         </div>
     </div>
-    </div>
-        
 </template>
 <script>
 export default{
@@ -95,7 +98,6 @@ export default{
 </script>
 <style scoped>
 *{
-    font-family: Mulish;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -111,8 +113,8 @@ ul li{
 }
 .overlay-hidden{
     position: fixed;
-    left: 270px;
-    top:40px;
+    left: 0;
+    top:0;
     right: 10px;
     bottom: 0;
     z-index: -1;

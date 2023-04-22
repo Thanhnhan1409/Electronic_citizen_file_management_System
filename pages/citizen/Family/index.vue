@@ -36,16 +36,7 @@
     </div>
 </template>
 <script>
-import PopupConfirm from '@/components/PopupConfirm.vue';
-import Tableft from '../../../components/Tableft.vue';
-import Navbar from '../../../components/Navbar.vue';
 export default {
-    components: {
-        PopupConfirm,
-        Tableft,
-        Navbar,
-    },
-     
     methods: {
         handleClick(id) {
             this.$emit('handleClick', id);

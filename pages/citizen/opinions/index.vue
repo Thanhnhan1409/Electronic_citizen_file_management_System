@@ -22,9 +22,9 @@
                     <div class="col col-3">Nội dung</div>
                   
                 </li>
-                <li class="table-row display" v-for="item of listOpinion" :key="item.id">
-                    <div class="col col-0" data-label="STT">{{ item.id }}</div>
-                    <div class="col col-1" data-label="Số CCCD">{{ item.citizen.citizenId }}</div>
+                <li class="table-row display" v-for="(item,index) in listOpinion" :key="index">
+                    <div class="col col-0" data-label="STT">{{ index }}</div>
+                     <div class="col col-1" data-label="Số CCCD">{{item.citizen}}</div> 
                     <div class="col col-2" data-label="Ngày gửi">{{ date }}</div>
                     <div class="col col-3" data-label="Nội dung">{{ item.content }}</div>
                    
@@ -44,6 +44,8 @@
                 <ul class="popup-input">
 
                     <li class="popup-input--title">
+                        <span>Người nhận:</span>
+                        <input type="text" v-model="authorId">
                         <span>Nội dung:</span>
                         <textarea v-model="content" name="" id="" cols="30" rows="10"></textarea>
                     </li>
@@ -55,29 +57,20 @@
 </template>
 <script>
 
-import PopupConfirm from '../../../components/PopupConfirm.vue';
-import Tableft from '../../../components/Tableft.vue';
-
 export default {
-    components: {
-        Tableft,
-    },
     data() {
         return {
-            listOpinion: [
-            ],
+            listOpinion:[],
             date: '',
-            content:''
+            content:'',
+            authorId: null
         };
     },
     mounted() {
-       this.postData();
         this.fetchData();
         this.getDate();
-        
     },
     methods: {
-    
           async fetchData() {
             try {
                 await this.$axios
@@ -91,20 +84,17 @@ export default {
                 console.log(error);
             }
         },
-    
         async postData() {
             try {
-                const res = await this.$axios.post(`http://localhost:8080/opinions/new`, {
-                    content: this.content,
-                    author_id: this.citizenId
-                }).then()
-                
-                this.listOpinion = res.data;
-                alert("Thêm thành công!");
+                await this.$axios.post(`http://localhost:8080/opinions/new`, {
+                    author_id: this.authorId,
+                    description: this.content
+                }).then((res)=>{
+                    this.listOpinion = res.data;
+                    console.log(this.listOpinion);
+                })
             } catch (error) {
-                console.error(error);
-                console.log("lỗi!")
-                
+                console.error(error);       
             }
             this.hiddenPopup();
         },
@@ -241,6 +231,7 @@ ul li {
     height: auto;
     /* fill: #fff; */
     margin-left: 7px;
+    
 }
 
 .add-notification {
@@ -258,6 +249,7 @@ ul li {
     background-color: #ffffff;
     transition: all 0.3s linear;
     cursor: pointer;
+    z-index: 3;
 }
 
 .add-notification:hover {
@@ -302,7 +294,7 @@ ul li {
 }
 
 .popup-input--title {
-    display: flex;
+    /* display: flex; */
     margin-top: 10px;
 }
 
