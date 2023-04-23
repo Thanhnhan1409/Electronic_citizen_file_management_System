@@ -27,11 +27,8 @@
                     </div>
                     <div class="total-gender military">
                         <div>
-                        
-                        </div>
-                        <div>
-                            <span>Nữ:</span>
-                            <span>12</span>
+                            <span>Tỷ lệ:</span>
+                            <span>{{ parseFloat(this.countMilitariers*100/this.countCitizen ) }}%</span>
                         </div>
                     </div>
                 </div>
@@ -56,25 +53,6 @@
                 </div>
 
             </div>
-            <!-- <div class="card">
-                <div class="total">
-                    <div class="total-data">
-                        <p>Tổng số người dân:</p>
-                        <h2>123</h2>
-                    </div>
-                    <div class="total-gender difference">
-                        <div>
-                            <span>Nam:</span>
-                            <span>12</span>
-                        </div>
-                        <div>
-                            <span>Nữ:</span>
-                            <span>12</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div> -->
         </div>
         <div class="area-charts">
             <div class="area-charts--item">
@@ -204,7 +182,7 @@ export default {
             listMarried:[10,4],
             countMarried:0,
             countSingle: 0,
-            countCitizen:0
+            countCitizen:0,
         }
     },
     mounted() {
@@ -309,6 +287,9 @@ export default {
         pushToListCriminal() {
             this.$router.push("/poli/statistical/listOfCriminal");
         },
+        pushToList(){
+           this.$router.push("/poli/seeInforCitizen")
+        }
     }
 }
 </script>
