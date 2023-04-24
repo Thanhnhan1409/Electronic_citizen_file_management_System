@@ -67,6 +67,7 @@ export default {
     },
     async submit() {
       try {
+        this.list.idFamily=this.list.family
         await this.$axios
           .put(`http://localhost:8080/api/citizen/update`, this.list)
           .then((res) => {
@@ -74,6 +75,7 @@ export default {
             this.showNoti = "Ok";
             setTimeout(() => {
               this.showNoti = "";
+              this.$router.push("/poli/seeInforCitizen")
             }, 1500);
             this.list = res.data;
             this.isShowPopup = false;

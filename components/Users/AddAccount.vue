@@ -64,7 +64,7 @@
             <small style="color: #c7422e">*</small>:
             <input
               type="text"
-              v-model="listInfor.idFamily"
+              v-model="listInfor.family"
               v-validate="'required|min:1|max:10|numeric'"
               :class="{
                 input: true,
@@ -403,7 +403,13 @@ export default {
         'con',
         'bố',
         'mẹ',
-        'cháu'
+        'cháu',
+        'em gái',
+        'chị gái',
+        'anh trai',
+        'em trai',
+        'ông',
+        'bà'
       ]
     };
   },
