@@ -64,7 +64,7 @@ export default {
           console.log(this.role);
           for (let item of this.role) {
             console.log(item);
-            if (item == 'CITIZEN') {
+            if (item == 'POLITICIAN') {
               this.check = true;
               console.log(this.check)
               break;
@@ -86,7 +86,6 @@ export default {
   }
 };
 </script>
-<style src="../static/asset/styles.css"></style>
 <style scoped>
 body {
   padding: 0;
@@ -97,11 +96,11 @@ html {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  
 }
 
 .container {
   width: 100%;
-  margin: 0;
 }
 
 .content {
@@ -125,12 +124,11 @@ img {
 .form {
   padding: 10px 40px 40px;
   background-color: #fff;
-  height: 350px;
-  width: 280px;
+  height: 380px;
+  width: 300px;
   /* border: 0.5px solid black; */
   border-radius: 10px;
   box-shadow: 3px 3px 10px rgb(205, 204, 204);
-  margin-bottom: 50px;
 }
 
 .form h2 {
@@ -140,15 +138,36 @@ img {
 }
 
 input {
-  width: 260px;
-  height: 25px;
+  width: 300px;
+  height: 30px;
   border: 1px solid green;
   border-radius: 4px;
-  margin: 10px 0;
+}
+
+.checkbox {
+  width: 20px;
+  height: auto;
+}
+
+.showButton {
+  text-align: end;
+  padding-top: 10px;
+}
+
+.show-pass {
+  text-align: end;
+  padding-top: 10px;
+  background-color: green;
+  color: #fff;
+  margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
 }
 
 .login {
-  width: 283px;
+  width: 305px;
   height: 35px;
   margin-top: 30px;
   background: green;
@@ -156,12 +175,9 @@ input {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-weight: 600;
 }
 
 .box {
   padding: 5px 10px;
 }
 </style>
-
- 

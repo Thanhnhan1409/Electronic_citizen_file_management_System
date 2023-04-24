@@ -11,19 +11,12 @@
   "dependencies": {
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.13.6",
-    "chart.js": "^2.1.4",
     "core-js": "^3.25.3",
-    "moment": "^2.29.4",
-    "moment-timezone": "^0.5.43",
     "nuxt": "^2.15.8",
-    "nuxt-vue-multiselect": "^1.0.4",
-    "vee-validate": "^2.2.13",
     "vue": "^2.7.10",
-    "vue-chartjs": "^3.5.1",
     "vue-server-renderer": "^2.7.10",
     "vue-template-compiler": "^2.7.10",
-    "vuex": "^4.1.0",
-    "vuex-persistedstate": "^4.1.0"
+    "vuex": "^4.1.0"
   },
   "devDependencies": {}
 }
