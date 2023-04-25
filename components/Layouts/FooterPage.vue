@@ -20,16 +20,18 @@
   .container-footer {
     background-color: green;
     text-align: center;
-    padding: 15px;
-    position: fixed;
+    padding: 15px 0;
+    position: relative;
     right: 0;
     left: 0;
     bottom: 0;
+    width: 100%;
   
   }
   
   .container-footer span{
     padding-right: 15px;
     color: #fff;
+
   }
   </style>

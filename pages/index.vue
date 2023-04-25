@@ -157,7 +157,8 @@ html {
 
 .container {
   width: 100%;
-  margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .content {
@@ -192,14 +193,14 @@ img {
 
 .form h2 {
   font-size: 40px;
-  color: green;
+  color: #127E23;
   text-align: center;
 }
 
 input {
   width: 260px;
   height: 25px;
-  border: 1px solid green;
+  border: 1px solid #127E23;
   border-radius: 4px;
   margin: 10px 0;
 }
@@ -208,7 +209,7 @@ input {
   width: 283px;
   height: 35px;
   /* margin-top: 50px; */
-  background: green;
+  background: #127E23;
   color: #fff;
   border: none;
   border-radius: 5px;

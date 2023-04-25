@@ -1,9 +1,6 @@
 <template>
     <div class="container">
-        <!-- <Search/>
-        <input type="date" v-model="selectedDate">
-<input type="hidden" v-model="timezoneOffset"> -->
-          <Notification/>
+        <LandingPage/>
     </div>
 </template>
 <script>
@@ -24,7 +21,6 @@ export default {
             // ...
         },
     },
-    components: { Notification }
 };
 
 </script>

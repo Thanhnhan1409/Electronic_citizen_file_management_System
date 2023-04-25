@@ -54,9 +54,9 @@
                 />
               </svg>
               <ul class="status-action">
-                <li @click.prevent="isShowPopup = 'popupAccept'">Chấp nhận</li>
-                <li @click.prevent="isShowPopup = 'popupDenied'">Từ chối</li>
-                <li @click.prevent="openPopUp(item)">Chuyển tiếp</li>
+                <li @click.prevent="isShowPopup = 'popupAccept'" class="accept-status">Chấp nhận</li>
+                <li @click.prevent="isShowPopup = 'popupDenied'" class="deny-status">Từ chối</li>
+                <li @click.prevent="openPopUp(item)" >Chuyển tiếp</li>
                 <PopupConfirm
                   :title="'đổi trạng thái sang chấp nhận'"
                   @action="Accept(item)"
@@ -424,17 +424,22 @@ export default {
   transition: all 0.2s linear;
   opacity: 0;
   visibility: hidden;
-  /* display: none; */
-  /* display: none; */
 }
-
 .status-action li {
   padding: 0;
   margin: 0;
   cursor: pointer;
 }
 .status-action li:hover {
-  color: green;
+  color: rgb(196, 152, 20);
+  font-weight: 550;
+}
+.status-action .accept-status:hover {
+  color: #127E23;
+  font-weight: 550;
+}
+.status-action .deny-status:hover {
+  color: rgb(196, 29, 20);
   font-weight: 550;
 }
 .icon__status-dot {
@@ -459,29 +464,6 @@ export default {
   visibility: visible;
   display: block;
 }
-#popup--confirm-change {
-  width: 280px;
-  height: auto;
-  background-color: #fff;
-  padding: 10px 25px;
-  border-radius: 5px;
-  position: fixed;
-  z-index: 90;
-  top: 40%;
-  left: 45%;
-}
-#popup--confirm-change span {
-  font-weight: 600;
-  text-align: center;
-}
-#overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity: 0.8;
-  background-color: rgb(139, 142, 144);
-  z-index: 10;
-}
+
+
 </style>

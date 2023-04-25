@@ -76,7 +76,7 @@
               </svg>
               <ul class="status-action">
                 <li @click.prevent="isShowPopup = 'popupAccept'">Chấp nhận</li>
-                <li @click.prevent="isShowPopup = 'popupDenied'">Từ chối</li>
+                <li @click.prevent="isShowPopup = 'popupDenied'" class="deny-status">Từ chối</li>
                 <PopupConfirm
                   :title="'đổi trạng thái sang chấp nhận'"
                   @action="Accept(item)"
@@ -131,14 +131,12 @@ export default {
   },
   methods: {
     renderAllAppointment() {
-      // this.hideOptionsTohandleStatus();
       this.listTmp.splice(0, this.listTmp.length);
       for (let i = 0; i < this.listAppointment.length; i++)
         this.listTmp.push(this.listAppointment[i]);
       console.log("all" + this.listTmp);
     },
     renderWaitingAppointment() {
-      // this.renderOptionsTohandleStatus()
       this.listTmp.splice(0, this.listTmp.length);
       for (let i = 0; i < this.listAppointment.length; i++)
         if (this.listAppointment[i].status == "Đang xử lý") {
@@ -147,7 +145,6 @@ export default {
       console.log("wait" + this.listTmp);
     },
     renderAcceptAppointment() {
-      // this.hideOptionsTohandleStatus();
       this.listTmp.splice(0, this.listTmp.length);
       for (let i = 0; i < this.listAppointment.length; i++)
         if (this.listAppointment[i].status == "Chấp nhận")
@@ -155,7 +152,6 @@ export default {
       console.log("accept" + this.listTmp);
     },
     renderDeniedAppointment() {
-      // this.hideOptionsTohandleStatus();
       this.listTmp.splice(0, this.listTmp.length);
       for (let i = 0; i < this.listAppointment.length; i++)
         if (this.listAppointment[i].status == "Từ chối") {
@@ -172,7 +168,7 @@ export default {
     },
     async patchStatus() {
       try {
-        console.log("Typeof" + typeof this.listAppointment);
+        this.isShowPopup= false;
         await this.$axios
           .patch(
             `http://localhost:8080/api/appointment/updateStatus/id=${this.idStatus}`,
@@ -233,15 +229,13 @@ export default {
     Accept(item) {
       this.idStatus = item.id;
       this.updateStatus = "Chấp nhận";
+      this.patchStatus();
     },
     denied(item) {
       this.idStatus = item.id;
       this.updateStatus = "Từ chối";
-    },
-    changeStatus() {
       this.patchStatus();
-      this.listTmp = this.listAppointment.slice();
-      this.renderAllAppoitment();
+
     },
     closePopup() {
       this.isShowPopup = "";
@@ -253,7 +247,6 @@ export default {
 <style scoped>
 .list-appointment {
   margin-top: 60px;
-  /* margin-left: 10px; */
   padding: 100px 0 20px 0;
   box-shadow: 4px 4px 10px 3px rgb(221, 221, 221);
   background-color: #fff;
@@ -270,17 +263,6 @@ export default {
   text-align: center;
   margin: 0;
   color: #4b4545;
-}
-#overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: -100%;
-  opacity: 0.6;
-  background-color: rgb(139, 142, 144);
-  animation: overlay 0.5s ease forwards;
-  z-index: 10;
 }
 /* form select date */
 .select-Date {
@@ -328,56 +310,7 @@ export default {
 .responsive-table .col-7 {
   flex-basis: 20%;
 }
-.app-button {
-  position: absolute;
-  right: 30px;
-  top: 130px;
-}
 
-.button-all {
-  border-radius: 10px;
-  padding: 7px 15px;
-  border: none;
-  color: #fff;
-  background-color: green;
-  cursor: pointer;
-}
-
-.button-waiting {
-  border-radius: 10px;
-  padding: 7px 15px;
-  border: none;
-  color: #fff;
-  background-color: green;
-  cursor: pointer;
-}
-
-.button-except {
-  border-radius: 10px;
-  padding: 7px 15px;
-  border: none;
-  color: #fff;
-  background-color: green;
-  cursor: pointer;
-}
-
-.button-denied {
-  border-radius: 10px;
-  padding: 7px 15px;
-  border: none;
-  color: #fff;
-  background-color: green;
-  cursor: pointer;
-}
-
-.button-handle {
-  border-radius: 15px;
-  padding: 5px 7px;
-  border: none;
-  background-color: green;
-  color: #fff;
-  cursor: pointer;
-}
 .status {
   position: absolute;
   right: 55px;
@@ -403,7 +336,12 @@ export default {
 }
 
 .status-action li:hover {
-  color: green;
+  color: #127E23;
+  font-weight: 550;
+}
+
+.status-action .deny-status:hover {
+  color: rgb(125, 6, 6);
   font-weight: 550;
 }
 
@@ -418,7 +356,7 @@ export default {
 }
 
 .icon__status-dot:hover {
-  fill: green;
+  fill: #127E23;
 }
 
 .icon__status-dot:hover + .status-action {
@@ -433,22 +371,6 @@ export default {
   display: block;
 }
 
-#popup--confirm-change {
-  width: 280px;
-  height: auto;
-  background-color: #fff;
-  padding: 10px 25px;
-  border-radius: 5px;
-  position: fixed;
-  z-index: 90;
-  top: 40%;
-  left: 45%;
-}
-
-#popup--confirm-change span {
-  font-weight: 600;
-  text-align: center;
-}
 .App-combobox {
   position: absolute;
   top: 40px;
