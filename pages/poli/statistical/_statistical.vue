@@ -8,13 +8,19 @@
             <h1>{{ count[0] }}</h1>
           </div>
           <div class="total-gender citizen">
-            <div>
-              <span>Nam:</span>
-              <span>{{ count[1] }}</span>
+            <div class="percent">
+              <div>
+                <span>Nam:</span>
+                <span>{{ count[1] }}</span>
+              </div>
+              <span style="text-align: right;">{{ (count[1]/count[0]*100).toFixed(2) }} % </span>
             </div>
-            <div>
-              <span>Nữ:</span>
-              <span>{{ count[2] }}</span>
+            <div class="percent">
+              <div>
+                <span>Nữ:</span>
+                <span>{{ count[2] }}</span>
+              </div>
+              <span style="text-align: right;">{{ (count[2]/count[0]*100).toFixed(2) }} % </span>
             </div>
           </div>
         </div>
@@ -26,7 +32,7 @@
             <h2>{{ count[3] }}</h2>
           </div>
           <div class="total-gender military">
-            <div>
+            <div class="percent">
               <span>Tỷ lệ:</span>
               <span>{{ ((count[3] / count[0]) * 100.0).toFixed(2) }}%</span>
             </div>
@@ -40,7 +46,7 @@
             <h2>{{ count[4] }}</h2>
           </div>
           <div class="total-gender criminal">
-            <div>
+            <div class="percent">
               <span>Tỷ lệ:</span>
               <span>{{ ((count[4] / count[0]) * 100.0).toFixed(2) }}%</span>
             </div>
@@ -51,9 +57,10 @@
     <div class="area-charts">
       <div class="area-charts--item">
         <client-only placeholder="Loading...">
-          <donut-chart
+          <donut-chart 
+          v-if="countListMarried.length != 0"
             :data="donutChartData"
-            :options="chartOptions2"
+            :options="donutChartOptions"
             :height="310"
             :width="1000"
             class="pie-chart"
@@ -67,9 +74,9 @@
       </div>
       <div class="area-charts--item">
         <client-only placeholder="Loading...">
-          <bar-chart
+          <bar-chart v-if="countListAge.length != 0"
             :data="barChartData"
-            :options="chartOptions"
+            :options="barChartOptions"
             :height="310"
             class="bar-chart"
           ></bar-chart>
@@ -108,30 +115,34 @@
   </div>
 </template>
 <script>
-import { Doughnut } from "vue-chartjs";
 export default {
   data() {
     return {
       listOpinions: [],
       nameArea: "",
-      listAge: [3,2,4],
-      totalCitizens: 120,
+      countListAge:[],
       countMilitariers: null,
       countCriminal: 0,
       idPoli: null,
       countCitizen: 0,
       count: [],
-      listMarried: [3,2],
+      countListMarried: [],
     };
   },
   computed: {
+    countMarriedData(){
+      return this.countListMarried
+    },
+    countAgeData(){
+      return this.countListAge
+    },
     donutChartData() {
       return {
         labels: ["Đã kết hôn", "Chưa kết hôn"],
         datasets: [
           {
             label: "",
-            data: this.listMarried,
+            data: this.countMarriedData,
             backgroundColor: ["#ED3232", "#189EFF"],
             borderColor: "#fff",
             borderWidth: 1,
@@ -152,7 +163,7 @@ export default {
             borderRadius: 8,
             hoverBorderRadius: 8,
             label: "",
-            data: this.listAge,
+            data: this.countAgeData,
             backgroundColor: ["#ED3232", "#189EFF", "#50C878"],
             barThickness: 40,
             onClick: (event, activeElements) => {
@@ -165,7 +176,7 @@ export default {
         ],
       };
     },
-    chartOptions() {
+    barChartOptions() {
       return {
         scales: {
           yAxes: [
@@ -190,7 +201,7 @@ export default {
         barPercentage: 0.5, // thay đổi giá trị này để đặt độ rộng của cột là 20px
       };
     },
-    chartOptions2() {
+    donutChartOptions() {
       return {
         beginAtZero: true,
         responsive: true,
@@ -230,13 +241,13 @@ export default {
           .get(`http://localhost:8080/api/citizen/report/count/poliId=1`)
           .then((res) => {
             this.count = res.data;
-            console.log("count" + this.count);
-            console.log("1 " + this.count[1]);
-            this.listAge.push(this.count[7]);
-            this.listAge.push(this.count[8]);
-            this.listAge.push(this.count[9]);
-            this.listMarried.push(this.count[5]);
-            this.listMarried.push(this.count[6]);
+            // console.log("count" + this.count);
+            // console.log("1 " + this.count[1]);
+            this.countListAge.push(this.count[7]);
+            this.countListAge.push(this.count[8]);
+            this.countListAge.push(this.count[9]);
+            this.countListMarried.push(this.count[5]);
+            this.countListMarried.push(this.count[6]);
           });
       } catch (error) {
         console.log(error);
@@ -386,5 +397,10 @@ export default {
 
 .responsive-table .col-2 {
   flex-basis: 65%;
+}
+.percent{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

@@ -11,6 +11,8 @@ import InforCitizenNew from '@/components/Users/InforCitizenNew.vue';
 import Criminalrecord from '@/components/Users/Criminalrecord.vue';
 import ListInforCitizen from '@/components/Users/ListInforCitizen.vue';
 import InforPoli from '@/components/Users/InforPoli.vue';
+import LandingPage from '@/components/LandingPages/LandingPage.vue';
+
 
 vue.component('PopupConfirm',PopupConfirm)
 vue.component('AddAccount',AddAccount)
@@ -23,4 +25,6 @@ vue.component('InforPoli',InforPoli)
 vue.component('Navbar',Navbar)
 vue.component('Notification', Notification)
 vue.component('FooterPage',FooterPage)
+vue.component('LandingPage',LandingPage)
+
 
