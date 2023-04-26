@@ -3,7 +3,7 @@
         <Tableft />
         <Navbar />
         <InforCitizenNew :listInfor="list" />
-        <Criminalrecord :listInfor="list"/>
+        <Criminalrecord :Criminalrecord="list.Criminalrecord"/>
     </div>
 </template>
 <script>

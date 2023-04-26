@@ -88,20 +88,18 @@ export default {
         },
         async postData() {
             try {
-                const response = await this.$axios.post(`http://localhost:8080/opinions/new`, {
+                await this.$axios.post(`http://localhost:8080/opinions/new`, {
                     author_id: this.authorId,
                     description: this.content
-                });
-                this.listOpinion = response.data;
-                console.log(this.listOpinion);
-               alert('Gửi thành công');
+                }).then((res)=>{
+                    this.listOpinion = res.data;
+                    console.log(this.listOpinion);
+                })
             } catch (error) {
-                console.error(error);
-               alert('Gửi thất bại');
+                console.error(error);       
             }
             this.hiddenPopup();
         },
-
       
         displayPopup() {
             document.querySelector('.add-notificaito--popup').classList.add('display-block');
@@ -238,7 +236,7 @@ ul li {
 }
 
 .add-notification {
-   box-shadow: 3px 3px 10px 2px rgb(231, 226, 226);
+    box-shadow: 3px 3px 10px 2px rgb(231, 226, 226);
     position: absolute;
     display: flex;
     padding: 7px 15px;
@@ -246,10 +244,10 @@ ul li {
     font-weight: 600;
     justify-content: space-between;
     align-items: center;
-    right: 180px;
-    top: 50px;
-    margin-right: 10px;
-    background-color: #53bc47a8;
+    right: 300px;
+    top: 100px;
+    margin-right: 20px;
+    background-color: #ffffff;
     transition: all 0.3s linear;
     cursor: pointer;
     z-index: 3;
@@ -299,7 +297,6 @@ ul li {
 .popup-input--title {
     /* display: flex; */
     margin-top: 10px;
-    
 }
 
 .popup-input--title span {
@@ -316,7 +313,6 @@ ul li {
 }
 
 .popup-input--title textarea {
-  
     width: 210px;
     height: 20px;
     margin-left: 10px;
