@@ -13,14 +13,18 @@
                 <span>Nam:</span>
                 <span>{{ count[1] }}</span>
               </div>
-              <span style="text-align: right;">{{ (count[1]/count[0]*100).toFixed(2) }} % </span>
+              <span style="text-align: right"
+                >{{ ((count[1] / count[0]) * 100).toFixed(2) }} %
+              </span>
             </div>
             <div class="percent">
               <div>
                 <span>Nữ:</span>
                 <span>{{ count[2] }}</span>
               </div>
-              <span style="text-align: right;">{{ (count[2]/count[0]*100).toFixed(2) }} % </span>
+              <span style="text-align: right"
+                >{{ ((count[2] / count[0]) * 100).toFixed(2) }} %
+              </span>
             </div>
           </div>
         </div>
@@ -57,8 +61,8 @@
     <div class="area-charts">
       <div class="area-charts--item">
         <client-only placeholder="Loading...">
-          <donut-chart 
-          v-if="countListMarried.length != 0"
+          <donut-chart
+            v-if="countListMarried.length != 0"
             :data="donutChartData"
             :options="donutChartOptions"
             :height="310"
@@ -74,7 +78,8 @@
       </div>
       <div class="area-charts--item">
         <client-only placeholder="Loading...">
-          <bar-chart v-if="countListAge.length != 0"
+          <bar-chart
+            v-if="countListAge.length != 0"
             :data="barChartData"
             :options="barChartOptions"
             :height="310"
@@ -114,7 +119,9 @@
     </div>
   </div>
 </template>
+
 <script>
+import { saveAs } from 'file-saver';
 export default {
   data() {
     return {
@@ -127,6 +134,7 @@ export default {
       countCitizen: 0,
       count: [],
       countListMarried: [],
+      blob:{}
     };
   },
   computed: {
@@ -238,11 +246,9 @@ export default {
     async getCount() {
       try {
         await this.$axios
-          .get(`http://localhost:8080/api/citizen/report/count/poliId=1`)
+          .get(`http://localhost:8080/api/citizen/report/count/poliId=${this.idPoli}`)
           .then((res) => {
             this.count = res.data;
-            // console.log("count" + this.count);
-            // console.log("1 " + this.count[1]);
             this.countListAge.push(this.count[7]);
             this.countListAge.push(this.count[8]);
             this.countListAge.push(this.count[9]);
@@ -261,7 +267,7 @@ export default {
     },
     pushToList() {
       this.$router.push("/poli/seeInforCitizen");
-    },
+    }
   },
 };
 </script>
@@ -331,15 +337,10 @@ export default {
 
 .total-gender {
   padding: 10px 20px;
-  /* height: ; */
   border-radius: 0 0 10px 10px;
   font-size: 14px;
-  /* border-top: 1.7px solid #13761e; */
   background: linear-gradient(to right, #17c136, #66c978);
-  /* background: linear-gradient(to right,#fe9365,#feb798); */
-  /* background-image: linear-gradient(to right, #50C878, #50C878); */
 }
-
 .military {
   background: linear-gradient(to right, #fcf525, #edeab9);
   height: 33px;
@@ -398,7 +399,7 @@ export default {
 .responsive-table .col-2 {
   flex-basis: 65%;
 }
-.percent{
+.percent {
   display: flex;
   justify-content: space-between;
   align-items: center;

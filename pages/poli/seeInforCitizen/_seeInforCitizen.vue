@@ -1,13 +1,32 @@
 <template>
   <div class="container">
     <div class="seeInfor--content">
-      <h2 class="title">Danh sách công dân tại {{ this.level }} {{ this.nameArea }}</h2>
-      <Search v-model="idSearch" @search="handleSearch" class="seeInfor--form"/>
-      <button @click="isShow = true" class="button-show">Hiển thị toàn bộ</button>
-      <ListInforCitizen v-show="isShow" :items="listCitizen"  @handleClick="handleClick"/>
-      <ListInforCitizen v-show="!isShow" :items="listTmp" @handleClick="handleClick"/>
+      <h2 class="title">
+        Danh sách công dân tại {{ this.level }} {{ this.nameArea }}
+      </h2>
+      <ButtonDownload
+      :urlDownloadPDF="urlDownloadPDF"
+      :urlDownloadXLS="urlDownloadXLS"
+      />
+      <Search
+        v-model="idSearch"
+        @search="handleSearch"
+        class="seeInfor--form"
+      />
+      <button @click="isShow = true" class="button-show">
+        Hiển thị toàn bộ
+      </button>
+      <ListInforCitizen
+        v-show="isShow"
+        :items="listCitizen"
+        @handleClick="handleClick"
+      />
+      <ListInforCitizen
+        v-show="!isShow"
+        :items="listTmp"
+        @handleClick="handleClick"
+      />
     </div>
-
   </div>
 </template>
 
@@ -21,9 +40,11 @@ export default {
       url: "",
       id: null,
       idCitizen: null,
-      idSearch: '',
+      idSearch: "",
       isShow: true,
-      fUrl: "http://localhost:8080/api/citizen/listCitizen/"
+      fUrl: "http://localhost:8080/api/citizen/listCitizen/",
+      urlDownloadPDF:'',
+      urlDownloadXLS:''
     };
   },
   mounted() {
@@ -32,11 +53,14 @@ export default {
     this.nameArea = localStorage.getItem("nameArea");
     this.checkLevelManager();
     this.fetchData();
+    this.urlDownloadPDF=`http://localhost:8080/api/citizen/export-to-pdf/citizen/poliId=${this.id}`
+    this.urlDownloadXLS=`http://localhost:8080/api/citizen/export-to-pdf/citizen/poliId=${this.id}`
+
   },
-  computed:{
-    listTmp(){
-      return this.listCitizen.filter(item => item.citizenId == this.idSearch)
-    }
+  computed: {
+    listTmp() {
+      return this.listCitizen.filter((item) => item.citizenId == this.idSearch);
+    },
   },
   methods: {
     handleSearch(id) {
@@ -50,7 +74,8 @@ export default {
         this.url = `${this.fUrl}district=${encodeURIComponent(this.nameArea)}`;
       else if (this.level == "town")
         this.url = `${this.fUrl}town=${encodeURIComponent(this.nameArea)}`;
-      else this.url = `${this.fUrl}quarter=${encodeURIComponent(this.nameArea)}`;
+      else
+        this.url = `${this.fUrl}quarter=${encodeURIComponent(this.nameArea)}`;
       console.log(this.url);
       console.log("tesst1");
     },
@@ -62,12 +87,10 @@ export default {
     async fetchData() {
       try {
         console.log("aaa" + this.nameArea);
-        await this.$axios
-          .get(`${this.url}`,)
-          .then((res) => {
-            this.listCitizen = res.data;
-            console.log(res);
-          });
+        await this.$axios.get(`${this.url}`).then((res) => {
+          this.listCitizen = res.data;
+          console.log(res);
+        });
       } catch (error) {
         console.log(error);
       }
@@ -97,7 +120,7 @@ export default {
   font-size: 22px;
   margin: 20px;
   margin-bottom: 70px;
-  color: #4B4545;
+  color: #4b4545;
   /* text-align: center; */
 }
 
@@ -109,12 +132,12 @@ export default {
   border-radius: 10px;
   position: relative;
 }
-.seeInfor--form{
+.seeInfor--form {
   position: absolute;
-    right: 0px;
-    top: 80px;
-    margin: 0;
-    width: fit-content;
+  right: 0px;
+  top: 80px;
+  margin: 0;
+  width: fit-content;
 }
 
 .button-show {
@@ -129,8 +152,50 @@ export default {
   cursor: pointer;
   transition: all 0.2s ease;
 }
-.button-show:hover{
+.button-show:hover {
   transform: scale(1.03);
   box-shadow: 3px 3px 10px 3px rgb(221, 221, 221);
+}
+.download-area{
+  position: absolute;
+  right: 20px;
+  top: 30px;
+  z-index: 6;
+}
+.download-button {
+  padding: 5px 10px;
+  background-color: #fff;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  /* border: 1px solid #127e23; */
+
+}
+.download-button:hover{
+  background-color: #127e23;
+  color: #ffff;
+}
+.download{
+  padding: 5px 10px;
+    border: 1px solid #127e23;
+    width: 150px;
+    text-align: center;
+    /* border-radius: 5px */
+}
+.download:hover{
+  background-color: #127e23;
+  color: #fff;
+}
+.download-box{
+  display: none;
+  width: 150px;
+  border: 1px solid #127e23;
+  transition: all 0.2s ease;
+}
+.download-box:hover{
+  display: block;
+}
+.download:hover + .download-box {
+  display: block;
 }
 </style>

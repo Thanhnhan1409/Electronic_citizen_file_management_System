@@ -1,6 +1,7 @@
 import vue from 'vue';
 
-import Search from '@/components/Search/Search.vue';
+import Search from '@/components/Items/Search.vue';
+import ButtonDownload from '@/components/Items/ButtonDownload.vue';
 import Tableft from '@/components/Layouts/Tableft.vue';
 import Navbar from '@/components/Layouts/Navbar.vue';
 import PopupConfirm from '@/components/Notifications/PopupConfirm.vue';
@@ -21,6 +22,7 @@ vue.component('InforCitizenNew',InforCitizenNew)
 vue.component('Criminalrecord',Criminalrecord)
 vue.component('ListInforCitizen',ListInforCitizen)
 vue.component('Search',Search)
+vue.component('ButtonDownload',ButtonDownload)
 vue.component('InforPoli',InforPoli)
 vue.component('Navbar',Navbar)
 vue.component('Notification', Notification)
