@@ -103,31 +103,51 @@ export default {
           .then((res) => {
             localStorage.setItem("id", this.citizen_id);
             this.role = res.data.role;
-            console.log(this.role);
+            localStorage.setItem('role','citizen')
             for (let item of this.role) {
-              console.log(item);
-              if (item == "POLITICIAN") {
+              if (item === "POLITICIAN") {
                 this.check = true;
+                localStorage.setItem('role','politician')
                 console.log(this.check);
+                this.status = "thành công";
+                this.showNoti = "Ok";
+                setTimeout(() => {
+                  this.showNoti = "";
+                  this.$router.push("/poli/inforPoli");
+                }, 1000);
                 break;
+              } else if(item === "ADMIN"){
+                localStorage.setItem('role','admin')
+                this.status = "thành công";
+                this.showNoti = "Ok";
+                setTimeout(() => {
+                  this.showNoti = "";
+                  this.$router.push("/admin/listInforAll");
+                }, 1000);
               }
             }
+            this.status = "thành công";
+                this.showNoti = "Ok";
+                setTimeout(() => {
+                  this.showNoti = "";
+                  this.$router.push("/citizen");
+            }, 1000);
             console.log("test ");
-            if (this.check == false) {
-              this.status = "thất bại";
-              this.showNoti = "Ok";
-              setTimeout(() => {
-                this.showNoti = "";
-              }, 1500);
-              console.log("test1 ");
-            } else {
-              this.status = "thành công";
-              this.showNoti = "Ok";
-              setTimeout(() => {
-                this.showNoti = "";
-                this.$router.push("/poli/inforPoli");
-              }, 1000);
-            }
+            // if (this.check == false) {
+            //   this.status = "thất bại";
+            //   this.showNoti = "Ok";
+            //   setTimeout(() => {
+            //     this.showNoti = "";
+            //   }, 1500);
+            //   console.log("test1 ");
+            // } else {
+            //   this.status = "thành công";
+            //   this.showNoti = "Ok";
+            //   setTimeout(() => {
+            //     this.showNoti = "";
+            //     this.$router.push("/poli/inforPoli");
+            //   }, 1000);
+            // }
           });
       } catch (error) {
         this.errDesc=true;

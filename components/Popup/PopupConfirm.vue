@@ -24,7 +24,6 @@ export default {
     closePopUp() {
       this.$emit('closePopup')},
     action() {
-      console.log(this.type);
       this.$emit('action')
       // this.closePopUp();
     }
