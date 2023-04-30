@@ -1,8 +1,8 @@
 <template>
-  <div class="container-inforCitizen">
-    <BackToList></BackToList>
+  <div class="container">
+    <BackToList class="backtolist"></BackToList>
     <button @click.prevent="isShowPopup=true" id="admin-delInfo">Xóa tài khoản</button>
-    <InforCitizen class="infor-citizen" :list-infor="listInfor"></InforCitizen>
+    <InforCitizenNew class="infor-citizen" :list-infor="listInfor"></InforCitizenNew>
     <Criminalrecord :Criminalrecord="listInfor.Criminalrecord"></Criminalrecord>
     <PopupConfirm
       :title="'xóa tài khoản'"
@@ -82,15 +82,8 @@ export default {
 };
 </script>
 
-<style scoped src="../../../static/asset/styles.css"></style>
+<style scoped src="~/static/asset/styles.css"></style>
 <style scoped>
-.container-inforCitizen{
-  position: relative;
-}
-
-ul {
-  list-style: none;
-}
 
 img {
   width: 180px;
@@ -106,8 +99,8 @@ img {
   color: #fff;
   font-weight: 550;
   position: absolute !important;
-  right: 90px;
-  top: 330px;
+  right: 70px;
+  top: 220px;
   font-size: 18px;
   cursor: pointer;
   z-index: 3;
@@ -116,23 +109,8 @@ img {
 .infor-citizen {
   margin-bottom: 60px;
 }
-.back-to-list{
-  position: relative;
-  left: 300px;
-  top: 80px;
-  /* box-shadow: 3px 3px 10px 3px rgb(217, 217, 217);
-  background-color: #fff; */
-  width: 100px;
-  padding: 5px 10px;
-  border-radius: 5px;
+.backtolist{
+  position: absolute;
+  top: 30px;
 }
-.back-to-list svg{
-  width: 14px;
-  height: auto;
-}
-.back-to-list span {
-  color: black;
-  text-decoration: none;
-}
-
 </style>

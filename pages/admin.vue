@@ -1,13 +1,14 @@
 
 <template>
-    <div class="container">
-        <TabLeft/>
+    <div class="container-admin">
+        <Tableft/>
         <Navbar/>
         <nuxt-child/>
     </div>
 </template>
-    
-<script>
+
+<style scoped src="~/static/asset/styles.css"></style>
+<!-- <script>
   export default {
     data() {
       return {
@@ -48,9 +49,9 @@
       },
     },
   };
-  </script>
-    
-  <style scoped>
+  </script> -->
+  <!-- <style scoped src="~/static/asset/styles.css"></style> -->
+  <!-- <style scoped>
   body {
     margin: 0;
     padding: 0;
@@ -277,6 +278,6 @@
     margin-left: 20px;
     border-radius: 5px;
   }
-  </style>
+  </style> -->
   
   

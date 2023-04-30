@@ -1,6 +1,6 @@
 <template>
-  <div class="container-add">
-    <h2 class="title">Đăng ký thông tin cá nhân công dân</h2>
+  <div class="container">
+    <!-- <h3 class="title">Đăng ký thông tin cá nhân công dân</h3> -->
     <div class="content">
       <AddAccount
         :listInfor="list"
@@ -32,7 +32,8 @@ export default {
     return {
       list: {
         password: "123",
-        criminalRecord:''
+        criminalRecord:'',
+        nationality: "Việt Nam"
       },
       isShowPopup: false,
       status: '',
@@ -44,6 +45,7 @@ export default {
     async submit() {
       try {
         console.log(this.list);
+        this.list.idFamily= this.list.family;
         await this.$axios
           .post("http://localhost:8080/api/v1/auth/register", this.list)
           .then((res) => {
@@ -84,6 +86,7 @@ export default {
   top: 70px;
   width: fit-content;
 }
+
 img {
   width: 180px;
   height: 210px;

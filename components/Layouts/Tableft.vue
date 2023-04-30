@@ -39,7 +39,7 @@
               <li>Thông tin cán bộ</li>
             </nuxt-link>
             <nuxt-link
-              to="/poli/seeInforCitizen/_seeInforCitizen"
+              to="/admin/listInforAll"
               class="link"
               v-show="role === 'admin'"
             >
@@ -60,7 +60,7 @@
             <li @click.prevent="updateAccount">Cập nhật tài khoản</li>
           </ul>
         </li>
-        <li class="tableft--option">
+        <li class="tableft--option" v-show="role !== 'admin'">
           <nuxt-link
             to="/poli/requirement/_requirement"
             v-show="role === 'politician'"
@@ -86,9 +86,9 @@
             Gửi yêu cầu
           </nuxt-link>
         </li>
-        <li class="tableft--option">
+        <li class="tableft--option" v-show="role !== 'admin'">
           <nuxt-link
-            to="/poli/sendNotification/_sendNotification"
+            to="/poli/notification"
             v-show="role === 'politician'"
             class="link"
           >
@@ -112,7 +112,7 @@
             Thông báo
           </nuxt-link>
         </li>
-        <li class="tableft--option">
+        <li class="tableft--option" v-show="role !== 'admin'">
           <nuxt-link
             to="/poli/appointment/_appointment"
             v-show="role === 'politician'"
@@ -213,29 +213,31 @@ export default {
     },
     homePage() {
       if (this.role === "citizen") {
-        this.$router.push("/citizen");
+        return this.$router.push("/citizen");
       } else if (this.role === "admin") {
-        this.$router.push("/admin/listInforAll");
-      } else this.$router.push("/poli/inforPoli");
+        return this.$router.push("/admin/listInforAll");
+      } else return this.$router.push("/poli/inforPoli");
     },
     addAccount() {
       if (this.role === "admin") {
-        this.$router.push("/admin/addAccount");
-      } else this.$router.push("/poli/addCitizen");
+        return this.$router.push("/admin/addAccount");
+      } else return this.$router.push("/poli/addCitizen");
     },
     updateAccount() {
       if (this.role === "admin") {
-        this.$router.push("/admin/updateInfor");
-      } else this.$router.push("/poli/update");
+        return this.$router.push("/admin/updateInfor");
+      } else return this.$router.push("/poli/update");
     },
     statistcal() {
       if (this.role === "admin") {
-        this.$router.push("/admin/statistical");
-      } else this.$router.push("/poli/statistical");
+        return this.$router.push("/admin/statistical");
+      } else return this.$router.push("/poli/statistical");
     },
   },
 };
 </script>
+
+<style scoped src="~/static/asset/styles.css"></style>
 <style scoped>
 .link {
   text-decoration: none;
@@ -290,7 +292,7 @@ ul li {
   position: relative;
   top: 10px;
   left: -60px;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   transition: all 0.5s linear;
 }
 

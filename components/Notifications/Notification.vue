@@ -70,6 +70,7 @@ export default {
 };
 </script>
 
+<style scoped src="~/static/asset/styles.css"></style>
 <style scoped>
 .noti-container {
   overflow: hidden;

@@ -1,41 +1,52 @@
 <template>
   <div class="container">
-    <TabLeft/>
-    <Search class="search-form" v-model="idSearch" @search="handleSearch"/>
+    <Search class="search-form" v-model="idSearch" @search="handleSearch" />
     <div class="content">
-      <!-- <h2 class="title--poli">Danh sách cán bộ công chức</h2> -->
-      <button @click="isShow = true" class="button-show">Hiển thị toàn bộ</button>
-      <ListPoli class="test" v-show="isShow" :list="listPolitician"  @handleClick="handleClick1"/>
-      <ListPoli class="test" v-show="!isShow" :list="listTmp1" @handleClick="handleClick1"/>
-      <!-- <h2 class="title--citizen">Danh sách công dân</h2> -->
-      <ListCitizen class="test" v-show="isShow" :items="listCitizen" @handleClick="handleClick2" />
-      <ListCitizen class="test" v-show="!isShow" :items="listTmp2" @handleClick="handleClick2"/>
+      <button @click="isShow = true" class="button-show">
+        Hiển thị toàn bộ
+      </button>
+      <ListInfor6Colums
+        :listTmp="isShow === true ? listPolitician : listTmp1"
+        :object="'poli'"
+        :title="'cán bộ'"
+        @pushToDetailInfor="handleClick1"
+      />
+
+      <ListInfor6Colums
+        :listTmp="isShow === true ? listCitizen : listTmp2"
+        :object="'poliListCitizen'"
+        :title="'công dân'"
+        @pushToDetailInfor="handleClick2"
+      />
     </div>
-    
   </div>
 </template>
 <script>
-export default{
+export default {
   data() {
     return {
       listCitizen: [],
       listPolitician: [],
       level: "",
       nameArea: "",
-      id: '',
+      id: "",
       idCitizen: null,
-      idSearch: '',
+      idSearch: "",
       isShow: true,
     };
   },
   computed: {
-      listTmp1() {
-        return this.listPolitician.filter(item => item.citizen.citizenId.toString() == this.idSearch)
-      },
-      listTmp2() {
-        return this.listCitizen.filter(item => item.citizen_id.toString() == this.idSearch)
-      }
+    listTmp1() {
+      return this.listPolitician.filter(
+        (item) => item.citizen.citizenId.toString() == this.idSearch
+      );
     },
+    listTmp2() {
+      return this.listCitizen.filter(
+        (item) => item.citizen_id.toString() == this.idSearch
+      );
+    },
+  },
   mounted() {
     this.id = localStorage.getItem("id");
     this.level = localStorage.getItem("level");
@@ -43,10 +54,10 @@ export default{
     this.fetchData();
     this.fetchDataPoli();
   },
-  methods:{
+  methods: {
     handleSearch(id) {
       this.idSearch = id;
-      this.isShow= false;
+      this.isShow = false;
     },
     async fetchData() {
       try {
@@ -54,7 +65,8 @@ export default{
           .get(`http://localhost:8080/api/citizen/listCitizen/country`)
           .then((res) => {
             this.listCitizen = res.data;
-            console.log("lisst citizen" + this.listCitizen)
+
+            console.log("lisst citizen" + this.listCitizen);
           });
       } catch (error) {
         console.log("test fectdata");
@@ -67,6 +79,9 @@ export default{
           .get(`http://localhost:8080/api/politician/listPolitician/country`)
           .then((res) => {
             this.listPolitician = res.data;
+            this.listPolitician.forEach((politician) => {
+              politician.levelManagerVN = this.checkLevelManager(politician);
+            });
             console.log("poli" + res.data);
           });
       } catch (error) {
@@ -82,38 +97,40 @@ export default{
       localStorage.setItem("admin_idCitizen", citizenId);
       this.$router.push("/admin/listInforAll/citizenInfor");
     },
-  }
-}
+    checkLevelManager(item) {
+      if (item.levelManager === "city") {
+        return "Tỉnh";
+      }
+      if (item.levelManager === "district") {
+        return "Huyện/Thành phố";
+      }
+      if (item.levelManager === "ward") {
+        return "Thị trấn/Xã";
+      }
+      if (item.levelManager === "quarter") {
+        return "Khối/Làng";
+      }
+    },
+  },
+};
 </script>
 
-
+<style scoped src="~/static/asset/styles.css"></style>
 <style scoped>
-.container{
-  margin-left: 280px;
-  margin-top: 100px;
+.content {
   position: relative;
+  width: 100%;
 }
-
-h2{
-  padding: 10px 0 50px 0;
-  margin: 0;
-}
-.title--citizen{
+.search-form {
   position: absolute;
-  top: 30px;
-}
-.search-form{
-position: absolute;
-top:75px;
-left: 20px;
-z-index: 3;
-margin: 0;
-width: fit-content;
+  top: 75px;
+  right: 20px;
+  z-index: 3;
+  margin: 0;
+  width: fit-content;
 }
 .button-show {
   position: absolute;
-  top: 65px;
-  right: 70px;
   border-radius: 10px;
   padding: 7px 10px;
   border: none;
@@ -122,14 +139,11 @@ width: fit-content;
   cursor: pointer;
   z-index: 7;
   transition: all 0.2s linear;
+  width: 120px;
+  top: 140px;
+  left: 89%;
 }
-.button-show:hover{
+.button-show:hover {
   transform: scale(1.02);
 }
-.test{
-  width: 93%;
-  position: relative;
-  margin-bottom: 70px;
-}
 </style>
-

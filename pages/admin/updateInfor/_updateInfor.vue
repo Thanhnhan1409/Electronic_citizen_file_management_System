@@ -1,9 +1,7 @@
 <template>
-  <div class="container-update">
+  <div class="container">
     <BackToList />
-    <div id="overlay" class="display-hide"></div>
     <div class="content">
-      <h2 class="title">Cập nhật thông tin cá nhân công dân</h2>
       <nuxt-link to="/admin/updateInfor/updateInforPoli">
         <div class="update--role">
           Cập nhật quyền quản lý
@@ -19,6 +17,7 @@
         </div>
       </nuxt-link>
       <Search class="search" v-model="idSearch" @search="handleSearch" />
+
       <AddAccount
         :listInfor="list"
         :action="'Cập nhật'"
@@ -78,14 +77,14 @@ export default {
     },
     async submit() {
       try {
-        console.log("idFamily"+ this.list.idFamily);
+        console.log("idFamily" + this.list.idFamily);
         this.isShowPopup = false;
-        console.log("list in"+this.list);
+        console.log("list in" + this.list);
         await this.$axios
           .put(`http://localhost:8080/api/citizen/update`, this.list)
           .then((res) => {
             this.list = res.data;
-            console.log("after test"+this.list);
+            console.log("after test" + this.list);
 
             this.status = "thành công";
             this.showNoti = "Ok";
@@ -94,10 +93,9 @@ export default {
               this.$router.push("/admin/listInforAll/_listInforAll");
             }, 1500);
           });
-          console.log("test"+this.list);
-
+        console.log("test" + this.list);
       } catch (error) {
-        console.log("test err"+this.list);
+        console.log("test err" + this.list);
         this.status = "thất bại";
         this.showNoti = "Ok";
         setTimeout(() => {
@@ -122,19 +120,6 @@ export default {
 
 <style scoped src="../../../static/asset/styles.css"></style>
 <style scoped>
-.container-update {
-  position: relative;
-}
-
-.container h2 {
-  padding: 10px;
-  width: fit-content;
-  margin: 90px 0 40px 310px;
-}
-
-ul {
-  list-style: none;
-}
 img {
   width: 180px;
   height: 210px;
@@ -148,48 +133,11 @@ input {
   border-radius: 8px;
   border: 0.8px solid black;
 }
-.submit {
-  padding: 10px 20px;
-  background-color: green;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 550;
-  border: none;
-  border-radius: 10px;
-  margin-bottom: 40px;
-  position: absolute;
-  right: 70px;
-  cursor: pointer;
-  box-shadow: 3px 3px 3px 1px rgba(218, 169, 36, 0.25);
-  top: 280px;
-  z-index: 2;
-  transition: all 0.2s ease;
-}
-.submit:hover {
-  transform: scale(1.05);
-}
-#overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: -100%;
-  opacity: 0.6;
-  background-color: rgb(139, 142, 144);
-  animation: overlay 0.5s ease forwards;
-  z-index: 10;
-}
-.display-block {
-  display: block !important;
-}
 
-.display-hide {
-  display: none !important;
-}
 .search {
   position: absolute;
-  top: 180px;
-  left: 320px;
+  top: -40px;
+  left: -250px;
   width: fit-content;
 }
 
@@ -208,7 +156,7 @@ input {
   position: absolute;
   color: black;
   font-weight: 600;
-  top: 180px;
+  top: 30px;
   right: 40px;
   z-index: 2;
   padding: 7px 15px;
@@ -228,5 +176,8 @@ input {
 }
 .update--role:hover .update__role--svg {
   transform: translateX(10px);
+}
+.content {
+  margin-top: 140px;
 }
 </style>

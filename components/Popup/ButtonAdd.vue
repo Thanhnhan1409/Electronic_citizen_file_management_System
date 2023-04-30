@@ -35,7 +35,7 @@ export default{
   font-weight: 600;
   justify-content: space-between;
   align-items: center;
-  right: 40px;
+  right: 45px;
   top: 45px;
   margin-right: 20px;
   background-color: #ffffff;
@@ -57,5 +57,8 @@ export default{
 }
 .add-notification:hover .icon-plus {
     fill: #ffff;
+}
+.add-notification p{
+  margin: 0;
 }
 </style>

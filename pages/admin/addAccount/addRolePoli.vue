@@ -1,8 +1,8 @@
 <template>
-  <div class="container-addPoli">
+  <div class="container">
     <BackToList />
     <div id="overlay" class="display-hide"></div>
-    <h2 class="title">Thêm thông tin cán bộ công chức</h2>
+    <!-- <h2 class="title">Thêm thông tin cán bộ công chức</h2> -->
     <AddOrUpdatePoli
       class="add-poli--form"
       :listPoli="listPoli"

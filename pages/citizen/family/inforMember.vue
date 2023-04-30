@@ -35,5 +35,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style scoped src="~/static/asset/styles.css"></style>

@@ -1,8 +1,7 @@
 <template>
   <div class="container">
-    <div class="seeInfor--content">
       <h2 class="title">
-        Danh sách công dân tại {{ this.level }} {{ this.nameArea }}
+        <!-- Danh sách công dân tại {{ this.level }} {{ this.nameArea }} -->
       </h2>
       <ButtonDownload
       :urlDownloadPDF="urlDownloadPDF"
@@ -16,17 +15,12 @@
       <button @click="isShow = true" class="button-show">
         Hiển thị toàn bộ
       </button>
-      <ListInforCitizen
-        v-show="isShow"
-        :items="listCitizen"
-        @handleClick="handleClick"
-      />
-      <ListInforCitizen
-        v-show="!isShow"
-        :items="listTmp"
-        @handleClick="handleClick"
-      />
-    </div>
+      <ListInfor6Colums
+      :listTmp="isShow === true ? listCitizen : listTmp"
+      :object="'poliListCitizen'"
+      :title="'công dân'"
+      @pushToDetailInfor="handleClick"
+    />
   </div>
 </template>
 
@@ -59,7 +53,7 @@ export default {
   },
   computed: {
     listTmp() {
-      return this.listCitizen.filter((item) => item.citizenId == this.idSearch);
+      return this.listCitizen.filter((item) => item.citizenId == this.idSearch || item.name === this.idSearch);
     },
   },
   methods: {
@@ -99,50 +93,20 @@ export default {
 };
 </script>
 
+<style scoped src="~/static/asset/styles.css"></style>
 <style scoped>
-.display-none {
-  background: red !important;
-}
-
-* {
-  font-family: "lato", sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.container {
-  margin: 0 40px 0 280px;
-  padding: 0 20px;
-}
-
-.title {
-  font-size: 22px;
-  margin: 20px;
-  margin-bottom: 70px;
-  color: #4b4545;
-  /* text-align: center; */
-}
-
-.seeInfor--content {
-  margin-top: 50px;
-  padding: 20px 0;
-  box-shadow: 4px 4px 10px 3px rgb(221, 221, 221);
-  background-color: #fff;
-  border-radius: 10px;
-  position: relative;
-}
 .seeInfor--form {
   position: absolute;
   right: 0px;
-  top: 80px;
+  top: 120px;
   margin: 0;
   width: fit-content;
+  z-index: 3;
 }
 
 .button-show {
   position: absolute;
-  top: 80px;
+  top: 120px;
   left: 20px;
   border-radius: 10px;
   padding: 7px 10px;
@@ -151,51 +115,10 @@ export default {
   background-color: green;
   cursor: pointer;
   transition: all 0.2s ease;
+  z-index: 3;
 }
 .button-show:hover {
   transform: scale(1.03);
   box-shadow: 3px 3px 10px 3px rgb(221, 221, 221);
-}
-.download-area{
-  position: absolute;
-  right: 20px;
-  top: 30px;
-  z-index: 6;
-}
-.download-button {
-  padding: 5px 10px;
-  background-color: #fff;
-  cursor: pointer;
-  width: 100%;
-  border: none;
-  /* border: 1px solid #127e23; */
-
-}
-.download-button:hover{
-  background-color: #127e23;
-  color: #ffff;
-}
-.download{
-  padding: 5px 10px;
-    border: 1px solid #127e23;
-    width: 150px;
-    text-align: center;
-    /* border-radius: 5px */
-}
-.download:hover{
-  background-color: #127e23;
-  color: #fff;
-}
-.download-box{
-  display: none;
-  width: 150px;
-  border: 1px solid #127e23;
-  transition: all 0.2s ease;
-}
-.download-box:hover{
-  display: block;
-}
-.download:hover + .download-box {
-  display: block;
 }
 </style>

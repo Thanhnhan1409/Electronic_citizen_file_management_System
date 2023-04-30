@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container-criminal">
         <div class="content">
             <h2>Tiền án, tiền sự</h2>
         <div class="content-crim">
@@ -14,6 +14,7 @@ export default{
     props:['criminalRecord']
 }
 </script>
+
 <style scoped>
 h2{
     margin: 20px 0;
@@ -30,6 +31,9 @@ h2{
     border-radius: 13px;
     margin-bottom: 70px;
     box-shadow: 3px 2px 10px rgb(217, 213, 213);
+}
+.container-criminal{
+    margin-top: 50px;
 }
 .content-crim{
     box-shadow: 3px 2px 10px rgb(217, 213, 213);

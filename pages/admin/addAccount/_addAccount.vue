@@ -1,9 +1,8 @@
 <template>
-  <div class="container-add">
+  <div class="container">
     <BackToList/>
     <div id="overlay" class="display-hide"></div>
     <div class="content">
-      <h2>Đăng ký thông tin cá nhân công dân</h2>
       <nuxt-link to="/admin/addAccount/addRolePoli">
         <div class="add--role">
           Thêm quyền quản lý
@@ -18,7 +17,6 @@
           </svg>
         </div>
       </nuxt-link>
-      <!-- <button @click.prevent="openPopUp" class="submit">Đăng ký</button> -->
       <AddAccount
         :list-infor="list"
         :action="'Đăng ký'"
@@ -95,38 +93,12 @@ export default {
 </script>
 <style scoped src="../../../static/asset/styles.css"></style>
 <style scoped>
-.container h2 {
-  /* padding: 10px;
-    margin: 50px 0 30px 280px ; */
-  position: absolute;
-  top: 110px;
-  left: 330px;
-  text-align: center;
-}
-#overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: -100%;
-  opacity: 0.6;
-  background-color: rgb(139, 142, 144);
-  animation: overlay 0.5s ease forwards;
-  z-index: 10;
-}
-.display-block {
-  display: block !important;
-}
 
-.display-hide {
-  display: none !important;
-}
+
 .content {
   margin-top: 140px;
 }
-ul {
-  list-style: none;
-}
+
 
 input {
   padding: 5px;
@@ -139,7 +111,7 @@ input {
   position: absolute;
   color: black;
   font-weight: 600;
-  top: 130px;
+  top: 30px;
   right: 50px;
   z-index: 2;
   padding: 7px 15px;
@@ -159,10 +131,6 @@ input {
 }
 .add--role:hover .add__role--svg {
   transform: translateX(10px);
-}
-.addAcc-content {
-  position: relative;
-  top: 40px;
 }
 
 </style>

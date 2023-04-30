@@ -40,7 +40,7 @@ export default {
             }
 
             // Convert searchId to a number
-            const id = parseInt(this.searchId)
+            const id = this.searchId
 
             // Reset searchId to empty string
             this.searchId = ''

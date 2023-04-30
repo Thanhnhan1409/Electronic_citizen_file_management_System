@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <ListInfor4Colums
-        :isNoti="true"
+        :object="'notification'"
         :listTmp="listTmp"
         :title="'các thông báo'"
         />

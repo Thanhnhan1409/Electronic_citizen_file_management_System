@@ -4,6 +4,7 @@
         :listTmp="listFamily"
         :object="'family'"
         @pushToDetailInfor="pushToDetailInfor"
+        :title="'người thân trong gia đình'"
         />
     </div>
 </template>

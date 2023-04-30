@@ -92,31 +92,11 @@
         </h4>
       </div>
     </div>
-    <div class="list-comment">
-      <h3>Danh sách ý kiến của người dân</h3>
-      <ul class="responsive-table req-content">
-        <li class="table-header">
-          <div class="col col-0">STT</div>
-          <div class="col col-1">Tên</div>
-          <div class="col col-2">Nội dung</div>
-        </li>
-        <ul
-          class="responsive-table content"
-          v-for="(item, index) in listOpinions"
-          :key="index"
-        >
-          <li class="table-row display">
-            <div class="col col-0" data-label="STT">{{ item.id }}</div>
-            <div class="col col-1" data-label="Tên công dân">
-              {{ item.citizen.name }}
-            </div>
-            <div class="col col-2" data-label="Nội dung">
-              {{ item.content }}
-            </div>
-          </li>
-        </ul>
-      </ul>
-    </div>
+    <ListInfor4Colums
+        :object="'opinion'"
+        :listTmp="listOpinions"
+        :title="'các ý kiến đóng góp'"
+        />
   </div>
 </template>
 
@@ -351,9 +331,7 @@ export default {
   height: 33px;
 }
 
-.difference {
-  background: linear-gradient(to right, #23c5c5, #b2f5f5);
-}
+
 
 .area-charts {
   display: flex;
@@ -373,31 +351,6 @@ export default {
   margin: 30px 0 10px 0;
   width: 400px;
   text-align: center;
-}
-
-.list-comment {
-  background-color: #fff;
-  width: 90%;
-  margin: 50px 0 50px 20px;
-  padding: 30px;
-  border-radius: 10px;
-}
-
-.list-comment h3 {
-  color: rgb(74, 73, 73);
-  margin: 20px 0;
-}
-
-.responsive-table .col-0 {
-  flex-basis: 10%;
-}
-
-.responsive-table .col-1 {
-  flex-basis: 20%;
-}
-
-.responsive-table .col-2 {
-  flex-basis: 65%;
 }
 .percent {
   display: flex;

@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div class="class-list" >
         <ul class="responsive-table">
             <li class="table-header">
                 <div class="col col-0">STT</div>
@@ -10,7 +10,7 @@
                 <div class="col col-5">Địa chỉ</div>
             </li>
         </ul>
-        <ul class="responsive-table content" v-for="(item,index) in items" :key="item.citizen_id">
+        <ul class="responsive-table content" v-for="(item,index) in items" :key="index">
             <li class="table-row display" @click.prevent="handleClick(item.citizen_id)">
                 <div class="col col-0" data-label="STT">{{ index + 1 }}</div>
                 <div class="col col-1" data-label="Số CCCD">

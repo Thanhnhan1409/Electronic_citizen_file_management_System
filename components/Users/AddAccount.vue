@@ -1,6 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container--addAcc">
     <div class="overlay-hidden"></div>
+    <h2 class="title">{{action }} thông tin cá nhân công dân</h2>
     <button @click.prevent="openPopup" class="submit">{{ action }}</button>
     <div class="infor--content">
       <h2>Thông tin cá nhân</h2>
@@ -332,7 +333,7 @@
 </template>
 <script>
 export default {
-  props: ["listInfor", "action"],
+  props: ["listInfor", "action","title"],
   data() {
     return {
       listCity: [],
@@ -469,16 +470,13 @@ export default {
   },
 };
 </script>
+
+<style scoped src="~/static/asset/styles.css"></style>
 <style scoped>
 ul li {
   list-style: none;
   padding: 0;
   margin: 0;
-}
-
-.container {
-  margin-left: 280px;
-  margin-top: 140px;
 }
 
 .overlay-hidden {
@@ -572,14 +570,14 @@ input {
   display: flex;
   text-align: start;
 }
-.title {
+/* .title {
   margin: 20px 0;
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
   line-height: 27px;
   color: #4b4545;
-}
+} */
 .content {
   margin: 0 30px;
   padding: 30px;
@@ -609,9 +607,9 @@ input {
   border-radius: 10px;
   margin-bottom: 40px;
   position: absolute;
-  right: 80px;
+  right: 70px;
   cursor: pointer;
-  top: 30px;
+  top: 100px;
   z-index: 2;
   transition: all 0.2s ease;
 }

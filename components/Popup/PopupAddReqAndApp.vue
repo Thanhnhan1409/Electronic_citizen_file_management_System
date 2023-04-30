@@ -4,49 +4,51 @@
     <div class="popup-AddAppoint">
       <h3>{{ title }}</h3>
       <div class="content">
-        <div class="content--item"  v-show="obj === 'appointment'">
-          <p>ID CBCC:</p>
+        <div class="content--item"  v-show="obj !== 'opinion'">
+          <p>{{obj === 'poliForwardRequirement'? 'ID CBCC chuyển tiếp:':'ID CBCC:'}}</p>
           <input
             :value="
               obj == 'appointment'
                 ? appointment.politician_id
-                : ''
+                : obj === 'poliForwardRequirement'
+                ? idPoliForward
+                : obj === 'requirement'
+                ? requirement.idPoli
+                :''
             "
             @input="
               obj == 'appointment'
                 ? (appointment.politician_id = $event.target.value)
-                : obj == 'requirement'
-                ? (requirement.author_id = $event.target.value)
-                : (opinion.author_id = $event.target.value)
+                : obj === 'poliForwardRequirement'
+                ? ''
+                : obj === 'requirement'
+                ? (requirement.idPoli = $event.target.value)
+                :(opinion.author_id = $event.target.value)
             "
             type="text"
             v-validate="'required'"
             :class="{ input: true, 'is-danger': errors.has('Id Policitian') }"
             name="Id Policitian"
             id=""
-            placeholder="Nhập số mã số CBCC"
+            placeholder="Nhập số ID CBCC"
             autocomplete="on"
           />
           <span v-show="errors.has('Id Policitian')" class="err">{{
             errors.first("Id Policitian")
           }}</span>
         </div>
-        <div class="content--item" v-show="obj === 'appointment' || obj === 'requiremen'">
+        <div class="content--item" v-show="obj === 'appointment'">
           <p>Ngày</p>
           <input
             
             :value="
               obj == 'appointment'
                 ? appointment.appointmentDate
-                : obj == 'requirement'
-                ? requirement.date
                 : ''
             "
             @input="
               obj == 'appointment'
                 ? (appointment.appointmentDate = $event.target.value)
-                : obj == 'appointment'
-                ? (requirement.date = $event.target.value)
                 : ''
             "
             type="date"
@@ -65,7 +67,7 @@
         <div class="content--item" v-show="obj == 'appointment'">
           <p>Thời gian bắt đầu:</p>
           <input
-            :value="
+          :value="
               obj == 'appointment'
                 ? appointment.startTime
                 : ''
@@ -118,7 +120,7 @@
           }}</span>
         </div>
 
-        <div class="content--item">
+        <div class="content--item" v-show="obj !== 'poliForwardRequirement'">
           <p>Nội dung</p>
           <textarea
           :value="
@@ -126,13 +128,17 @@
                 ? appointment.description
                 : obj == 'requirement'
                 ? requirement.description
-                : opinion.description
+                : obj === 'poliForwardRequirement'
+                ? ''
+                :opinion.description
             "
             @input="
               obj == 'appointment'
                 ? (appointment.description = $event.target.value)
                 : obj == 'requirement'
                 ? (requirement.description = $event.target.value)
+                : obj === 'poliForwardRequirement'
+                ? ''
                 : (opinion.description = $event.target.value)
             "
             v-validate="'required'"
@@ -200,7 +206,7 @@ export default {
   background-color: #fff;
   position: absolute;
   left: 25%;
-  top: 25%;
+  top: 15%;
   padding: 40px 60px 20px;
   z-index: 99;
   width: 350px;

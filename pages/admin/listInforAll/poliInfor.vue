@@ -1,7 +1,7 @@
 <template>
-  <div class="container-inforPoli">
-    <BackToList/>
-    <InforCitizen class="infor-citizen" :list-infor="list" />
+  <div class="container">
+    <BackToList class="backtolist"/>
+    <InforCitizenNew class="infor-citizen" :list-infor="list" />
     <h2>Thông tin cá nhân</h2>
     <div class="admin-delete">
       <p class="admin-delInfo">Xóa tài khoản</p>
@@ -159,11 +159,8 @@ export default {
 }
 </script>
 
-<style scoped src="../../../static/asset/styles.css"></style>
+<style scoped src="~/static/asset/styles.css"></style>
 <style scoped>
-.container-inforPoli{
-  position: relative;
-}
 .container h2 {
   padding: 10px;
   width: fit-content;
@@ -260,23 +257,8 @@ img {
   background-color: #fff;
   color: black;
 }
-.back-to-list{
-  position: relative;
-  left: 300px;
-  top: 80px;
-  /* box-shadow: 3px 3px 10px 3px rgb(217, 217, 217);
-  background-color: #fff; */
-  width: 100px;
-  padding: 5px 10px;
-  border-radius: 5px;
+.backtolist{
+  position: absolute;
+  top: 30px;
 }
-.back-to-list svg{
-  width: 14px;
-  height: auto;
-}
-.back-to-list span {
-  color: black;
-  text-decoration: none;
-}
-
 </style>

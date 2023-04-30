@@ -21,7 +21,7 @@
             </div>
             <div class="card">
                 <div class="total">
-                    <div class="total-data" @click="pushToListMilitariers">
+                    <div class="total-data">
                         <p>Tổng số công dân:</p>
                         <h2>{{ countMilitariers }}</h2>
                     </div>
@@ -39,7 +39,7 @@
 
             </div>
             <div class="card">
-                <div class="total" @click="pushToListCriminal">
+                <div class="total" >
                     <div class="total-data">
                         <p>Tổng số cán bộ công chức:</p>
                         <h2>123</h2>
@@ -269,13 +269,7 @@ export default {
 
         },
         pushToList() {
-            this.$router.push("/poli/seeInforCitizen/_seeInforCitizen");
-        },
-        pushToListMilitariers() {
-            this.$router.push("/poli/statistical/listOfMilitarier");
-        },
-        pushToListCriminal() {
-            this.$router.push("/poli/statistical/listOfCriminal");
+            this.$router.push("/admin/listInforAll");
         },
     }
 }

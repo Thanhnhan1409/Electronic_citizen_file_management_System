@@ -111,16 +111,16 @@ export default {
                 console.log(this.check);
                 this.status = "thành công";
                 this.showNoti = "Ok";
-                setTimeout(() => {
+                return setTimeout(() => {
                   this.showNoti = "";
                   this.$router.push("/poli/inforPoli");
                 }, 1000);
                 break;
-              } else if(item === "ADMIN"){
+              } else if (item === "ADMIN"){
                 localStorage.setItem('role','admin')
                 this.status = "thành công";
                 this.showNoti = "Ok";
-                setTimeout(() => {
+                return setTimeout(() => {
                   this.showNoti = "";
                   this.$router.push("/admin/listInforAll");
                 }, 1000);
@@ -133,21 +133,6 @@ export default {
                   this.$router.push("/citizen");
             }, 1000);
             console.log("test ");
-            // if (this.check == false) {
-            //   this.status = "thất bại";
-            //   this.showNoti = "Ok";
-            //   setTimeout(() => {
-            //     this.showNoti = "";
-            //   }, 1500);
-            //   console.log("test1 ");
-            // } else {
-            //   this.status = "thành công";
-            //   this.showNoti = "Ok";
-            //   setTimeout(() => {
-            //     this.showNoti = "";
-            //     this.$router.push("/poli/inforPoli");
-            //   }, 1000);
-            // }
           });
       } catch (error) {
         this.errDesc=true;
@@ -185,8 +170,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 50px;
-  margin-top: 25px;
+  margin-bottom:2.5px;
 }
 
 .logo-login {

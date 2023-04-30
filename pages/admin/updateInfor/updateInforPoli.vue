@@ -1,8 +1,6 @@
 <template>
-  <div class="container-updateRole">
-    <BackToList />
-    <div id="overlay" class="display-hide"></div>
-    <h2 class="title">Cập nhật thông tin cán bộ</h2>
+  <div class="container">
+    <BackToList class="backtolist"/>
     <Search class="search" v-model="idSearch" @search="handleSearch" />
     <div class="infor">
       <AddOrUpdatePoli
@@ -116,65 +114,27 @@ export default {
 };
 </script>
 
-<style scoped src="../../../static/asset/styles.css"></style>
+<style scoped src="~/static/asset/styles.css"></style>
 <style scoped>
-.title {
-  position: absolute;
-  left: 320px;
-  top: 80px;
-  width: fit-content;
-}
-#overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: -100%;
-  opacity: 0.6;
-  background-color: rgb(139, 142, 144);
-  animation: overlay 0.5s ease forwards;
-  z-index: 10;
-}
-.display-block {
-  display: block !important;
-}
+/*   */
 
-.display-hide {
-  display: none !important;
-}
 .search {
   position: absolute;
-  top: 180px;
-  left: 320px;
+  top: 0px;
+  right: 40px;
+  z-index: 3;
+  width: fit-content;
 }
 
 .form {
   margin-top: 110px;
 }
-
-.submit {
-  padding: 7px 20px;
-  background-color: green;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 550;
-  border: none;
-  border-radius: 10px;
-  margin-bottom: 40px;
-  position: absolute;
-  right: 80px;
-  cursor: pointer;
-  box-shadow: 3px 3px 8px rgba(218, 169, 36, 0.25);
-  top: 30px;
-  transition: all 0.2s linear;
-  z-index: 2;
-}
-
-.submit:hover {
-  transform: scale(1.05);
-}
 .infor {
   position: relative;
+  top: 60px;
+}
+.backtolist{
+  position: absolute;
   top: 60px;
 }
 </style>

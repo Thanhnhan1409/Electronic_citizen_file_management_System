@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container--citizen">
     <Tableft />
     <Navbar />
     <nuxt-child />
@@ -7,25 +7,26 @@
 </template>
     
 <script>
-export default {
-  data() {
-    return {
-      name: ''
-    }
-  },
-  mounted() {
-    this.name = localStorage.getItem('name')
-  },
-  methods: {
-    logout: function () {
-      localStorage.clear();
-      localStorage.removeItem('auth._token.local')
-      this.$router.push('/login');
-    }
-  }
-}
+// export default {
+//   data() {
+//     return {
+//       name: ''
+//     }
+//   },
+//   mounted() {
+//     this.name = localStorage.getItem('name')
+//   },
+//   methods: {
+//     logout: function () {
+//       localStorage.clear();
+//       localStorage.removeItem('auth._token.local')
+//       this.$router.push('/login');
+//     }
+//   }
+// }
 </script>
-<style scoped>
+<style scoped src="~/static/asset/styles.css"></style>
+<!-- <style scoped>
 body {
   margin: 0;
   padding: 0;
@@ -207,4 +208,4 @@ a {
   color: black;
   border-radius: 7px;
 }
-</style>
+</style> -->

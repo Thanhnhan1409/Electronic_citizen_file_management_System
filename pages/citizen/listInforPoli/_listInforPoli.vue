@@ -1,7 +1,5 @@
 <template>
   <div class="container">
-    <Tableft />
-    <Navbar />
     <div class="poli_inf">
       <div class="filter-address">
         <div>
@@ -68,9 +66,8 @@
       />
       <ListInfor6Colums 
         :listTmp="listPoli" 
-        :object="'requirement'" 
-         :title="'cán bộ công chức trên cả nước'"
-
+        :object="'listPoli'" 
+        :title="'cán bộ công chức trên cả nước'"
       />
     </div>
   </div>
@@ -85,6 +82,7 @@ export default {
       listDistrict: [],
       listWard: [],
       listInfor: {},
+      idSearch:''
     };
   },
   mounted() {
@@ -159,53 +157,21 @@ export default {
 
 <style scoped src="../../../static/asset/styles.css"></style>
 <style scoped>
-.poli_inf {
+/* .poli_inf {
   padding: 50px 20px;
   box-shadow: 3px 3px 10px rgb(206, 203, 203);
   border-radius: 10px;
-  background-color: #fff;
-}
+  background-color: #fff; */
+/* }
 
 .poli_inf h2 {
   top: -30px;
   left: 0px;
   margin: 0;
-}
+} */
 
-.table {
-  margin-top: 3%;
-}
-
-.responsive-table .col-0 {
-  flex-basis: 10%;
-}
-
-.responsive-table .col-1 {
-  flex-basis: 10%;
-}
-
-.responsive-table .col-2 {
-  flex-basis: 15%;
-}
-
-.responsive-table .col-3 {
-  flex-basis: 10%;
-}
-
-.responsive-table .col-4 {
-  flex-basis: 10%;
-}
-
-.responsive-table .col-6 {
-  flex-basis: 10%;
-}
-
-.responsive-table .col-5 {
-  flex-basis: 25%;
-}
-
-.table-row:hover {
-  color: green;
+.list-appointment[data-v-05331f66] {
+  padding-top: 100px;
 }
 .err {
   font-size: 12px;
@@ -216,16 +182,22 @@ export default {
 .filter-address {
   display: flex;
   gap: 2%;
+  position: absolute;
+  top: 50px;
   padding-top: 40px;
+  z-index: 3  ;
+  width: 80%;
+  left: 30px;
 }
 .multiselect {
   margin-top: 10px;
 }
 .seeInfor--form {
   position: absolute;
-  right: 20px;
+  right: 50px;
   top: 110px;
   margin: 0;
   width: fit-content;
+  z-index: 3;
 }
 </style>
