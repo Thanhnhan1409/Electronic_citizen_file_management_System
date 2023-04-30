@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
+  <div class="container-all">
     <Tableft />
     <Navbar /><nuxt-child />
   </div>
 </template>
     
-<script>
+<!-- <script>
 export default {
   data() {
     return {
@@ -206,4 +206,4 @@ a {
   color: black;
   border-radius: 7px;
 }
-</style>
+</style> -->

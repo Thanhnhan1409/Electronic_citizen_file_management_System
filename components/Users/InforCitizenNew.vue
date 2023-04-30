@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container--inforCitizen">
         <div class="overlay-hidden"></div>
         
         <div class="img--personal div-center">

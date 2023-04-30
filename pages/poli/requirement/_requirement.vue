@@ -54,20 +54,20 @@
                 />
               </svg>
               <ul class="status-action">
-                <li @click.prevent="isShowPopup = 'popupAccept'" class="accept-status">Chấp nhận</li>
-                <li @click.prevent="isShowPopup = 'popupDenied'" class="deny-status">Từ chối</li>
+                <li @click.prevent="handleAccept" class="accept-status">Chấp nhận</li>
+                <li @click.prevent="handleDenied = 'popupDenied'" class="deny-status">Từ chối</li>
                 <li @click.prevent="openPopUp(item)" >Chuyển tiếp</li>
-                <PopupConfirm
+                <!-- <PopupConfirm
                   :title="'đổi trạng thái sang chấp nhận'"
                   @action="Accept(item)"
                   v-show="isShowPopup == 'popupAccept'"
                   @closePopup="closePopup"
                 >
-                </PopupConfirm>
+                </PopupConfirm> -->
                 <PopupConfirm
-                  :title="'đổi trạng thái sang từ chối'"
-                  @action="denied(item)"
-                  v-show="isShowPopup == 'popupDenied'"
+                  :title="updatedStatus ==='denied'?  'đổi trạng thái sang từ chối': 'đổi trạng thái sang chấp nhận'"
+                  @action="updatedStatus ==='denied'? denied(item):Accept(item) "
+                  v-show="isShowPopup === true"
                   @closePopup="closePopup"
                 >
                 </PopupConfirm>
@@ -77,7 +77,7 @@
         </ul>
       </ul>
     </div>
-    <form id="popUp-forward" v-show="isShowForward">
+    <!-- <form id="popUp-forward" v-show="isShowForward">
       <svg
         @click.prevent="isShowForward = false"
         class="popup--icon-close"
@@ -99,12 +99,20 @@
           Xác nhận
         </button>
       </div>
-    </form>
+    </form> -->
+    <PopupAddReqAndApp
+      :idPoliForward="idPoliForward"
+      :obj="'forwardRequirement'"
+      :title="'Chuyển tiếp yêu cầu'"
+      @action="openPopUpForwardConfirm"
+      @closePopUp="closePopupForward()"
+      v-show="isShowForward"
+    />
     <PopupConfirm
       :title="'chuyển tiếp yêu cầu'"
       @action="forward"
       v-show="isShowPopupForwardConfirm"
-      @closePopup="closePopupForwardConfirm()"
+      @closePopup="closePopup()"
     >
     </PopupConfirm>
     <Notification
@@ -121,11 +129,9 @@
 export default {
   data() {
     return {
-      status: "Tất cả",
       listAppointment: [],
       listTmp: [],
       idPoli: null,
-      day: "",
       idStatus: null,
       updateStatus: "",
       idPoliForward: "",
@@ -136,6 +142,7 @@ export default {
       isShowPopupForwardConfirm: false,
       status: "",
       showNoti: "",
+      updatedStatus:''
     };
   },
   mounted() {
@@ -244,15 +251,16 @@ export default {
       this.idReq = item.id_requirement;
     },
     closePopup() {
-      this.isShowPopup = "";
-    },
-    closePopupForwardConfirm() {
+      this.isShowPopup = false;
       this.isShowPopupForwardConfirm = false;
       this.isShowForward = true;
     },
     openPopUpForwardConfirm() {
       this.isShowPopupForwardConfirm = true;
       this.isShowForward = false;
+    },
+    closePopupForward(){
+      this.isShowForward = false
     },
     async forward() {
       try {
@@ -276,6 +284,16 @@ export default {
       else if (this.status == "Chấp nhận") this.renderAcceptReq();
       else this.renderDeniedReq();
     },
+    handleAccept(){
+      this.isShowPopup = true ;
+      this.updatedStatus = 'accept';
+
+    },
+    handleAccept(){
+      this.isShowPopup = true ;
+      this.updatedStatus = 'denied';
+
+    }
   },
 };
 </script>

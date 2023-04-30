@@ -29,7 +29,8 @@ export default {
     '@plugins/components.js',
     '@plugins/vue-multiselect.js',
     {src: '~/plugins/vee-validate.js', ssr: true },
-    {src: '~/plugins/validate.js', ssr: true }
+    {src: '~/plugins/validate.js', ssr: true },
+    { src: '~/plugins/before_unload.js', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -88,7 +89,7 @@ export default {
   },
   
   server: {
-    port: 3001 // Set the port to 3000
+    port: 3000 // Set the port to 3000
   },
 
   state: {},

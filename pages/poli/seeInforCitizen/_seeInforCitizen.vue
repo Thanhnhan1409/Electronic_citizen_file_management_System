@@ -1,13 +1,26 @@
 <template>
   <div class="container">
-    <div class="seeInfor--content">
-      <h2 class="title">Danh sách công dân tại {{ this.level }} {{ this.nameArea }}</h2>
-      <Search v-model="idSearch" @search="handleSearch" class="seeInfor--form"/>
-      <button @click="isShow = true" class="button-show">Hiển thị toàn bộ</button>
-      <ListInforCitizen v-show="isShow" :items="listCitizen"  @handleClick="handleClick"/>
-      <ListInforCitizen v-show="!isShow" :items="listTmp" @handleClick="handleClick"/>
-    </div>
-
+      <h2 class="title">
+        <!-- Danh sách công dân tại {{ this.level }} {{ this.nameArea }} -->
+      </h2>
+      <ButtonDownload
+      :urlDownloadPDF="urlDownloadPDF"
+      :urlDownloadXLS="urlDownloadXLS"
+      />
+      <Search
+        v-model="idSearch"
+        @search="handleSearch"
+        class="seeInfor--form"
+      />
+      <button @click="isShow = true" class="button-show">
+        Hiển thị toàn bộ
+      </button>
+      <ListInfor6Colums
+      :listTmp="isShow === true ? listCitizen : listTmp"
+      :object="'poliListCitizen'"
+      :title="'công dân'"
+      @pushToDetailInfor="handleClick"
+    />
   </div>
 </template>
 
@@ -21,9 +34,11 @@ export default {
       url: "",
       id: null,
       idCitizen: null,
-      idSearch: '',
+      idSearch: "",
       isShow: true,
-      fUrl: "http://localhost:8080/api/citizen/listCitizen/"
+      fUrl: "http://localhost:8080/api/citizen/listCitizen/",
+      urlDownloadPDF:'',
+      urlDownloadXLS:''
     };
   },
   mounted() {
@@ -32,11 +47,14 @@ export default {
     this.nameArea = localStorage.getItem("nameArea");
     this.checkLevelManager();
     this.fetchData();
+    this.urlDownloadPDF=`http://localhost:8080/api/citizen/export-to-pdf/citizen/poliId=${this.id}`
+    this.urlDownloadXLS=`http://localhost:8080/api/citizen/export-to-pdf/citizen/poliId=${this.id}`
+
   },
-  computed:{
-    listTmp(){
-      return this.listCitizen.filter(item => item.citizenId == this.idSearch)
-    }
+  computed: {
+    listTmp() {
+      return this.listCitizen.filter((item) => item.citizenId == this.idSearch || item.name === this.idSearch);
+    },
   },
   methods: {
     handleSearch(id) {
@@ -50,7 +68,8 @@ export default {
         this.url = `${this.fUrl}district=${encodeURIComponent(this.nameArea)}`;
       else if (this.level == "town")
         this.url = `${this.fUrl}town=${encodeURIComponent(this.nameArea)}`;
-      else this.url = `${this.fUrl}quarter=${encodeURIComponent(this.nameArea)}`;
+      else
+        this.url = `${this.fUrl}quarter=${encodeURIComponent(this.nameArea)}`;
       console.log(this.url);
       console.log("tesst1");
     },
@@ -62,12 +81,10 @@ export default {
     async fetchData() {
       try {
         console.log("aaa" + this.nameArea);
-        await this.$axios
-          .get(`${this.url}`,)
-          .then((res) => {
-            this.listCitizen = res.data;
-            console.log(res);
-          });
+        await this.$axios.get(`${this.url}`).then((res) => {
+          this.listCitizen = res.data;
+          console.log(res);
+        });
       } catch (error) {
         console.log(error);
       }
@@ -76,50 +93,20 @@ export default {
 };
 </script>
 
+<style scoped src="~/static/asset/styles.css"></style>
 <style scoped>
-.display-none {
-  background: red !important;
-}
-
-* {
-  font-family: "lato", sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.container {
-  margin: 0 40px 0 280px;
-  padding: 0 20px;
-}
-
-.title {
-  font-size: 22px;
-  margin: 20px;
-  margin-bottom: 70px;
-  color: #4B4545;
-  /* text-align: center; */
-}
-
-.seeInfor--content {
-  margin-top: 50px;
-  padding: 20px 0;
-  box-shadow: 4px 4px 10px 3px rgb(221, 221, 221);
-  background-color: #fff;
-  border-radius: 10px;
-  position: relative;
-}
-.seeInfor--form{
+.seeInfor--form {
   position: absolute;
-    right: 0px;
-    top: 80px;
-    margin: 0;
-    width: fit-content;
+  right: 0px;
+  top: 120px;
+  margin: 0;
+  width: fit-content;
+  z-index: 3;
 }
 
 .button-show {
   position: absolute;
-  top: 80px;
+  top: 120px;
   left: 20px;
   border-radius: 10px;
   padding: 7px 10px;
@@ -128,8 +115,9 @@ export default {
   background-color: green;
   cursor: pointer;
   transition: all 0.2s ease;
+  z-index: 3;
 }
-.button-show:hover{
+.button-show:hover {
   transform: scale(1.03);
   box-shadow: 3px 3px 10px 3px rgb(221, 221, 221);
 }

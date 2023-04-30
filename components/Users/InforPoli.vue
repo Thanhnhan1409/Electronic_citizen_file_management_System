@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container--inforPoli">
         <div class="poli--content">
             <h2>Thông tin cán bộ:</h2>
             <ul class="poli__content--items">
@@ -44,7 +44,7 @@ ul li{
 }
 
 .poli--content{
-    margin:0 30px 50px 30px;
+    margin:50px 30px;
     padding: 30px;
     background-color: #fff;
     border-radius: 13px;

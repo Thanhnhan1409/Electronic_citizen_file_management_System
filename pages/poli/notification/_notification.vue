@@ -18,7 +18,6 @@
         <li class="table-header">
           <div class="col col-0">STT</div>
           <div class="col col-1">Người nhận</div>
-          <div class="col col-2">Ngày</div>
           <div class="col col-3">Nội dung</div>
         </li>
         <ul
@@ -36,9 +35,6 @@
               >
                 <li class="item-idCitizen">{{ tmp }}</li>
               </ul>
-            </div>
-            <div class="col col-2" data-label="Ngày">
-              {{ item.date }}
             </div>
             <div class="col col-3" data-label="Nội dung">
               {{ item.message }}
@@ -126,17 +122,12 @@ export default {
     this.author_id = localStorage.getItem("idPolicitian");
     this.fetchListNotification();
   },
-  computed: {
-    curDate() {
-      return JSON.parse(localStorage.getItem("curDate") || "[]");
-    },
-  },
   methods: {
     async postData() {
       try {
         this.listIdCitizen = this.stringIdCitizen.split(", ");
         this.isShowPopup = false;
-        // console.log("danh sach ng duoc gui yeu cau" + this.listIdCitizen);
+        console.log("danh sach ng duoc gui yeu cau" + this.listIdCitizen);
         await this.$axios
           .post(`http://localhost:8080/api/notification/newNotification`, {
             recipient_id: this.listIdCitizen,
@@ -173,10 +164,6 @@ export default {
           .then((res) => {
             this.listNotification.splice(0, this.listNotification.length);
             this.listNotification = res.data;
-            this.date = new Date();
-            this.curDate.push(this.date);
-            localStorage.setItem("curDate", JSON.stringify(this.curDate));
-            this.getDate();
             this.stringIdCitizen = "";
             this.description = "";
           });
@@ -184,21 +171,6 @@ export default {
         console.log(error);
       }
     },
-    // displayPopup() {
-    //   document
-    //     .querySelector(".add-notificaito--popup")
-    //     .classList.add("display-block");
-    //   document.querySelector(".overlay-Popup").classList.add("display-block");
-    // },
-    // hiddenPopup() {
-    //   document
-    //     .querySelector(".add-notificaito--popup")
-    //     .classList.remove("display-block");
-    //   document
-    //     .querySelector(".overlay-Popup")
-    //     .classList.remove("display-block");
-    //   this.fetchListNotification();
-    // },
     openPopupConfirm() {
       this.isShow = false;
       this.isShowPopup = true;
@@ -206,12 +178,6 @@ export default {
     closePopup() {
       this.isShow = true;
       this.isShowPopup = false;
-    },
-    getDate() {
-      for (let i = 0; i < this.curDate.length; i++) {
-        this.listNotification[i].date = this.curDate[i];
-        console.log(this.curDate[i]);
-      }
     },
     uniqueNames(citizens) {
       const uniqueNames = [];
@@ -280,7 +246,7 @@ ul li {
 }
 
 .responsive-table .col-3 {
-  flex-basis: 40%;
+  flex-basis: 45%;
 }
 .item-idCitizen {
   padding: 2px 3px !important;

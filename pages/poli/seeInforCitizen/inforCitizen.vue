@@ -1,7 +1,5 @@
 <template>
   <div class="container">
-    <Tableft />
-    <div id="overlay" class="display-hide"></div>
     <button @click.prevent="isShowPopup = true" class="poli-delInfo">
       Xóa tài khoản
     </button>
@@ -81,6 +79,8 @@ export default {
   },
 };
 </script>
+
+<style scoped src="~/static/asset/styles.css"></style>
 <style scoped>
 .poli-delInfo {
   border: none;
@@ -92,7 +92,6 @@ export default {
   position: absolute;
   right: 100px;
   top: 250px;
-  /* font-size: 18px; */
   cursor: pointer;
   z-index: 2;
 }
