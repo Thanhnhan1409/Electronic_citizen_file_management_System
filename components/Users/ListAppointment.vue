@@ -158,8 +158,8 @@
     </div>
     <Notification
       :status="status"
-      :object="'trạng thái'"
-      :action="'Cập nhật'"
+      :object="'lịch hẹn'"
+      :action="isShowPopup === 'popupUpdate'? 'Cập nhật': 'Xóa'"
       :isShowNoti="showNoti"
       v-if="showNoti == 'Ok'"
     >
@@ -254,22 +254,6 @@ export default {
     async fetchData() {
       this.$emit("fetchData");
     },
-    // async fetchData() {
-    //   try {
-    //     await this.$axios
-    //       .get(
-    //         `http://localhost:8080/api/appointment/politician_id=${this.idPoli}`
-    //       )
-    //       .then((res) => {
-    //         this.listTmp.splice(0, this.listTmp.length);
-    //         this.listAppointment = res["data"];
-    //         this.listTmp = this.listAppointment.slice();
-    //         console.log(res);
-    //       });
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
     async fetchDataByDate() {
       try {
         console.log(this.date);
