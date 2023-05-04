@@ -2,13 +2,32 @@
   <div class="container">
     <div class="poli_inf">
       <div class="filter-address">
-        <div>
+        <div class="poli-level">
+          Cấp vụ
+          <multiselect
+            class="multiselect"
+            :options="listLevelPoli"
+            v-model="levelManager"
+            @input="fetchData"
+            placeholder="Chọn cấp vụ"
+            v-validate="'required'"
+            :class="{
+              input: true,
+              'is-danger': errors.has('Cấp vụ'),
+            }"
+            name="Cấp vụ"
+          ></multiselect>
+          <span v-show="errors.has('Cấp vụ')" class="err">{{
+            errors.first("Cấp vụ")
+          }}</span>
+        </div>
+        <div v-show="isShowCity">
           Tỉnh
           <multiselect
             class="multiselect"
             @input="getDistrict()"
             :options="listCity"
-            v-model="listInfor.city"
+            v-model="inforSearch.add"
             placeholder="Chọn tỉnh"
             v-validate="'required'"
             :class="{
@@ -21,13 +40,13 @@
             errors.first("Tỉnh")
           }}</span>
         </div>
-        <div>
+        <div v-show="isShowDistrict">
           Huyện/Thành phố
           <multiselect
             class="multiselect"
             @input="getWard()"
             :options="listDistrict"
-            v-model="listInfor.district"
+            v-model="inforSearch.add"
             placeholder="Chọn huyện/Thành phố"
             v-validate="'required'"
             :class="{
@@ -40,12 +59,12 @@
             errors.first("Huyện")
           }}</span>
         </div>
-        <div>
+        <div v-show="isShowTown">
           Xã/Thị trấn:
           <multiselect
             class="multiselect"
             :options="listWard"
-            v-model="listInfor.town"
+            v-model="inforSearch.add"
             placeholder="Chọn Xã/Thị trấn"
             v-validate="'required'"
             :class="{
@@ -64,10 +83,11 @@
         @search="handleSearch"
         class="seeInfor--form"
       />
-      <ListInfor6Colums 
-        :listTmp="listPoli" 
-        :object="'listPoli'" 
+      <ListInfor6Colums
+        :listTmp="listPoli"
+        :object="'poli'"
         :title="'cán bộ công chức trên cả nước'"
+        @pushToDetailInfor="pushToDetailInfor"
       />
     </div>
   </div>
@@ -82,21 +102,36 @@ export default {
       listDistrict: [],
       listWard: [],
       listInfor: {},
-      idSearch:''
+      idSearch: "",
+      listLevelPoli: ["Cả nước","Tỉnh", "Huyện/Thành phố", "Xã/Thị trấn"],
+      inforSearch: {},
+      levelManager: "Cả nước",
+      isShowCity:false,
+      isShowDistrict: false,
+      isShowTown: false,
     };
   },
   mounted() {
-    this.fetchData();
     this.getCity();
+    // this.fetchData();
   },
   methods: {
     async fetchData() {
       try {
+        this.checkLevel();
+        let url = `http://localhost:8080/api/politician/listPolitician/country`;
+        if( this.levelManager !=='Cả nước'){
+          url = `http://localhost:8080/api/politician/listPolitician/?levelManageEncode=${
+            this.inforSearch.level
+          }&areaManageEncode=${encodeURIComponent(this.inforSearch.add)}`;
+        }
         await this.$axios
-          .get(`http://localhost:8080/api/politician/listPolitician/country`)
+          .get(url)
           .then((res) => {
-            this.listPoli = response.data;
-            console.log("items" + this.listPoli);
+            this.listPoli = res.data;
+            this.listPoli.forEach((politician) => {
+              politician.levelManagerVN = this.checkLevelManager(politician);
+            });
           });
       } catch (error) {
         console.log(error);
@@ -110,6 +145,9 @@ export default {
             this.listCity = res.data;
             this.getDistrict();
           });
+
+        // await this.filterPoli();
+        await this.fetchData();
       } catch (error) {
         console.log(error);
       }
@@ -127,6 +165,7 @@ export default {
             this.listDistrict = res.data;
             this.getWard();
           });
+        this.fetchData();
       } catch (error) {
         console.log(error);
       }
@@ -143,13 +182,54 @@ export default {
           .then((res) => {
             this.listWard = res.data;
           });
+        this.fetchData();
       } catch (error) {
         console.log(error);
+      }
+    },
+    async checkLevel() {
+      if (this.levelManager === "Tỉnh") {
+        this.inforSearch.level = "city";
+        this.isShowCity=true;
+        this.isShowDistrict = false;
+        this.isShowTown = false;
+      } else if (this.levelManager === "Huyện/Thành phố") {
+        this.inforSearch.level = "district";
+        this.isShowCity=true;
+        this.isShowDistrict = true;
+        this.isShowTown = false;
+      } else if (this.levelManager === "Xã/Thị trấn") {
+        this.inforSearch.level = "ward";
+        this.isShowCity=true;
+        this.isShowDistrict = true;
+        this.isShowTown = true;
+      } else {
+        this.isShowCity=false;
+        this.isShowDistrict = false;
+        this.isShowTown = false;
+      }
+    },
+    checkLevelManager(item) {
+      if (item.levelManager === "city") {
+        return "Tỉnh";
+      }
+      if (item.levelManager === "district") {
+        return "Huyện/Thành phố";
+      }
+      if (item.levelManager === "ward") {
+        return "Thị trấn/Xã";
+      }
+      if (item.levelManager === "quarter") {
+        return "Khối/Làng";
       }
     },
     handleSearch(id) {
       this.idSearch = id;
       this.isShow = false;
+    },
+    pushToDetailInfor(id) {
+      localStorage.setItem("idPolicitian", id);
+      this.$router.push("/citizen/listInforPoli/inforPoli");
     },
   },
 };
@@ -157,19 +237,6 @@ export default {
 
 <style scoped src="../../../static/asset/styles.css"></style>
 <style scoped>
-/* .poli_inf {
-  padding: 50px 20px;
-  box-shadow: 3px 3px 10px rgb(206, 203, 203);
-  border-radius: 10px;
-  background-color: #fff; */
-/* }
-
-.poli_inf h2 {
-  top: -30px;
-  left: 0px;
-  margin: 0;
-} */
-
 .list-appointment[data-v-05331f66] {
   padding-top: 100px;
 }
@@ -185,7 +252,7 @@ export default {
   position: absolute;
   top: 50px;
   padding-top: 40px;
-  z-index: 3  ;
+  z-index: 3;
   width: 80%;
   left: 30px;
 }
@@ -194,8 +261,8 @@ export default {
 }
 .seeInfor--form {
   position: absolute;
-  right: 50px;
-  top: 110px;
+  right: 30px;
+  top: 40px;
   margin: 0;
   width: fit-content;
   z-index: 3;

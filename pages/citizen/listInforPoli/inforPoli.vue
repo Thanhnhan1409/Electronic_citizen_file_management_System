@@ -22,7 +22,7 @@ export default {
     },
     // middleware: "auth",
     mounted() {
-        this.id = localStorage.getItem("id");
+        this.id = localStorage.getItem("idPolicitian");
         this.fetchData();
         this.fetchDataPoli();
         this.name = localStorage.getItem("name");

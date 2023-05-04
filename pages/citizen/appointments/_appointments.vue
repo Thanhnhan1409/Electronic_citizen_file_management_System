@@ -50,17 +50,14 @@ export default {
       listTmp:[]
     };
   },
-  // watch: {
-  //   listApp() {
-  //     // khi listApp thay đổi, cập nhật lại
-  //     this.$nextTick(() => {
-  //       console.log("listApp changed");
-  //     });
-  //   },
-  // },
   mounted() {
     this.id = localStorage.getItem("id");
     this.fetchListApp();
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        this.isPopupVisible = true;
+      }
+    });
   },
   methods: {
     async fetchListApp() {
