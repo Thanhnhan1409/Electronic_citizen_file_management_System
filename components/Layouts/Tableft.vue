@@ -1,13 +1,11 @@
 <template>
   <div class="container">
-    <!-- <div id="overlay" class="display-hide"></div> -->
     <div class="overlay-hidden"></div>
     <div class="tableft">
       <img class="img--logo" src="../../static/images/logo.png" alt="" />
       <h3>HỆ THỐNG QUẢN LÝ HỒ SƠ ĐIỆN TỬ CÔNG DÂN</h3>
       <ul class="tableft__list--options">
         <li class="tableft--option" @click.prevent="homePage">
-          <!-- <nuxt-link to="/poli/inforPoli" class="link"> -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
             <path
               class="tableft-icon"
@@ -15,7 +13,6 @@
             />
           </svg>
           Trang chủ
-          <!-- </nuxt-link> -->
         </li>
         <li class="tableft--option manage--option">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -243,13 +240,6 @@ export default {
   text-decoration: none;
   color: #fff;
 }
-
-ul li {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
 .img--logo {
   width: 120px;
   height: auto;
@@ -258,7 +248,6 @@ ul li {
   top: 49px;
   margin-bottom: 30px;
 }
-
 .overlay-hidden {
   position: fixed;
   left: 0;
@@ -306,14 +295,6 @@ ul li {
   /* animation: manage 0.7s ease forwards; */
 }
 
-/* .manage__icon--arrow {
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  left: 215.11px;
-  top: 307.11px;
-  transition: all 0.2s linear;
-} */
 
 .manage--option:hover .tableft__manage--options li {
   opacity: 1;
@@ -321,11 +302,6 @@ ul li {
   display: block;
   transform: translateY(0);
 }
-
-/* .manage--option:hover .manage__icon--arrow {
-  transform: rotate(90deg);
-} */
-
 .manage--option li:hover {
   background-color: #127e23;
   color: #fff;
@@ -393,106 +369,5 @@ svg {
 .tableft-logout:hover svg {
   fill: #127e23;
   transform: scale(1.2);
-}
-
-.display-block {
-  display: block !important;
-}
-
-#overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: -100%;
-  opacity: 0.6;
-  background-color: rgb(139, 142, 144);
-  animation: overlay 0.5s ease forwards;
-  z-index: 10;
-}
-
-.display-flex {
-  display: flex !important;
-  justify-content: space-evenly;
-}
-
-.display-hide {
-  display: none !important;
-}
-
-#popup--confirm-change {
-  width: 280px;
-  height: auto;
-  background-color: #fff;
-  padding: 20px 25px;
-  border-radius: 10px;
-  position: fixed;
-  z-index: 90;
-  top: 40%;
-  left: 45%;
-  box-shadow: 3px 3px 10px 3px rgb(129, 129, 129);
-  /* display: block !important; */
-}
-
-#popup--confirm-change p {
-  font-weight: 600;
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  padding: 10px;
-}
-
-.popup--icon-close {
-  width: 10px;
-  height: auto;
-  cursor: pointer;
-  fill: #818281;
-  padding: 2px 0 0 5px;
-}
-
-.popup--button button {
-  margin-top: 15px;
-  padding: 5px 10px;
-  cursor: pointer;
-  width: 135px;
-  border: 0.3px solid black;
-}
-
-.popup--button {
-  display: flex;
-  padding: 10px;
-  justify-content: space-between;
-}
-
-.cancel {
-  background-color: #fff;
-  border: 0.3px solid black;
-  color: green;
-}
-
-.confirm {
-  background-color: green;
-  color: #fff;
-  border: 1.3px solid #fff;
-  margin-left: 5px;
-}
-
-.popup--button button:hover {
-  transform: scale(1.02);
-  box-shadow: 3px 3px 10px 3px rgb(212, 213, 212);
-}
-
-.icon-close {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  right: 15px;
-  top: 15px;
-  border-radius: 50%;
-  transition: all 0.5s ease;
-}
-
-.icon-close:hover {
-  background-color: #d8d9d8;
 }
 </style>

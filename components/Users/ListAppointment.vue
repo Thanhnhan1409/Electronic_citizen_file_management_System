@@ -85,7 +85,7 @@
                   d="M56 472a56 56 0 1 1 0-112 56 56 0 1 1 0 112zm0-160a56 56 0 1 1 0-112 56 56 0 1 1 0 112zM0 96a56 56 0 1 1 112 0A56 56 0 1 1 0 96z"
                 />
               </svg>
-              <ul class="status-action" v-show="object === 'poliAppointment'">
+              <ul class="status-action" v-if="object === 'poliAppointment'">
                 <li @click.prevent="isShowPopup = 'popupAccept'">Chấp nhận</li>
                 <li
                   @click.prevent="isShowPopup = 'popupDenied'"
@@ -108,7 +108,7 @@
                 </PopupConfirm>
               </ul>
             </div>
-            <div class="status col col-8" v-show="object !== 'poliAppointment'">
+            <div class="status col col-8" v-if="object !== 'poliAppointment'">
               <svg
                 class="icon__status-dot"
                 xmlns="http://www.w3.org/2000/svg"
@@ -119,7 +119,7 @@
                 />
               </svg>
               <ul class="status-action">
-                <li @click.prevent="isShowPopupUpdate = true">Cập nhật</li>
+                <li @click.prevent="openPopupUpdate(item)">Cập nhật</li>
                 <li
                   @click.prevent="isShowPopup = 'popupDelete'"
                   class="deny-status"
@@ -146,7 +146,7 @@
                       ? update(item)
                       : deleteApp(item)
                   "
-                  v-show="isShowPopup !== ''"
+                  v-if="isShowPopup !== ''"
                   @closePopup="closePopup"
                 >
                 </PopupConfirm>
@@ -172,7 +172,6 @@ export default {
   props: ["object", "listAppointment", "listTmp"],
   data() {
     return {
-      status: "Tất cả",
       idPoli: null,
       date: "",
       idStatus: null,
@@ -182,10 +181,16 @@ export default {
       status: "",
       showNoti: "",
       isShowPopupUpdate: false,
+      dataTmp:{}
     };
   },
   mounted() {
     this.idPoli = localStorage.getItem("idPolicitian");
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        this.isPopupVisible = true;
+      }
+    });
   },
   methods: {
     renderAllAppointment() {
@@ -338,6 +343,10 @@ export default {
       this.isShowPopupUpdate = true;
       item.politician_id = item.politician.politicianId;
     },
+    openPopupUpdate(item){
+      this.isShowPopupUpdate = true;
+      this.dataTmp = item;
+    },
     openPopupConfirm() {
       this.isShowPopupUpdate = false;
       this.isShowPopup = "popupUpdate";
@@ -489,8 +498,13 @@ export default {
   padding-bottom: 10px;
 }
 .update-requirement {
-  position: absolute;
-  top: 15%;
-  left: 25%;
+  position: fixed;
+    /* display: block; */
+    left: 38%;
+    top: 30%;
+    z-index: 99;
+}
+.update-requirement:hover{
+  display: block !important;
 }
 </style>
