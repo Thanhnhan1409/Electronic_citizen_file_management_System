@@ -15,7 +15,7 @@
 
 <script>
 export default{
-    props:[ 'title'],
+    props:[ 'title','activity'],
     methods:{
         showAddApp(){
             this.$emit('showAddApp')

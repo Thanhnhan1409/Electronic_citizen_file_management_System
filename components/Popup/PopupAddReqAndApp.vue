@@ -1,56 +1,55 @@
 <template>
   <div class="container-popup">
-    <div class="overlay"  @click.prevent="closePopUp()"></div>
+    <div class="overlay" @click.prevent="closePopUp()"></div>
     <div class="popup-AddAppoint">
       <h3>{{ title }}</h3>
       <div class="content">
-        <div class="content--item"  v-show="obj !== 'opinion'">
-          <p>{{obj === 'poliForwardRequirement'? 'ID CBCC chuyển tiếp:':'ID CBCC:'}}</p>
+        <div class="content--item" v-show="obj !== 'opinion'">
+          <p>
+            {{
+              obj === "poliForwardRequirement"
+                ? "ID CBCC chuyển tiếp:"
+                : "ID CBCC:"
+            }}
+          </p>
           <input
             :value="
-              obj == 'appointment'
+              obj === 'appointment'
                 ? appointment.politician_id
                 : obj === 'poliForwardRequirement'
-                ? idPoliForward
+                ? idPoliForward.id
                 : obj === 'requirement'
                 ? requirement.idPoli
-                :''
+                : ''
             "
             @input="
-              obj == 'appointment'
+              obj === 'appointment'
                 ? (appointment.politician_id = $event.target.value)
-                : obj === 'poliForwardRequirement'
-                ? ''
                 : obj === 'requirement'
                 ? (requirement.idPoli = $event.target.value)
-                :(opinion.author_id = $event.target.value)
+                : obj === 'poliForwardRequirement'
+                ? (idPoliForward.id = $event.target.value)
+                : ''
             "
             type="text"
-            v-validate="'required'"
-            :class="{ input: true, 'is-danger': errors.has('Id Policitian') }"
-            name="Id Policitian"
-            id=""
+            :class="{ input: true, 'is-danger': errors.has('idPoli') }"
+            :name="''"
             placeholder="Nhập số ID CBCC"
+            name="Nhập nội dung"
+            id="input-idPoli"
             autocomplete="on"
           />
-          <span v-show="errors.has('Id Policitian')" class="err">{{
-            errors.first("Id Policitian")
+          <span v-show="errors.has('idPoli')" class="err">{{
+            errors.first("idPoli")
           }}</span>
         </div>
+
         <div class="content--item" v-show="obj === 'appointment'">
           <p>Ngày</p>
           <input
-            
-            :value="
-              obj == 'appointment'
-                ? appointment.appointmentDate
-                : ''
-            "
-            @input="
-              obj == 'appointment'
-                ? (appointment.appointmentDate = $event.target.value)
-                : ''
-            "
+            :value="obj == 'appointment' ? appointment.appointmentDate : ''"
+            @input="obj === 'appointment' ? (appointment.politician_id = $event.target.value) : (obj === 'poliForwardRequirement' ? '' : (obj === 'requirement' ? (requirement.idPoli = $event.target.value) : (opinion.author_id = $event.target.value)))"
+
             type="date"
             v-validate="'required'"
             :class="{ input: true, 'is-danger': errors.has('Ngày') }"
@@ -64,14 +63,10 @@
           }}</span>
         </div>
 
-        <div class="content--item" v-show="obj == 'appointment'">
+        <div class="content--item" v-show="obj === 'appointment'">
           <p>Thời gian bắt đầu:</p>
           <input
-          :value="
-              obj == 'appointment'
-                ? appointment.startTime
-                : ''
-            "
+            :value="obj == 'appointment' ? appointment.startTime : ''"
             @input="
               obj == 'appointment'
                 ? (appointment.startTime = $event.target.value)
@@ -92,14 +87,10 @@
           }}</span>
         </div>
 
-        <div class="content--item" v-show="obj == 'appointment'">
+        <div class="content--item" v-show="obj === 'appointment'">
           <p>Thời gian kết thúc:</p>
           <input
-            :value="
-              obj == 'appointment'
-                ? appointment.endTime
-                : ''
-            "
+            :value="obj == 'appointment' ? appointment.endTime : ''"
             @input="
               obj == 'appointment'
                 ? (appointment.endTime = $event.target.value)
@@ -123,14 +114,14 @@
         <div class="content--item" v-show="obj !== 'poliForwardRequirement'">
           <p>Nội dung</p>
           <textarea
-          :value="
+            :value="
               obj == 'appointment'
                 ? appointment.description
                 : obj == 'requirement'
                 ? requirement.description
                 : obj === 'poliForwardRequirement'
                 ? ''
-                :opinion.description
+                : opinion.description
             "
             @input="
               obj == 'appointment'
@@ -177,7 +168,14 @@
 
 <script>
 export default {
-  props: ["appointment", "requirement", "opinion", "obj", "title"],
+  props: [
+    "appointment",
+    "requirement",
+    "opinion",
+    "obj",
+    "title",
+    "idPoliForward",
+  ],
   methods: {
     closePopUp() {
       this.$emit("closePopup");

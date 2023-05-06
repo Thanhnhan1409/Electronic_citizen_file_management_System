@@ -84,7 +84,7 @@
         class="seeInfor--form"
       />
       <ListInfor6Colums
-        :listTmp="listPoli"
+        :listTmp="isShow === true ? listPoli : listTmp1"
         :object="'poli'"
         :title="'cán bộ công chức trên cả nước'"
         @pushToDetailInfor="pushToDetailInfor"
@@ -103,31 +103,36 @@ export default {
       listWard: [],
       listInfor: {},
       idSearch: "",
-      listLevelPoli: ["Cả nước","Tỉnh", "Huyện/Thành phố", "Xã/Thị trấn"],
+      listLevelPoli: ["Cả nước", "Tỉnh", "Huyện/Thành phố", "Xã/Thị trấn"],
       inforSearch: {},
       levelManager: "Cả nước",
-      isShowCity:false,
+      isShowCity: false,
       isShowDistrict: false,
       isShowTown: false,
+      isShow: true,
     };
+  },
+  computed: {
+    listTmp1() {
+      return this.listPoli.filter(
+        (item) => item.citizen.citizenId.toString() == this.idSearch
+      );
+    },
   },
   mounted() {
     this.getCity();
-    // this.fetchData();
   },
   methods: {
     async fetchData() {
       try {
-        this.checkLevel();
-        let url = `http://localhost:8080/api/politician/listPolitician/country`;
-        if( this.levelManager !=='Cả nước'){
-          url = `http://localhost:8080/api/politician/listPolitician/?levelManageEncode=${
-            this.inforSearch.level
-          }&areaManageEncode=${encodeURIComponent(this.inforSearch.add)}`;
-        }
-        await this.$axios
-          .get(url)
-          .then((res) => {
+          this.checkLevel();
+          let url = `http://localhost:8080/api/politician/listPolitician/country`;
+          if (this.levelManager !== "Cả nước") {
+            url = `http://localhost:8080/api/politician/listPolitician/?levelManageEncode=${
+              this.inforSearch.level
+            }&areaManageEncode=${encodeURIComponent(this.inforSearch.add)}`;
+          }
+          await this.$axios.get(url).then((res) => {
             this.listPoli = res.data;
             this.listPoli.forEach((politician) => {
               politician.levelManagerVN = this.checkLevelManager(politician);
@@ -190,21 +195,21 @@ export default {
     async checkLevel() {
       if (this.levelManager === "Tỉnh") {
         this.inforSearch.level = "city";
-        this.isShowCity=true;
+        this.isShowCity = true;
         this.isShowDistrict = false;
         this.isShowTown = false;
       } else if (this.levelManager === "Huyện/Thành phố") {
         this.inforSearch.level = "district";
-        this.isShowCity=true;
+        this.isShowCity = true;
         this.isShowDistrict = true;
         this.isShowTown = false;
       } else if (this.levelManager === "Xã/Thị trấn") {
         this.inforSearch.level = "ward";
-        this.isShowCity=true;
+        this.isShowCity = true;
         this.isShowDistrict = true;
         this.isShowTown = true;
       } else {
-        this.isShowCity=false;
+        this.isShowCity = false;
         this.isShowDistrict = false;
         this.isShowTown = false;
       }
@@ -235,7 +240,7 @@ export default {
 };
 </script>
 
-<style scoped src="../../../static/asset/styles.css"></style>
+<style scoped src="~/static/asset/styles.css"></style>
 <style scoped>
 .list-appointment[data-v-05331f66] {
   padding-top: 100px;

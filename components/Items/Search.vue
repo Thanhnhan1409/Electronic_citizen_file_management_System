@@ -54,10 +54,11 @@ export default {
 
 <style scoped>
 .container {
-    width: 100%;
+    width: fit-content;
 }
 .form{
     position: relative;
+    width: fit-content;
 }
 .input-search {
     width: 200px;

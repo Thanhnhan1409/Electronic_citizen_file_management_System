@@ -1,6 +1,7 @@
 import vue from 'vue';
 
 import Search from '@/components/Items/Search.vue';
+import FilterList from '@/components/Items/FilterList.vue';
 import BackToList from '@/components/Items/BackToList.vue';
 import ButtonDownload from '@/components/Items/ButtonDownload.vue';
 import Tableft from '@/components/Layouts/Tableft.vue';
@@ -19,7 +20,7 @@ import ListInfor6Colums from '@/components/Users/ListInfor6Colums.vue';
 import ListInfor4Colums from '@/components/Users/ListInfor4Colums.vue';
 import AddOrUpdatePoli from '@/components/Users/AddOrUpdatePoli.vue';
 import PopupAddReqAndApp from '@/components/Popup/PopupAddReqAndApp.vue';
-import ButtonAdd from '@/components/Popup/ButtonAdd.vue';
+import ButtonAdd from '@/components/Items/ButtonAdd.vue';
 
 
 vue.component('PopupConfirm',PopupConfirm)
@@ -42,6 +43,8 @@ vue.component('ListInfor6Colums',ListInfor6Colums)
 vue.component('ListAppointment',ListAppointment)
 vue.component('AddOrUpdatePoli',AddOrUpdatePoli)
 vue.component('BackToList',BackToList)
+vue.component('FilterList',FilterList)
+
 
 
 

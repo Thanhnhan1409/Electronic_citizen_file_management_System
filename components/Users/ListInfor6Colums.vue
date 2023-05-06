@@ -3,7 +3,7 @@
     <div class="list-appointment">
       <h2
         :class="
-          object === 'poli' || object === 'poliListCitizen'
+          object === 'poli'
             ? 'title-poli'
             : 'title'
         "
@@ -144,17 +144,40 @@
                   @closePopup="closePopup"
                 >
                 </PopupConfirm>
-                <Notification
+                <!-- <Notification
                   :status="status"
                   :object="'yêu cầu'"
                   :action="'Xóa'"
                   :isShowNoti="showNoti"
                   v-if="showNoti == 'Ok'"
                 >
-                </Notification>
+                </Notification> -->
               </ul>
             </div>
-            
+            <div class="status col col-7" v-if="object === 'poliRequirement'">
+              <svg
+                class="icon__status-dot"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 128 512"
+              >
+                <path
+                  d="M56 472a56 56 0 1 1 0-112 56 56 0 1 1 0 112zm0-160a56 56 0 1 1 0-112 56 56 0 1 1 0 112zM0 96a56 56 0 1 1 112 0A56 56 0 1 1 0 96z"
+                />
+              </svg>
+              <ul class="status-action">
+                <li @click.prevent="handleAccept" class="accept-status">Chấp nhận</li>
+                <li @click.prevent="handleDenied" class="deny-status">Từ chối</li>
+                <li @click.prevent="openPopUp(item)" >Chuyển tiếp</li>
+                
+                <PopupConfirm
+                  :title="updatedStatus ==='denied'?  'đổi trạng thái sang từ chối': 'đổi trạng thái sang chấp nhận'"
+                  @action="updatedStatus ==='denied'? denied(item):Accept(item) "
+                  v-show="isShowPopup === true"
+                  @closePopup="closePopup"
+                >
+                </PopupConfirm>
+              </ul>
+            </div>
           </li>
         </ul>
       </ul>
@@ -164,12 +187,15 @@
 
 <script>
 export default {
-  props: ["object", "listTmp", "title", "updatePopup"],
+  props: ["object", "listTmp", "title", "updatePopup","updateStatus"],
   data() {
     return {
       isShowPopupDelete: false,
       status: "",
       showNoti: "",
+      updatedStatus:'',
+      isShowPopup:''
+
     };
   },
   methods: {
@@ -186,6 +212,34 @@ export default {
     },
     closePopup() {
       this.isShowPopupDelete = false;
+      this.isShowPopup = false;
+    },
+    handleAccept(){
+      this.isShowPopup = true ;
+      this.updatedStatus = 'accept';
+
+    },
+    handleDenied(){
+      this.isShowPopup = true ;
+      this.updatedStatus = 'denied';
+    },
+    openPopUp(item) {
+      console.log("hehehe m co hien len noi kh");
+
+      this.$emit("openPopup",item)
+    },
+    Accept(item) {
+      // this.updateStatus = "Chấp nhận";
+      this.$emit("accept",item)
+      this.isShowPopup=false;
+      // this.renderAllReq();
+    },
+    denied(item) {
+      // this.updateStatus = "Từ chối";
+      this.$emit("denied",item)
+      this.isShowPopup=false;
+
+
     },
   },
 };
@@ -295,6 +349,45 @@ export default {
   fill: green;
 }
 .icon__status-dot:hover + .update-app {
+  opacity: 1;
+  visibility: visible;
+  display: block;
+}
+.status-action {
+  padding: 10px 15px;
+  box-shadow: 3px 3px 10px #cccccc;
+  background-color: #fff;
+  border-radius: 5px;
+  width: 100px;
+  font-size: 15px;
+  z-index: 3;
+  transition: all 0.2s linear;
+  opacity: 0;
+  visibility: hidden;
+}
+.status-action li {
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.status-action li:hover {
+  color: rgb(196, 152, 20);
+  font-weight: 550;
+}
+.status-action .accept-status:hover {
+  color: #127E23;
+  font-weight: 550;
+}
+.status-action .deny-status:hover {
+  color: rgb(196, 29, 20);
+  font-weight: 550;
+}
+.icon__status-dot:hover + .status-action {
+  opacity: 1;
+  visibility: visible;
+  display: block;
+}
+.status-action:hover {
   opacity: 1;
   visibility: visible;
   display: block;
