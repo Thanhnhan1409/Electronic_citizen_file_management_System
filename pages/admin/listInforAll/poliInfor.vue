@@ -2,7 +2,9 @@
   <div class="container">
     <BackToList class="backtolist"/>
     <InforCitizenNew class="infor-citizen" :list-infor="list" />
-    <h2>Thông tin cá nhân</h2>
+    <InforPoli
+    :listPoli="listPoli"
+    />
     <div class="admin-delete">
       <p class="admin-delInfo">Xóa tài khoản</p>
       <svg class="admin__icon--arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
@@ -81,6 +83,7 @@ export default {
         )
           .then((res) => {
             this.listPoli = res['data'];
+            this.listPoli.levelManagerVN = this.checkLevelManager(this.listPoli);
             console.log(this.listPoli);
 
           });
@@ -154,6 +157,20 @@ export default {
     },
     closePopup() {
       this.isShowPopup = false;
+    },
+    checkLevelManager(item) {
+      if (item.levelManager === "city") {
+        return "Tỉnh";
+      }
+      if (item.levelManager === "district") {
+        return "Huyện/Thành phố";
+      }
+      if (item.levelManager === "ward") {
+        return "Thị trấn/Xã";
+      }
+      if (item.levelManager === "quarter") {
+        return "Khối/Làng";
+      }
     },
   },
 }
@@ -236,7 +253,7 @@ img {
 }
 .admin-delete{
   position: absolute;
-  top: 220px;
+  top: 120px;
   right: 40px;
 }
 .admin-delete:hover .addmin-del-options {

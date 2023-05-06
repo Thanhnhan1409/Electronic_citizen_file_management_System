@@ -1,21 +1,15 @@
 <template>
   <div class="container">
-      <h2 class="title">
-        <!-- Danh sách công dân tại {{ this.level }} {{ this.nameArea }} -->
-      </h2>
-      <ButtonDownload
+    <h2 class="title">
+      <!-- Danh sách công dân tại {{ this.level }} {{ this.nameArea }} -->
+    </h2>
+    <ButtonDownload
       :urlDownloadPDF="urlDownloadPDF"
       :urlDownloadXLS="urlDownloadXLS"
-      />
-      <Search
-        v-model="idSearch"
-        @search="handleSearch"
-        class="seeInfor--form"
-      />
-      <button @click="isShow = true" class="button-show">
-        Hiển thị toàn bộ
-      </button>
-      <ListInfor6Colums
+    />
+    <Search v-model="idSearch" @search="handleSearch" class="seeInfor--form" />
+    <button @click="isShow = true" class="button-show">Hiển thị toàn bộ</button>
+    <ListInfor6Colums
       :listTmp="isShow === true ? listCitizen : listTmp"
       :object="'poliListCitizen'"
       :title="'công dân'"
@@ -37,8 +31,8 @@ export default {
       idSearch: "",
       isShow: true,
       fUrl: "http://localhost:8080/api/citizen/listCitizen/",
-      urlDownloadPDF:'',
-      urlDownloadXLS:''
+      urlDownloadPDF: "",
+      urlDownloadXLS: "",
     };
   },
   mounted() {
@@ -47,13 +41,14 @@ export default {
     this.nameArea = localStorage.getItem("nameArea");
     this.checkLevelManager();
     this.fetchData();
-    this.urlDownloadPDF=`http://localhost:8080/api/citizen/export-to-pdf/citizen/poliId=${this.id}`
-    this.urlDownloadXLS=`http://localhost:8080/api/citizen/export-to-pdf/citizen/poliId=${this.id}`
-
+    this.urlDownloadPDF = `http://localhost:8080/api/citizen/export-to-pdf/citizen/poliId=${this.id}`;
+    this.urlDownloadXLS = `http://localhost:8080/api/citizen/export-to-pdf/citizen/poliId=${this.id}`;
   },
   computed: {
     listTmp() {
-      return this.listCitizen.filter((item) => item.citizenId == this.idSearch || item.name === this.idSearch);
+      return this.listCitizen.filter(
+        (item) => item.citizenId == this.idSearch || item.name === this.idSearch
+      );
     },
   },
   methods: {
@@ -81,14 +76,16 @@ export default {
     async fetchData() {
       try {
         console.log("aaa" + this.nameArea);
-        await this.$axios.get(`${this.url}`).then((res) => {
+        await this.$axios
+        .get(`${this.url}`)
+        .then((res) => {
           this.listCitizen = res.data;
           console.log(res);
         });
       } catch (error) {
         console.log(error);
       }
-    }
+    },
   },
 };
 </script>

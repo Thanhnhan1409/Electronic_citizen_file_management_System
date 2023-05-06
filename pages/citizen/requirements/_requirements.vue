@@ -7,7 +7,10 @@
       :title="'các yêu cầu đã gửi'"
       @deleteRequirement="deleteRequirement"
     />
-    <ButtonAdd :title="'Thêm yêu cầu'" @showAddApp="showAddReqf" />
+    <ButtonAdd 
+    :title="'Thêm yêu cầu'" 
+    @showAddApp="showAddReqf" 
+    />
     <PopupAddReqAndApp
       v-show="showAddReq"
       :requirement="requirement"
@@ -17,8 +20,8 @@
       @action="openPopupConfirm()"
     />
     <PopupConfirm
-      :title="activity === 'add'? 'thêm yêu cầu' : 'cập nhật yêu cầu'"
-      @action=" activity === 'add'? addRequirement() : updateRequirement()"
+      :title="'thêm yêu cầu' "
+      @action="addRequirement() "
       v-show="isShowPopup"
       @closePopup="closePopup"
     >
@@ -26,15 +29,11 @@
     <Notification
       :status="status"
       :object="'yêu cầu'"
-      :action="activity==='add'
-      ?'Thêm'
-      : activity === 'update'
-      ? 'cập nhật'
-      : 'Xóa'"
+      :action="activity === 'delete'? 'Xoá' : 'Thêm'"
       :isShowNoti="showNoti"
       v-if="showNoti == 'Ok'"
     >
-    </Notification>
+    </Notification> 
   </div>
 </template>
 
@@ -90,6 +89,7 @@ export default {
               this.showNoti = "";
             }, 1500);
           });
+        await this.getListRequirement()
       } catch (error) {
         this.isShowPopup = false;
         this.status = "thất bại";
@@ -108,12 +108,14 @@ export default {
           .delete(`http://localhost:8080/api/requirement/${id_requirement}`)
           .then((res) => {
             this.status = "thành công";
+            this.activity ='delete'
             this.showNoti = "Ok";
             this.isShowPopup = false;
             setTimeout(() => {
               this.showNoti = "";
             }, 1500);
           });
+        await this.getListRequirement()
       } catch (error) {
         this.isShowPopup = false;
         this.status = "thất bại";

@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div id="overlay" v-show="isShowForward"></div>
-    <h2 class="title">Danh sách các yêu cầu của công dân tại {{ nameArea }}</h2>
     <select
       class="req-combobox"
       @change="renderReq"
@@ -15,68 +14,15 @@
       <option value="Chấp nhận">Chấp nhận</option>
       <option value="Từ chối">Từ chối</option>
     </select>
-    <div class="list-requirements">
-      <ul class="responsive-table">
-        <li class="table-header">
-          <div class="col col-0">STT</div>
-          <div class="col col-1">Số CCCD</div>
-          <div class="col col-2">Tên</div>
-          <div class="col col-3">Ngày</div>
-          <div class="col col-7">Nội dung</div>
-          <div class="col col-6">Trạng thái</div>
-        </li>
-        <ul
-          class="responsive-table content"
-          v-for="(item, index) in listTmp"
-          :key="item.id_requirement"
-        >
-          <li class="table-row display">
-            <div class="col col-0" data-label="STT">{{ index + 1 }}</div>
-            <div class="col col-1" data-label="Số CCCD công dân">
-              {{ item.author.citizenId }}
-            </div>
-            <div class="col col-2" data-label="Tên">{{ item.author.name }}</div>
-            <div class="col col-3" data-label="Ngày">{{ item.date }}</div>
-            <div class="col col-7" data-label="Nội dung">
-              {{ item.description }}
-            </div>
-            <div class="col col-6" data-label="Trạng thái">
-              <span class="status-waiting">{{ item.status }}</span>
-            </div>
-            <div class="status col col-8">
-              <svg
-                class="icon__status-dot"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 128 512"
-              >
-                <path
-                  d="M56 472a56 56 0 1 1 0-112 56 56 0 1 1 0 112zm0-160a56 56 0 1 1 0-112 56 56 0 1 1 0 112zM0 96a56 56 0 1 1 112 0A56 56 0 1 1 0 96z"
-                />
-              </svg>
-              <ul class="status-action">
-                <li @click.prevent="handleAccept" class="accept-status">Chấp nhận</li>
-                <li @click.prevent="handleDenied = 'popupDenied'" class="deny-status">Từ chối</li>
-                <li @click.prevent="openPopUp(item)" >Chuyển tiếp</li>
-                <!-- <PopupConfirm
-                  :title="'đổi trạng thái sang chấp nhận'"
-                  @action="Accept(item)"
-                  v-show="isShowPopup == 'popupAccept'"
-                  @closePopup="closePopup"
-                >
-                </PopupConfirm> -->
-                <PopupConfirm
-                  :title="updatedStatus ==='denied'?  'đổi trạng thái sang từ chối': 'đổi trạng thái sang chấp nhận'"
-                  @action="updatedStatus ==='denied'? denied(item):Accept(item) "
-                  v-show="isShowPopup === true"
-                  @closePopup="closePopup"
-                >
-                </PopupConfirm>
-              </ul>
-            </div>
-          </li>
-        </ul>
-      </ul>
-    </div>
+    <ListInfor6Colums
+      :listTmp="listTmp"
+      :object="'poliRequirement'"
+      :title="`các yêu cầu của công dân tại ${nameArea}`"
+      :updateStatus="updateStatus"
+      @denied="denied"
+      @accept="accept"
+      @openPopup="openPopUp"
+    />
     <!-- <form id="popUp-forward" v-show="isShowForward">
       <svg
         @click.prevent="isShowForward = false"
@@ -102,10 +48,10 @@
     </form> -->
     <PopupAddReqAndApp
       :idPoliForward="idPoliForward"
-      :obj="'forwardRequirement'"
+      :obj="object"
       :title="'Chuyển tiếp yêu cầu'"
       @action="openPopUpForwardConfirm"
-      @closePopUp="closePopupForward()"
+      @closePopup="closePopupForward()"
       v-show="isShowForward"
     />
     <PopupConfirm
@@ -117,8 +63,8 @@
     </PopupConfirm>
     <Notification
       :status="status"
-      :object="'tài khoản'"
-      :action="'Cập nhật'"
+      :object="object === 'poliForwardRequirement' ? 'yêu cầu' : 'trạng thái'"
+      :action="object === 'poliForwardRequirement' ? 'Chuyển tiếp' : 'Cập nhật'"
       :isShowNoti="showNoti"
       v-if="showNoti == 'Ok'"
     >
@@ -134,15 +80,15 @@ export default {
       idPoli: null,
       idStatus: null,
       updateStatus: "",
-      idPoliForward: "",
       idReq: "",
       nameArea: "",
-      isShowPopup: "",
       isShowForward: false,
       isShowPopupForwardConfirm: false,
       status: "",
+      idPoliForward: {},
       showNoti: "",
-      updatedStatus:''
+      updatedStatus: "",
+      object: "poliForwardRequirement",
     };
   },
   mounted() {
@@ -152,13 +98,11 @@ export default {
   },
   methods: {
     renderAllReq() {
-      // this.hideOptionsTohandleStatus();
       this.listTmp.splice(0, this.listTmp.length);
       for (let i = 0; i < this.listAppointment.length; i++)
         this.listTmp.push(this.listAppointment[i]);
     },
     renderWaitingReq() {
-      // this.renderOptionsTohandleStatus()
       this.listTmp.splice(0, this.listTmp.length);
       for (let i = 0; i < this.listAppointment.length; i++)
         if (this.listAppointment[i].status == "Đang xử lý") {
@@ -191,8 +135,7 @@ export default {
             }
           )
           .then((res) => {
-            this.isShowPopup = false;
-            this.listAppointment = res.data;
+            this.fetchData();
             this.status = "thành công";
             this.showNoti = "Ok";
             setTimeout(() => {
@@ -227,26 +170,23 @@ export default {
         console.log(error);
       }
     },
-    Accept(item) {
+    accept(item) {
       this.idStatus = item.id_requirement;
       this.updateStatus = "Chấp nhận";
       this.patchStatus();
-      this.listTmp = this.listAppointment.slice();
-      // this.renderAllReq();
     },
     denied(item) {
       this.idStatus = item.id_requirement;
       this.updateStatus = "Từ chối";
       this.patchStatus();
-      this.listTmp = this.listAppointment.slice();
     },
     changeStatus() {
       this.patchStatus();
-      this.listTmp = this.listAppointment.slice();
       this.renderAllReq();
       this.closePopUpChangeStatus();
     },
     openPopUp(item) {
+      console.log("m co hien len noi kh");
       this.isShowForward = true;
       this.idReq = item.id_requirement;
     },
@@ -259,21 +199,32 @@ export default {
       this.isShowPopupForwardConfirm = true;
       this.isShowForward = false;
     },
-    closePopupForward(){
-      this.isShowForward = false
+    closePopupForward() {
+      this.isShowForward = false;
     },
     async forward() {
       try {
         console.log("chuyen");
+        console.log(this.idPoliForward);
         await this.$axios
           .put(
-            `http://localhost:8080/api/requirement/forwardRequest?idReq=${this.idReq}&idPoli=${this.idPoliForward}`
+            `http://localhost:8080/api/requirement/forwardRequest?idReq=${this.idReq}&idPoli=${this.idPoliForward.id}`
           )
           .then((res) => {
             // alert("Chuyển thành công!");
+            this.status = "thành công";
+            this.showNoti = "Ok";
+            setTimeout(() => {
+              this.showNoti = "";
+            }, 1500);
             this.isShowPopupForwardConfirm = false;
           });
       } catch (error) {
+        this.status = "thất bại";
+        this.showNoti = "Ok";
+        setTimeout(() => {
+          this.showNoti = "";
+        }, 1500);
         console.log(error);
       }
     },
@@ -284,16 +235,6 @@ export default {
       else if (this.status == "Chấp nhận") this.renderAcceptReq();
       else this.renderDeniedReq();
     },
-    handleAccept(){
-      this.isShowPopup = true ;
-      this.updatedStatus = 'accept';
-
-    },
-    handleAccept(){
-      this.isShowPopup = true ;
-      this.updatedStatus = 'denied';
-
-    }
   },
 };
 </script>
@@ -453,7 +394,7 @@ export default {
   font-weight: 550;
 }
 .status-action .accept-status:hover {
-  color: #127E23;
+  color: #127e23;
   font-weight: 550;
 }
 .status-action .deny-status:hover {
@@ -482,6 +423,4 @@ export default {
   visibility: visible;
   display: block;
 }
-
-
 </style>

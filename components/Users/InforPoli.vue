@@ -16,7 +16,7 @@
                 <li class="content--item div-center">
                     <div class="left">
                         Cấp vụ:
-                        <span>{{listPoli.levelManager}}</span>
+                        <span>{{listPoli.levelManagerVN}}</span>
                     </div>
                     <div>
                         Chức danh:
