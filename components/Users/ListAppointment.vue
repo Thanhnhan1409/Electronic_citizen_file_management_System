@@ -382,7 +382,6 @@ export default {
   left: 300px;
   top: 140px;
 }
-
 #form-date {
   margin-left: 10px;
   padding: 3px 10px;
@@ -390,45 +389,35 @@ export default {
   box-shadow: 3px 3px 10px 2px rgb(226, 224, 226);
   border-radius: 8px;
 }
-
 .responsive-table .col-0 {
   flex-basis: 10%;
 }
-
 .responsive-table .col-1 {
   flex-basis: 10%;
 }
-
 .responsive-table .col-2 {
   flex-basis: 10%;
 }
-
 .responsive-table .col-3 {
   flex-basis: 10%;
 }
-
 .responsive-table .col-4 {
   flex-basis: 10%;
 }
-
 .responsive-table .col-5 {
   flex-basis: 10%;
 }
-
 .responsive-table .col-6 {
   flex-basis: 15%;
 }
-
 .responsive-table .col-7 {
   flex-basis: 20%;
 }
-
 .status {
   position: absolute;
   right: 55px;
   top: 5px;
 }
-
 .status-action {
   padding: 10px 15px;
   box-shadow: 3px 3px 10px #cccccc;
@@ -438,25 +427,23 @@ export default {
   font-size: 15px;
   z-index: 3;
   transition: all 0.2s linear;
-  opacity: 0;
-  visibility: hidden;
+  display: none;
+  /* opacity: 0;
+  visibility: hidden; */
 }
 .status-action li {
   padding: 0;
   margin: 0;
   cursor: pointer;
 }
-
 .status-action li:hover {
   color: #127e23;
   font-weight: 550;
 }
-
 .status-action .deny-status:hover {
   color: rgb(125, 6, 6);
   font-weight: 550;
 }
-
 .icon__status-dot {
   position: absolute;
   right: 0px;
@@ -466,14 +453,13 @@ export default {
   cursor: pointer;
   /* z-index: 4; */
 }
-
 .icon__status-dot:hover {
   fill: #127e23;
 }
 
-.icon__status-dot:hover + .status-action {
-  opacity: 1;
-  visibility: visible;
+.status:hover .status-action {
+  /* opacity: 1;
+  visibility: visible; */
   display: block;
 }
 
@@ -507,4 +493,6 @@ export default {
 .update-requirement:hover{
   display: block !important;
 }
+
+
 </style>
