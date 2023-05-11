@@ -74,7 +74,7 @@ export default {
             this.showNoti = "Ok";
             setTimeout(() => {
               this.showNoti = "";
-              this.$router.push("/poli/seeInforCitizen")
+              this.$router.push("/poli/viewInforCitizen")
             }, 1500);
             this.list = res.data;
             this.isShowPopup = false;

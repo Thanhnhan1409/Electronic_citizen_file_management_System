@@ -2,7 +2,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'test',
+    title: 'Hệ thống quản lý hồ sơ điện tử công dân',
     htmlAttrs: {
       lang: 'en'
     },

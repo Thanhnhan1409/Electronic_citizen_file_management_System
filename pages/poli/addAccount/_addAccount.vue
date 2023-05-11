@@ -54,7 +54,8 @@ export default {
             this.isShowPopup = false;
             setTimeout(() => {
               this.showNoti = "";
-              this.$router.push("/poli/inforPoli/_inforPoli");
+            //this.$router.push("/poli/inforPoli");
+              this.$router.push("/poli");
             }, 1500);
           });
         console.log(this.list);

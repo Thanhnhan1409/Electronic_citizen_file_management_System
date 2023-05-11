@@ -113,7 +113,8 @@ export default {
                 this.showNoti = "Ok";
                 return setTimeout(() => {
                   this.showNoti = "";
-                  this.$router.push("/poli/inforPoli");
+                  //this.$router.push("/poli/inforPoli");
+                  this.$router.push("/poli");
                 }, 1000);
                 break;
               } else if (item === "ADMIN"){
