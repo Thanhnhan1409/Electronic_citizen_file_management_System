@@ -65,7 +65,7 @@ export default{
       },
       handleClick(citizenId) {
       localStorage.setItem("idCitizenOfSeeInforCitizen", citizenId);
-      this.$router.push("/poli/seeInforCitizen/inforCitizen");
+      this.$router.push("/poli/viewInforCitizen/inforCitizen");
       console.log(this.idCitizen);
     },
   }

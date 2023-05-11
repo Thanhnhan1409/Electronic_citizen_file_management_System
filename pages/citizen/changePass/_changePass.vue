@@ -80,8 +80,8 @@ export default {
           .then((res) => {
             console.log("test2");
             //index=>inforPoli
-            
-            this.$router.push("/poli/inforPoli");
+            //this.$router.push("/poli/inforPoli");
+            this.$router.push("/poli");
           });
         console.log(this.changePass);
       } catch (error) {

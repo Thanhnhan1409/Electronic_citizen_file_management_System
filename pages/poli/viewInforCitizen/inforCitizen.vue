@@ -60,7 +60,9 @@ export default {
             this.showNoti = "Ok";
             setTimeout(() => {
               this.showNoti = "";
-              this.$router.push("/poli/inforPoli");
+            //this.$router.push("/poli/inforPoli");
+
+              this.$router.push("/poli");
             }, 1500);
           });
         console.log(this.list);

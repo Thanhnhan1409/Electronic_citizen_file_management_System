@@ -2,7 +2,7 @@
   <div class="container">
     <BackToList />
     <div class="content">
-      <nuxt-link to="/admin/updateInfor/updateInforPoli">
+      <nuxt-link to="/admin/update/updateInforPoli">
         <div class="update--role">
           Cập nhật quyền quản lý
           <svg

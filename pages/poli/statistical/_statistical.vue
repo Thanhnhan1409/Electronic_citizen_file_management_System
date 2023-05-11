@@ -246,7 +246,7 @@ export default {
       this.$router.push("/poli/statistical/listOfCriminal");
     },
     pushToList() {
-      this.$router.push("/poli/seeInforCitizen");
+      this.$router.push("/poli/viewInforCitizen");
     }
   },
 };

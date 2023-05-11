@@ -181,11 +181,13 @@ export default {
       status: "",
       showNoti: "",
       isShowPopupUpdate: false,
-      dataTmp:{}
+      dataTmp:{},
+      idCitizen: null
     };
   },
   mounted() {
     this.idPoli = localStorage.getItem("idPolicitian");
+    this.idCitizen = localStorage.getItem("id")
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') {
         this.isPopupVisible = true;
@@ -291,13 +293,11 @@ export default {
       this.isShowPopupUpdate = false;
     },
     async update(item) {
-      //update appoitment
-      //   this.item.politician_id = this.item.politicianId
-      //   this.$emit("update", item);
       try {
         this.isShowPopup = '';
+        item.citizen_id = this.idCitizen
         await this.$axios
-          .put(`http://localhost:8080/api/appointment/update/${item.id}`, item)
+          .put(`http://localhost:8080/api/appointment/update/id=${item.id}`, item)
           .then((res) => {
             this.status = "thành công";
             this.showNoti = "Ok";
