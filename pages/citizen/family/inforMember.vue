@@ -14,7 +14,7 @@ export default {
         };
     },
     mounted() {
-        this.id = localStorage.getItem("idMember");
+        this.id = localStorage.getItem("idViewInfor");
         this.fetchData();
     },
     methods: {

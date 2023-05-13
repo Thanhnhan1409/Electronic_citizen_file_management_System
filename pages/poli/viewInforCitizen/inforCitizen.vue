@@ -36,7 +36,7 @@ export default {
     };
   },
   mounted() {
-    this.id = localStorage.getItem("idCitizenOfSeeInforCitizen");
+    this.id = localStorage.getItem("idViewInfor");
     this.fetchDataCitizen();
   },
   methods: {
