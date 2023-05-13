@@ -125,19 +125,19 @@ export default {
   methods: {
     async fetchData() {
       try {
-          this.checkLevel();
-          let url = `http://localhost:8080/api/politician/listPolitician/country`;
-          if (this.levelManager !== "Cả nước") {
-            url = `http://localhost:8080/api/politician/listPolitician/?levelManageEncode=${
-              this.inforSearch.level
-            }&areaManageEncode=${encodeURIComponent(this.inforSearch.add)}`;
-          }
-          await this.$axios.get(url).then((res) => {
-            this.listPoli = res.data;
-            this.listPoli.forEach((politician) => {
-              politician.levelManagerVN = this.checkLevelManager(politician);
-            });
+        this.checkLevel();
+        let url = `http://localhost:8080/api/politician/listPolitician/country`;
+        if (this.levelManager !== "Cả nước") {
+          url = `http://localhost:8080/api/politician/listPolitician/?levelManageEncode=${
+            this.inforSearch.level
+          }&areaManageEncode=${encodeURIComponent(this.inforSearch.add)}`;
+        }
+        await this.$axios.get(url).then((res) => {
+          this.listPoli = res.data;
+          this.listPoli.forEach((politician) => {
+            politician.levelManagerVN = this.checkLevelManager(politician);
           });
+        });
       } catch (error) {
         console.log(error);
       }
@@ -215,17 +215,21 @@ export default {
       }
     },
     checkLevelManager(item) {
-      if (item.levelManager === "city") {
-        return "Tỉnh";
-      }
-      if (item.levelManager === "district") {
-        return "Huyện/Thành phố";
-      }
-      if (item.levelManager === "ward") {
-        return "Thị trấn/Xã";
-      }
-      if (item.levelManager === "quarter") {
-        return "Khối/Làng";
+      switch (item.levelManager) {
+        case "city": {
+          return "Tỉnh";
+        }
+        case "district": {
+          return "Huyện/Thành phố";
+        }
+        case "ward": {
+          return "Thị trấn/Xã";
+        }
+        case "quarter": {
+          return "Khối/Làng";
+        }
+        default:
+          break;
       }
     },
     handleSearch(id) {

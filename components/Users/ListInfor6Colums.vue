@@ -144,14 +144,6 @@
                   @closePopup="closePopup"
                 >
                 </PopupConfirm>
-                <!-- <Notification
-                  :status="status"
-                  :object="'yêu cầu'"
-                  :action="'Xóa'"
-                  :isShowNoti="showNoti"
-                  v-if="showNoti == 'Ok'"
-                >
-                </Notification> -->
               </ul>
             </div>
             <div class="status col col-7" v-if="object === 'poliRequirement'">
@@ -200,9 +192,12 @@ export default {
   },
   methods: {
     handleClick(item) {
+      
       if (this.object === "family" || this.object === "poliListCitizen") {
+        localStorage.setItem("idViewInfor", item.citizenId)
         this.$emit("pushToDetailInfor", item.citizenId);
       } else if ( this.object === "poli") {
+        localStorage.setItem("idViewInfor",item.citizen.citizenId)
         this.$emit("pushToDetailInfor", item.citizen.citizenId);
       }
     },

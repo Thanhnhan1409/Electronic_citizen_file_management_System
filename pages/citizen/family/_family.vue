@@ -36,7 +36,6 @@ export default {
             
         },
         pushToDetailInfor(id){
-            localStorage.setItem('idMember', id);
             this.$router.push("/citizen/family/inforMember")
         }
     }

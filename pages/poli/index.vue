@@ -50,7 +50,7 @@
                       localStorage.setItem("nameArea", this.listPoli.areaManage);
                       localStorage.setItem("level", this.listPoli.levelManager);
                       localStorage.setItem("idPolicitian", this.listPoli.politician_id);
-                      console.log(this.listPoli);
+                      
                   });
               }
               catch (error) {

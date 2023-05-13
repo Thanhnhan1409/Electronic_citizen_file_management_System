@@ -47,6 +47,9 @@
                 pageParam == '/poli/viewInforCitizen' ||
                 pageParam == '/citizen/family' ||
                 pageParam == '/citizen/listInforPoli' ||
+                pageParam == '/poli/viewInforCitizen/inforCitizen' ||
+                pageParam == '/citizen/family/inforMember' ||
+                pageParam == '/citizen/listInforPoli/inforPoli' ||
                 pageParam == '/admin/listInforAll',
             }"
           >
@@ -57,6 +60,9 @@
                   pageParam == '/citizen/family' ||
                   pageParam == '/citizen/listInforPoli' ||
                   pageParam == '/admin/listInforAll' ||
+                  pageParam == '/poli/viewInforCitizen/inforCitizen' ||
+                  pageParam == '/citizen/family/inforMember' ||
+                  pageParam == '/citizen/listInforPoli/inforPoli' ||
                   showPage == 'seeInfor',
               }"
               xmlns="http://www.w3.org/2000/svg"
