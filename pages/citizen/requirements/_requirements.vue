@@ -76,6 +76,7 @@ export default {
         this.isShowPopup = false;
         this.requirement.author_id = this.id;
         this.requirement.date =  Date.now();
+        this.requirement.recipient_id.splice();
         this.requirement.recipient_id.push(this.requirement.idPoli)
         console.log(this.requirement);
         await this.$axios

@@ -27,7 +27,7 @@
             class="multiselect"
             @input="getDistrict()"
             :options="listCity"
-            v-model="inforSearch.add"
+            v-model="inforSearch.city"
             placeholder="Chọn tỉnh"
             v-validate="'required'"
             :class="{
@@ -46,7 +46,7 @@
             class="multiselect"
             @input="getWard()"
             :options="listDistrict"
-            v-model="inforSearch.add"
+            v-model="inforSearch.district"
             placeholder="Chọn huyện/Thành phố"
             v-validate="'required'"
             :class="{
@@ -64,7 +64,7 @@
           <multiselect
             class="multiselect"
             :options="listWard"
-            v-model="inforSearch.add"
+            v-model="inforSearch.town"
             placeholder="Chọn Xã/Thị trấn"
             v-validate="'required'"
             :class="{
@@ -163,7 +163,7 @@ export default {
         await this.$axios
           .get(
             `http://localhost:8080/api/local/district/province=${encodeURIComponent(
-              this.listInfor.city
+              this.inforSearch.city
             )}`
           )
           .then((res) => {
@@ -181,8 +181,8 @@ export default {
         await this.$axios
           .get(
             `http://localhost:8080/api/local/ward/?proCode=${encodeURIComponent(
-              this.listInfor.city
-            )}&disCode=${encodeURIComponent(this.listInfor.district)}`
+              this.inforSearch.city
+            )}&disCode=${encodeURIComponent(this.inforSearch.district)}`
           )
           .then((res) => {
             this.listWard = res.data;
@@ -195,16 +195,19 @@ export default {
     async checkLevel() {
       if (this.levelManager === "Tỉnh") {
         this.inforSearch.level = "city";
+        this.inforSearch.add = this.inforSearch.city;
         this.isShowCity = true;
         this.isShowDistrict = false;
         this.isShowTown = false;
       } else if (this.levelManager === "Huyện/Thành phố") {
         this.inforSearch.level = "district";
+        this.inforSearch.add = this.inforSearch.district;
         this.isShowCity = true;
         this.isShowDistrict = true;
         this.isShowTown = false;
       } else if (this.levelManager === "Xã/Thị trấn") {
         this.inforSearch.level = "ward";
+        this.inforSearch.add = this.inforSearch.town;
         this.isShowCity = true;
         this.isShowDistrict = true;
         this.isShowTown = true;
