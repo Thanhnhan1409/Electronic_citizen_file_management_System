@@ -98,7 +98,7 @@
               errors.first("Dân tộc")
             }}</span>
           </div>
-          <div>
+          <div style="text-align: start;">
             Quan hệ:
             <small style="color: #c7422e">*</small>:
             <multiselect

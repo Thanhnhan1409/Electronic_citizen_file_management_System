@@ -5,7 +5,6 @@
     </h2>
     <ButtonDownload
       :urlDownloadPDF="urlDownloadPDF"
-      :urlDownloadXLS="urlDownloadXLS"
     />
     <Search v-model="idSearch" @search="handleSearch" class="seeInfor--form" />
     <button @click="isShow = true" class="button-show">Hiển thị toàn bộ</button>
@@ -32,7 +31,6 @@ export default {
       isShow: true,
       fUrl: "http://localhost:8080/api/citizen/listCitizen/",
       urlDownloadPDF: "",
-      urlDownloadXLS: "",
     };
   },
   mounted() {
@@ -42,7 +40,6 @@ export default {
     this.checkLevelManager();
     this.fetchData();
     this.urlDownloadPDF = `http://localhost:8080/api/citizen/export-to-pdf/citizen/poliId=${this.id}`;
-    this.urlDownloadXLS = `http://localhost:8080/api/citizen/export-to-pdf/citizen/poliId=${this.id}`;
   },
   computed: {
     listTmp() {
@@ -93,8 +90,8 @@ export default {
 <style scoped>
 .seeInfor--form {
   position: absolute;
-  right: 0px;
-  top: 120px;
+  right: 10px;
+  top: 70px;
   margin: 0;
   width: fit-content;
   z-index: 3;
@@ -102,7 +99,7 @@ export default {
 
 .button-show {
   position: absolute;
-  top: 120px;
+  top: 70px;
   left: 20px;
   border-radius: 10px;
   padding: 7px 10px;

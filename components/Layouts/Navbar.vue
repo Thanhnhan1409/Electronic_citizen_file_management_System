@@ -6,7 +6,7 @@
                     <path
                         d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
                 </svg>
-                <span style="width: 120px;">Phan Thị Thanh Nhàn</span>
+                <span> | {{ userName }} </span>
                 <nuxt-link to="/poli/changePass/" v-show="isShow" class="nav__change-pass">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                         <path
@@ -23,9 +23,12 @@ export default {
     data() {
         return {
             isShow: false,
+            userName: '',
         }
     },
-    props: ['name'],
+    mounted(){
+        this.userName = localStorage.getItem('name');
+    },
     methods: {
         changePassVisible() {
             this.isShow = !this.isShow;
@@ -34,10 +37,6 @@ export default {
 }
 </script>
 <style scoped>
-.container {
-    /* margin-left: 280px; */
-}
-
 .nav-bar {
     text-align: end;
     display: flex;
@@ -55,6 +54,9 @@ export default {
 
 .nav__name-user {
     cursor: pointer;
+    padding-right: 30px;
+    display: flex;
+    justify-content: center;
 }
 
 .nav__name-user svg {
@@ -65,27 +67,23 @@ export default {
 
 .nav__change-pass {
     position: absolute;
-    right: 75px;
+    right: 30px;
     top: 30px;
     transition: all 0.5 linear;
-    /* display: none; */
-    /* transform: translateY(100%); */
-
 }
-
 .change-pass--visible {
     display: block !important;
     transform: translateY(0%) !important;
 }
-
 .nav__change-pass p {
     padding: 5px 10px;
     /* border-radius: 10px; */
     background-color: #127E23;
     color: #fff;
     margin: 0;
-    width: 100px;
+    width: 110px;
     position: absolute;
+    text-align: center;
     right: -4px;
     top: 12px;
     text-align: start;
@@ -94,15 +92,9 @@ export default {
 .nav__change-pass svg {
     fill: #127E23;
     position: absolute;
-    right: 90px;
+    right: 0px;
     top: 2px;
     width: 13px;
     height: auto;
 }
-
-.icon--logout {
-    padding-left: 10px;
-    width: 18px;
-    height: auto;
-    cursor: pointer;
-}</style>
+</style>

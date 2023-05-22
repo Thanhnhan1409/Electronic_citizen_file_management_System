@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <ButtonAdd
+    class="button--add"
     :title="'Thêm ý kiến'"
     @showAddApp="showAddAppf"
     />
@@ -105,3 +106,8 @@ export default {
 </script>
 
 <style scoped src="~/static/asset/styles.css"></style>
+<style scoped>
+.button--add{
+  margin-right: 20px;
+}
+</style>

@@ -245,23 +245,18 @@ export default {
 .responsive-table .col-0 {
   flex-basis: 10%;
 }
-
 .responsive-table .col-1 {
   flex-basis: 15%;
 }
-
 .responsive-table .col-2 {
   flex-basis: 15%;
 }
-
 .responsive-table .col-3 {
   flex-basis: 15%;
 }
-
 .responsive-table .col-4 {
   flex-basis: 25%;
 }
-
 .responsive-table .col-5 {
   flex-basis: 15%;
 }
@@ -271,7 +266,7 @@ export default {
   text-decoration: underline;
 }
 .list-appointment {
-  margin-top: 60px;
+  margin-top: 80px;
   /* margin-left: 10px; */
   padding: 10px 0 20px 0;
   box-shadow: 4px 4px 10px 3px rgb(221, 221, 221);
