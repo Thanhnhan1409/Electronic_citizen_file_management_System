@@ -4,6 +4,7 @@
       <PopupAddReqAndApp
         v-if="showAddApp === true"
         :appointment="appointment"
+        :appointmentDate ="appointment.appointmentDate"
         :title="'Thêm lịch hẹn'"
         :obj="'appointment'"
         @closePopup="closePopup"
@@ -42,7 +43,9 @@ export default {
     return {
       id: null,
       listApp: {},
-      appointment: {},
+      appointment: {
+        appointmentDate: ''
+      },
       showAddApp: false,
       isShowPopup: false,
       showNoti: "",

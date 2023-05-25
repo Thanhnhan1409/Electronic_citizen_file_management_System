@@ -94,5 +94,6 @@ export default {
   border-radius: 10px;
   position: relative;
   width: 97%;
+  margin-bottom: 50px;
 }
 </style>
