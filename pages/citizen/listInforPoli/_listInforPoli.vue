@@ -269,7 +269,10 @@ export default {
   left: 30px;
 }
 .multiselect {
-  margin-top: 10px;
+  width: 238px;
+  height: 40px;
+  padding-top: 10px;
+  /* margin-left: 20px; */
 }
 .seeInfor--form {
   position: absolute;

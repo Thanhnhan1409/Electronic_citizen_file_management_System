@@ -25,15 +25,14 @@
             @input="
               obj === 'appointment'
                 ? (appointment.politician_id = $event.target.value)
-                : obj === 'requirement'
-                ? (requirement.idPoli = $event.target.value)
                 : obj === 'poliForwardRequirement'
                 ? (idPoliForward.id = $event.target.value)
+                : obj === 'requirement'
+                ? (requirement.idPoli = $event.target.value)
                 : ''
             "
             type="text"
             :class="{ input: true, 'is-danger': errors.has('idPoli') }"
-            :name="''"
             placeholder="Nhập số ID CBCC"
             name="Nhập nội dung"
             id="input-idPoli"
@@ -47,9 +46,8 @@
         <div class="content--item" v-show="obj === 'appointment'">
           <p>Ngày</p>
           <input
-            :value="obj == 'appointment' ? appointment.appointmentDate : ''"
-            @input="obj === 'appointment' ? (appointment.politician_id = $event.target.value) : (obj === 'poliForwardRequirement' ? '' : (obj === 'requirement' ? (requirement.idPoli = $event.target.value) : (opinion.author_id = $event.target.value)))"
-
+            :value="appointmentDate"
+            @input="appointmentDate = $event.target.value"
             type="date"
             v-validate="'required'"
             :class="{ input: true, 'is-danger': errors.has('Ngày') }"
@@ -175,6 +173,7 @@ export default {
     "obj",
     "title",
     "idPoliForward",
+    "appointmentDate"
   ],
   methods: {
     closePopUp() {

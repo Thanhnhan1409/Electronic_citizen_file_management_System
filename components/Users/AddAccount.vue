@@ -618,7 +618,7 @@ input {
   box-shadow: 3px 3px 10px 3px rgb(209, 208, 208);
 }
 .multiselect {
-  width: 338px;
+  width: 238px;
   height: 40px;
   padding: 10px;
   margin-left: 20px;
