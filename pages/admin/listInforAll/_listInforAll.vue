@@ -125,7 +125,15 @@ export default {
   computed: {
     listTmp1() {
       return this.listPolitician.filter(
-        (item) => item.citizen.citizenId.toString() == this.idSearch
+        (item) => {
+          item.citizen.citizenId.toString() == this.idSearch
+          item.citizen.name.toString() == this.idSearch
+          item.citizen.address.toString() == this.idSearch
+          item.citizen.location.city.toString() == this.idSearch ||
+          item.citizen.location.district.toString() == this.idSearch ||
+          item.citizen.location.town.toString() == this.idSearch ||
+          item.citizen.location.quarter.toString() == this.idSearch 
+        }
       );
     },
     listTmp2() {
@@ -145,6 +153,7 @@ export default {
     handleSearch(id) {
       this.idSearch = id;
       this.isShow = false;
+
     },
     async fetchData() {
       try {

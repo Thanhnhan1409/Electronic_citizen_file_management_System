@@ -113,10 +113,10 @@ export default {
             this.showNoti = "Ok";
             this.isShowPopup = false;
             setTimeout(() => {
+              this.getListRequirement();
               this.showNoti = "";
             }, 1500);
           });
-        await this.getListRequirement()
       } catch (error) {
         this.isShowPopup = false;
         this.status = "thất bại";

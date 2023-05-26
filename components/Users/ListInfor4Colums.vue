@@ -29,9 +29,7 @@
               {{
                 object === "notification"
                   ? item.politician.politicianId
-                  : object === "opinion"
-                  ? item.citizen.name
-                  : item.id
+                  : item.citizen.name
               }}
             </div>
             <div
@@ -42,8 +40,6 @@
               {{
                 object === "notification"
                   ? item.politician.citizen.name
-                  : object === "opinion"
-                  ? item.author.name
                   : item.citizen.name
               }}
             </div>

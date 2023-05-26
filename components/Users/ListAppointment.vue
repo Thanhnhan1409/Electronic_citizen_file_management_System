@@ -119,38 +119,47 @@
                 />
               </svg>
               <ul class="status-action">
-                <li @click.prevent="openPopupUpdate(item)">Cập nhật</li>
+                <li @click.prevent="openPopupUpdate(item)">
+                  Cập nhật
+                  <!-- <PopupAddReqAndApp
+                    v-if="isShowPopupUpdate === true"
+                    :appointment="item"
+                    :title="'Cập nhật lịch hẹn'"
+                    :obj="'appointment'"
+                    @closePopup="closePopup"
+                    @action="openPopupConfirm"
+                    class="update-requirement"
+                  /> -->
+                </li>
                 <li
                   @click.prevent="isShowPopup = 'popupDelete'"
                   class="deny-status"
                 >
                   Xóa
                 </li>
-                <PopupAddReqAndApp
-                  v-if="isShowPopupUpdate === true"
-                  :appointment="item"
-                  :title="'Cập nhật lịch hẹn'"
-                  :obj="'appointment'"
-                  @closePopup="closePopup"
-                  @action="openPopupConfirm"
-                  class="update-requirement"
-                />
-                <PopupConfirm
-                  :title="
-                    isShowPopup === 'popupUpdate'
-                      ? 'cập nhật lịch hẹn'
-                      : 'xóa lịch hẹn'
-                  "
-                  @action="
-                    isShowPopup === 'popupUpdate'
-                      ? update(item)
-                      : deleteApp(item)
-                  "
-                  v-if="isShowPopup !== ''"
-                  @closePopup="closePopup"
-                >
-                </PopupConfirm>
               </ul>
+              <PopupAddReqAndApp
+                v-if="isShowPopupUpdate === true"
+                :appointment="item"
+                :title="'Cập nhật lịch hẹn'"
+                :obj="'updateAppointment'"
+                @closePopup="closePopup"
+                @action="openPopupConfirm"
+                class="update-requirement"
+              />
+              <PopupConfirm
+                :title="
+                  isShowPopup === 'popupUpdate'
+                    ? 'cập nhật lịch hẹn'
+                    : 'xóa lịch hẹn'
+                "
+                @action="
+                  isShowPopup === 'popupUpdate' ? update(item) : deleteApp(item)
+                "
+                v-if="isShowPopup !== ''"
+                @closePopup="closePopup"
+              >
+              </PopupConfirm>
             </div>
           </li>
         </ul>
@@ -159,7 +168,7 @@
     <Notification
       :status="status"
       :object="'lịch hẹn'"
-      :action="isShowPopup === 'popupUpdate'? 'Cập nhật': 'Xóa'"
+      :action="isShowPopup === 'popupUpdate' ? 'Cập nhật' : 'Xóa'"
       :isShowNoti="showNoti"
       v-if="showNoti == 'Ok'"
     >
@@ -181,15 +190,15 @@ export default {
       status: "",
       showNoti: "",
       isShowPopupUpdate: false,
-      dataTmp:{},
-      idCitizen: null
+      dataTmp: {},
+      idCitizen: null,
     };
   },
   mounted() {
     this.idPoli = localStorage.getItem("idPolicitian");
-    this.idCitizen = localStorage.getItem("id")
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') {
+    this.idCitizen = localStorage.getItem("id");
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") {
         this.isPopupVisible = true;
       }
     });
@@ -233,7 +242,7 @@ export default {
     },
     async patchStatus() {
       try {
-        this.isShowPopup = '';
+        this.isShowPopup = "";
         await this.$axios
           .patch(
             `http://localhost:8080/api/appointment/updateStatus/id=${this.idStatus}`,
@@ -294,11 +303,15 @@ export default {
     },
     async update(item) {
       try {
-        this.isShowPopup = '';
-        item.citizen_id = this.idCitizen
+        this.isShowPopup = "";
+        item.citizen_id = this.idCitizen;
         await this.$axios
-          .put(`http://localhost:8080/api/appointment/update/id=${item.id}`, item)
+          .put(
+            `http://localhost:8080/api/appointment/update/id=${item.id}`,
+            item
+          )
           .then((res) => {
+            this.fetchData();
             this.status = "thành công";
             this.showNoti = "Ok";
             setTimeout(() => {
@@ -317,12 +330,11 @@ export default {
     async deleteApp(item) {
       //   this.$emit("delete", item);
       try {
-        this.isShowPopup = '';
+        this.isShowPopup = "";
         await this.$axios
-          .delete(
-            `http://localhost:8080/api/appointment/delete/${item.id}`
-          )
+          .delete(`http://localhost:8080/api/appointment/delete/${item.id}`)
           .then((res) => {
+            this.fetchData();
             this.status = "thành công";
             this.showNoti = "Ok";
             setTimeout(() => {
@@ -343,7 +355,7 @@ export default {
       this.isShowPopupUpdate = true;
       item.politician_id = item.politician.politicianId;
     },
-    openPopupUpdate(item){
+    openPopupUpdate(item) {
       this.isShowPopupUpdate = true;
       this.dataTmp = item;
     },
@@ -485,14 +497,12 @@ export default {
 }
 .update-requirement {
   position: fixed;
-    /* display: block; */
-    left: 38%;
-    top: 30%;
-    z-index: 99;
+  /* display: block; */
+  left: 38%;
+  top: 30%;
+  z-index: 99;
 }
-.update-requirement:hover{
+/* .update-requirement:hover {
   display: block !important;
-}
-
-
+} */
 </style>
