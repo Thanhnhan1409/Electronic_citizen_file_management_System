@@ -1,11 +1,6 @@
 <template>
   <div class="container">
-    <h2 class="title">
-      <!-- Danh sách công dân tại {{ this.level }} {{ this.nameArea }} -->
-    </h2>
-    <ButtonDownload
-      :urlDownloadPDF="urlDownloadPDF"
-    />
+    <ButtonDownload :urlDownloadPDF="urlDownloadPDF" />
     <Search v-model="idSearch" @search="handleSearch" class="seeInfor--form" />
     <button @click="isShow = true" class="button-show">Hiển thị toàn bộ</button>
     <ListInfor6Colums
@@ -43,9 +38,15 @@ export default {
   },
   computed: {
     listTmp() {
-      return this.listCitizen.filter(
-        (item) => item.citizenId == this.idSearch || item.name === this.idSearch
-      );
+      return this.listCitizen.filter((item) => {
+          item.citizenId == this.idSearch ||
+          item.name === this.idSearch ||
+          item.location.city === this.idSearch ||
+          item.location.quarter === this.idSearch ||
+          item.location.town === this.idSearch ||
+          item.location.district === this.idSearch ||
+          item.address === this.idSearch;
+      });
     },
   },
   methods: {
@@ -72,9 +73,7 @@ export default {
     async fetchData() {
       try {
         console.log("aaa" + this.nameArea);
-        await this.$axios
-        .get(`${this.url}`)
-        .then((res) => {
+        await this.$axios.get(`${this.url}`).then((res) => {
           this.listCitizen = res.data;
           console.log(res);
         });

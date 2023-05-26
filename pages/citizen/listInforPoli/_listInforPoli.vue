@@ -115,7 +115,9 @@ export default {
   computed: {
     listTmp1() {
       return this.listPoli.filter(
-        (item) => item.citizen.citizenId.toString() == this.idSearch
+        (item) => item.citizen.citizenId.toString() == this.idSearch || 
+        item.citizen.name.toString() == this.idSearch ||
+        item.areaManage.toString() == this.idSearch
       );
     },
   },
@@ -126,8 +128,10 @@ export default {
     async fetchData() {
       try {
         this.checkLevel();
+        this.isShow = true;
         let url = `http://localhost:8080/api/politician/listPolitician/country`;
         if (this.levelManager !== "Cả nước") {
+          
           url = `http://localhost:8080/api/politician/listPolitician/?levelManageEncode=${
             this.inforSearch.level
           }&areaManageEncode=${encodeURIComponent(this.inforSearch.add)}`;

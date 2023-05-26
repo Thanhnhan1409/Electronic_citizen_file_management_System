@@ -4,7 +4,6 @@
       <PopupAddReqAndApp
         v-if="showAddApp === true"
         :appointment="appointment"
-        :appointmentDate ="appointment.appointmentDate"
         :title="'Thêm lịch hẹn'"
         :obj="'appointment'"
         @closePopup="closePopup"
@@ -85,6 +84,7 @@ export default {
         await this.$axios
           .post(`http://localhost:8080/api/appointment/new`, this.appointment)
           .then((res) => {
+            this.fetchListApp();
             this.status = "thành công";
             this.showNoti = "Ok";
             this.isShowPopup = false;
