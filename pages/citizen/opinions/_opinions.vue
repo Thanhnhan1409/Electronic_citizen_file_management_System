@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Navbar :userName = "name" />
     <ButtonAdd
     class="button--add"
     :title="'Thêm ý kiến'"
@@ -45,12 +46,14 @@ export default {
       showAddOpinion: false,
       isShowPopup: false,
       showNoti: "",
-      id: null
+      id: null,
+      name: ''
     };
   },
   mounted() {
     this.id = localStorage.getItem('id')
     this.fetchData();
+    this.name = localStorage.getItem('name')
   },
   methods: {
     async fetchData() {

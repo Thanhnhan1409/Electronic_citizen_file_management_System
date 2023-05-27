@@ -1,5 +1,7 @@
 <template>
     <div class="container">
+        <Navbar :userName = "name" />
+
         <ListInfor4Colums
         :object="'notification'"
         :listTmp="listTmp"
@@ -20,6 +22,7 @@ export default{
     mounted(){
         this.id = localStorage.getItem('id')
         this.getListNotification()
+        this.name = localStorage.getItem('name')
     },
     methods:{
         async getListNotification(){

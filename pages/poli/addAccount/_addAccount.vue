@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <!-- <h3 class="title">Đăng ký thông tin cá nhân công dân</h3> -->
+    <Navbar :userName = "name" />
     <div class="content">
       <AddAccount
         :listInfor="list"
@@ -37,8 +37,12 @@ export default {
       },
       isShowPopup: false,
       status: '',
-      showNoti:''
+      showNoti:'',
+      name:''
     };
+  },
+  mounted(){
+    this.name = localStorage.getItem('name');
   },
   // middleware:['auth'],
   methods: {

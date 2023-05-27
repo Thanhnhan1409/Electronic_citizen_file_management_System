@@ -104,9 +104,7 @@ ul li{
     margin: 0;
     
 }
-.container{
-    margin-left: 280px;
-}
+
 .overlay-hidden{
     position: fixed;
     left: 0;
@@ -116,26 +114,7 @@ ul li{
     z-index: -1;
     background-color: rgb(239, 238, 238);
 }
-.infor--edit{
-    position: absolute;
-    top: 200px;
-    right: 70px;
-    font-weight: 600;
-    font-size: 18px;
-    padding: 5px 10px ;
-    border-radius: 8px;
-    box-shadow: 5px 1px 10px #e1dede;
-    width: 130px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-.infor__icon--edit{
-    width:20px;
-    height: auto;
-    margin-left: 10px;
-}
+
 .img--personal{
     margin-left: 50px;
 }

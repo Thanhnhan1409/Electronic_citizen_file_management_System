@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <Navbar :userName = "name" />
         <ListInfor6Colums
         :listTmp="listFamily"
         :object="'family'"
@@ -15,12 +16,14 @@ export default {
     data(){
         return{
             idFamily:null,
-            listFamily:[]
+            listFamily:[],
+            name:''
         }
     },
     mounted(){
         this.idFamily = localStorage.getItem('idFamily')
-        this.getListFamily()
+        this.getListFamily();
+        this.name = localStorage.getItem('name')
     },
     methods: {
         async getListFamily(){

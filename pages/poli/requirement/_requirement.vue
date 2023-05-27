@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Navbar :userName = "name" />
     <div id="overlay" v-show="isShowForward"></div>
     <select
       class="req-combobox"
@@ -66,12 +67,15 @@ export default {
       showNoti: "",
       updatedStatus: "",
       object: "poliForwardRequirement",
+      name:''
     };
   },
   mounted() {
     this.idPoli = localStorage.getItem("idPolicitian");
     this.fetchData();
     this.nameArea = localStorage.getItem("nameArea");
+    this.name = localStorage.getItem('name');
+
   },
   methods: {
     renderAllReq() {

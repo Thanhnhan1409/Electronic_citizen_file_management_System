@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Navbar :userName = "name" />
     <ButtonDownload :urlDownloadPDF="urlDownloadPDF" />
     <Search v-model="idSearch" @search="handleSearch" class="seeInfor--form" />
     <button @click="isShow = true" class="button-show">Hiển thị toàn bộ</button>
@@ -26,12 +27,14 @@ export default {
       isShow: true,
       fUrl: "http://localhost:8080/api/citizen/listCitizen/",
       urlDownloadPDF: "",
+      name:''
     };
   },
   mounted() {
     this.id = localStorage.getItem("id");
     this.level = localStorage.getItem("level");
     this.nameArea = localStorage.getItem("nameArea");
+    this.name = localStorage.getItem('name');
     this.checkLevelManager();
     this.fetchData();
     this.urlDownloadPDF = `http://localhost:8080/api/citizen/export-to-pdf/citizen/poliId=${this.id}`;

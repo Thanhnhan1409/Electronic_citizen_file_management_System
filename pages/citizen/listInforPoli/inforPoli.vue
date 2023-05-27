@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Tableft />
-    <Navbar />
+    <Navbar :userName = 'name' />
     <InforCitizenNew :listInfor="list" />
     <InforPoli :listPoli="listPoli" />
   </div>
@@ -34,7 +34,7 @@ export default {
           .get(`http://localhost:8080/api/citizen/listCitizen/id=${this.id}`)
           .then((res) => {
             this.list = res["data"];
-            localStorage.setItem("name", this.list.name);
+            // localStorage.setItem("name", this.list.name);
           });
       } catch (error) {
         console.log(error);

@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <Navbar :userName = "name" />
         <InforCitizenNew :listInfor="list" />
         <Criminalrecord :Criminalrecord="list.Criminalrecord"/>
     </div>
@@ -11,11 +12,13 @@ export default {
         return {
             list: {},
             id: "",
+            name:''
         };
     },
     mounted() {
         this.id = localStorage.getItem("idViewInfor");
         this.fetchData();
+        this.name = localStorage.getItem('name')
     },
     methods: {
         async fetchData() {

@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+      <Navbar :userName = "name" />
         <h2 class="title">Danh sách tội phạm tại {{ nameArea }}</h2>
         <div class="list-criminal">
             <ul class="responsive-table req-content">
@@ -34,13 +35,15 @@ export default{
         return {
             listCriminalRecord:[],
             idPoli:null,
-            nameArea:''
+            nameArea:'',
+            name:''
         }
     },
     mounted(){
         this.idPoli = localStorage.getItem('idPolicitian')
         this.nameArea = localStorage.getItem('nameArea')
         this.getListCriminal();
+        this.name = localStorage.getItem('name')
     },
     methods:{
         async getListCriminal() {

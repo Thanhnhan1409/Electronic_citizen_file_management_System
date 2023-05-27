@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Navbar :userName = "name" />
     <div @click.prevent="isShow = true" class="add-notification">
       <svg
         class="icon-plus"
@@ -116,11 +117,13 @@ export default {
       isShow: false,
       status: "",
       showNoti: "",
+      name:''
     };
   },
   mounted() {
     this.author_id = localStorage.getItem("idPolicitian");
     this.fetchListNotification();
+    this.name = localStorage.getItem('name')
   },
   methods: {
     async postData() {

@@ -18,16 +18,13 @@
         </div>
     </div>
 </template>
-<script>
+<script>    
 export default {
+    props:['userName'],
     data() {
         return {
             isShow: false,
-            userName: '',
         }
-    },
-    mounted(){
-        this.userName = localStorage.getItem('name');
     },
     methods: {
         changePassVisible() {

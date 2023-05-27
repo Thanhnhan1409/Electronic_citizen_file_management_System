@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Navbar :userName = "name" />
     <div class="container-listInfor">
       <PopupAddReqAndApp
         v-if="showAddApp === true"
@@ -49,17 +50,14 @@ export default {
       isShowPopup: false,
       showNoti: "",
       status: "",
-      listTmp:[]
+      listTmp:[],
+      name:''
     };
   },
   mounted() {
     this.id = localStorage.getItem("id");
     this.fetchListApp();
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') {
-        this.isPopupVisible = true;
-      }
-    });
+    this.name = localStorage.getItem('name')
   },
   methods: {
     async fetchListApp() {

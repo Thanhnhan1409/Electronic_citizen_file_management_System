@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <Navbar :userName = "name" />
+
     <div class="content">
       <form class="form">
         <h2>Đổi Mật khẩu</h2>
@@ -58,11 +60,13 @@ export default {
       changePass: {},
       isShowPopup: false,
       errDesc: false,
+      name:''
     };
   },
   // middleware: 'auth',
   mounted() {
     this.changePass.citizen_id = localStorage.getItem("id");
+    this.name = localStorage.getItem('name')
   },
   methods: {
     async submit() {
