@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Navbar :userName = "name" />
     <div class="poli_inf">
       <div class="filter-address">
         <div class="poli-level">
@@ -110,6 +111,7 @@ export default {
       isShowDistrict: false,
       isShowTown: false,
       isShow: true,
+      name:''
     };
   },
   computed: {
@@ -123,6 +125,7 @@ export default {
   },
   mounted() {
     this.getCity();
+    this.name = localStorage.getItem('name')
   },
   methods: {
     async fetchData() {

@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Navbar :userName = "name" />
     <div class="content">
       <!-- <h2>Cập nhật thông tin cá nhân công dân</h2> -->
       <Search
@@ -42,7 +43,11 @@ export default {
       isShowPopup: false,
       status: "",
       showNoti: "",
+      name:''
     };
+  },
+  mounted(){
+    this.name = localStorage.getItem("name");
   },
   // middleware: 'nhan',
   methods: {

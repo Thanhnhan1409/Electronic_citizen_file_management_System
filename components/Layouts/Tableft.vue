@@ -52,7 +52,7 @@
           >
             <svg
               :class="{
-                'fill-svg': pathViewInformation(),
+                'fill-svg': pathViewInformation() || showPageData === 'seeInfor',
               }"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"
@@ -103,7 +103,7 @@
           class="manage--option"
           v-show="role !== 'citizen'"
           v-bind:class="{
-            'background-white': pathManageInformation() || showPageData == 'requirements',
+            'background-white': pathManageInformation() ||  showPage == 'inforManager'
           }"
           @click.prevent="showPage = 'inforManager'"
         >
@@ -115,7 +115,7 @@
           >
             <svg
               :class="{
-                'fill-svg': pathManageInformation() ,
+                'fill-svg': pathManageInformation() ||  showPage == 'inforManager',
               }"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 640 512"
@@ -127,7 +127,7 @@
             Quản lý thông tin
           </div>
 
-          <ul class="tableft__manage--options" v-show="pathManageInformation() || showPageData == 'requirements'">
+          <ul class="tableft__manage--options" v-show="pathManageInformation() ||  showPage == 'inforManager'">
             <li
               class="tableft__options--item"
               @click.prevent="pushToAddAccount"
@@ -162,7 +162,7 @@
           >
             <svg
               :class="{
-                'fill-svg': pathRequirement(),
+                'fill-svg': pathRequirement() ,
               }"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
@@ -210,7 +210,7 @@
           >
             <svg
               :class="{
-                'fill-svg': pathNotification(),
+                'fill-svg': pathNotification() || showPageData == 'notifications' ,
               }"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"
@@ -257,7 +257,7 @@
           >
             <svg
               :class="{
-                'fill-svg': pathAppointment(),
+                'fill-svg': pathAppointment() || showPageData === 'appointments' ,
               }"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"
@@ -487,7 +487,7 @@ export default {
     },
     pathManageInformation() {
       if (
-        this.showPageData === "inforManager" ||
+        
         this.pageParam == "/admin/update" ||
         this.pageParam == "/admin/addAccount" ||
         this.pageParam == "/poli/update" ||

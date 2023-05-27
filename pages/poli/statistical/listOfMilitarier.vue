@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+      <Navbar :userName = "name" />
         <h2 class="title">Danh sách những người chưa tham gia nghĩa vụ quân sự tại {{ nameArea }}</h2>
         <!-- <a href="http://localhost:8080/api/citizen/export-to-pdf/militaryService/poliId=1"> -->
           <button class="download">
@@ -39,13 +40,15 @@ export default{
             listMilitarier:[],
             idPoli:null,
             nameArea:'',
-            idPoli:null
+            idPoli:null,
+            name:''
         }
     },
     mounted(){
         this.nameArea = localStorage.getItem('nameArea')
         this.getListMilitarier();
-        this.idPoli = localStorage.getItem('idPolicitian')
+        this.idPoli = localStorage.getItem('idPolicitian');
+        this.name = localStorage.getItem('name')
     },
     methods:{
       async getListMilitarier() {

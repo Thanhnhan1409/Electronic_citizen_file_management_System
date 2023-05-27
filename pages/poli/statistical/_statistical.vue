@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Navbar :userName = "name" />
     <div class="statis-cards">
       <div class="card">
         <div class="total" @click.prevent="pushToList">
@@ -114,7 +115,8 @@ export default {
       countCitizen: 0,
       count: [],
       countListMarried: [],
-      blob:{}
+      blob:{},
+      name:''
     };
   },
   computed: {
@@ -209,6 +211,8 @@ export default {
     this.getOpinions();
     this.nameArea = localStorage.getItem("nameArea");
     this.getCount();
+    this.name = localStorage.getItem('name');
+
   },
   methods: {
     async getOpinions() {

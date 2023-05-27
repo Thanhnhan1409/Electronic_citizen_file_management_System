@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Navbar :userName = "name" />
     <ListInfor6Colums 
     :listTmp="listPoli" 
     :object="'requirement'" 
@@ -13,11 +14,11 @@ export default{
     data(){
         return{
             listPoli:[],
-            
+            name:''
         }
     },
     mounted(){
-
+      this.name = localStorage.getItem('name')
     },
     methods:{
       async getListPoli(){

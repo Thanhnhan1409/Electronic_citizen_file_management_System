@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <Navbar :userName = "name" />
+
     <ListAppointment
     :object="'poliAppointment'"
     :list-appointment="listAppointment"
@@ -13,12 +15,14 @@ export default {
   data() {
     return {
       listAppointment: [],
-      listTmp: []
+      listTmp: [],
+      name:''
     };
   },
   mounted() {
     this.idPoli = localStorage.getItem("idPolicitian");
     this.fetchData();
+    this.name = localStorage.getItem('name');
   },
   methods: {
     async fetchData() {

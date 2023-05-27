@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Navbar :userName = "name" />
     <button @click.prevent="isShowPopup = true" class="poli-delInfo">
       Xóa tài khoản
     </button>
@@ -33,11 +34,13 @@ export default {
       isShowPopup: false,
       status: "",
       showNoti: "",
+      name:''
     };
   },
   mounted() {
     this.id = localStorage.getItem("idViewInfor");
     this.fetchDataCitizen();
+    this.name = localStorage.getItem('name');
   },
   methods: {
     async fetchDataCitizen() {
@@ -60,8 +63,6 @@ export default {
             this.showNoti = "Ok";
             setTimeout(() => {
               this.showNoti = "";
-            //this.$router.push("/poli/inforPoli");
-
               this.$router.push("/poli");
             }, 1500);
           });

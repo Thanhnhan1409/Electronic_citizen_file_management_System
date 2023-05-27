@@ -1,7 +1,6 @@
 <template>
   <div class="container">
-    <Tableft />
-    <Navbar />
+    <Navbar :userName = 'name' />
     <div @click.prevent="displayPopup" class="add-notification">
       <svg class="icon-plus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
         <path
@@ -54,13 +53,14 @@ export default {
     data() {
       return {
         listRequirement: [],    
-       
+        name:""
         };
     },
     mounted() {
         this.author_id = localStorage.getItem("citizenId");
         this.fetchListRequirement();
         this.getDate();
+        this.name = localStorage.getItem('name')
     },
   methods: {
 

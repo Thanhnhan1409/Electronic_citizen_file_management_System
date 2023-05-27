@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <Navbar :userName = "name" />
+
     <ListInfor6Colums
       :listTmp="listRequirement"
       :object="'requirement'"
@@ -51,12 +53,14 @@ export default {
       showNoti: "",
       isShowPopupDelete: false,
       idReq: null,
-      activity:''
+      activity:'',
+      name:''
     };
   },
   mounted() {
     this.id = localStorage.getItem("id");
     this.getListRequirement();
+    this.name = localStorage.getItem('name')
   },
   methods: {
     async getListRequirement() {

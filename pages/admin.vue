@@ -2,7 +2,7 @@
 <template>
     <div class="container-admin">
         <Tableft/>
-        <Navbar/>
+        <Navbar :userName="'Admin'"/>
         <nuxt-child/>
     </div>
 </template>

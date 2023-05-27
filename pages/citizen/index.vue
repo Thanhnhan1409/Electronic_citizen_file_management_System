@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <Navbar :userName = "name"/>
         <InforCitizenNew :listInfor="list" />
         <Criminalrecord :Criminalrecord="list.Criminalrecord"/>
     </div>
@@ -11,11 +12,13 @@ export default {
         return {
             list: {},
             id: "",
+            name:''
         };
     },
     mounted() {
         this.id = localStorage.getItem("id");
         this.fetchData();
+        
     },
     methods: {
         async fetchData() {
@@ -26,6 +29,7 @@ export default {
                     this.list = res["data"];
                     localStorage.setItem("name", this.list.name);
                     localStorage.setItem("idFamily", this.list.family);
+                    this.name = localStorage.getItem('name');
                 });
             }
             catch (error) {
