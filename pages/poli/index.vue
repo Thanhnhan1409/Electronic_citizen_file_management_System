@@ -2,7 +2,7 @@
   <div class="container">
     <Navbar :userName =  "name"/>
     <InforCitizenNew :listInfor="list" />
-    <InforPoli :listPoli="listPoli" />
+    <InforPoli :listPoli="informationPoli" />
   </div>
 </template>
 <script>
@@ -11,7 +11,7 @@ export default {
     return {
       message: "",
       list: {},
-      listPoli: {},
+      informationPoli: {},
       id: "",
       idFamily: null,
       role: [],
@@ -44,10 +44,10 @@ export default {
         await this.$axios
           .get(`http://localhost:8080/api/politician/citizenId=${this.id}`)
           .then((res) => {
-            this.listPoli = res["data"];
-            localStorage.setItem("nameArea", this.listPoli.areaManage);
-            localStorage.setItem("level", this.listPoli.levelManager);
-            localStorage.setItem("idPolicitian", this.listPoli.politician_id);
+            this.informationPoli = res["data"];
+            localStorage.setItem("nameArea", this.informationPoli.areaManage);
+            localStorage.setItem("level", this.informationPoli.levelManager);
+            localStorage.setItem("idPolicitian", this.informationPoli.politician_id);
           });
       } catch (error) {
         console.log(error);

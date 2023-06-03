@@ -118,8 +118,8 @@ export default {
     listTmp1() {
       return this.listPoli.filter(
         (item) => item.citizen.citizenId.toString() == this.idSearch || 
-        item.citizen.name.toString() == this.idSearch ||
-        item.areaManage.toString() == this.idSearch
+        item.citizen.name.toString().toLowerCase().includes(this.idSearch.toLowerCase()) ||
+        item.areaManage.toString().toLowerCase().includes(this.idSearch.toLowerCase())
       );
     },
   },

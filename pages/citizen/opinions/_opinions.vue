@@ -78,6 +78,7 @@ export default {
             this.status = "thành công";
             this.showNoti = "Ok";
             this.isShowPopup = false;
+            this.fetchData();
             setTimeout(() => {
               this.showNoti = "";
             }, 1500);

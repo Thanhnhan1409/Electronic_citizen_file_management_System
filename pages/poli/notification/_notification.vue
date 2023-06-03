@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Navbar :userName = "name" />
+    <Navbar :userName="name" />
     <div @click.prevent="isShow = true" class="add-notification">
       <svg
         class="icon-plus"
@@ -13,6 +13,7 @@
       </svg>
       <p>Thêm thông báo</p>
     </div>
+
     <div class="list--content-notification">
       <h2 class="title">Danh dách nội dung thông báo</h2>
       <ul class="responsive-table">
@@ -44,7 +45,9 @@
         </ul>
       </ul>
     </div>
+
     <div class="overlay-Popup" v-show="isShow"></div>
+
     <div class="add-notificaito--popup" v-show="isShow">
       <svg
         @click.prevent="isShow = false"
@@ -58,30 +61,43 @@
       <div class="popup-content">
         <h3>Thêm thông báo</h3>
         <ul class="popup-input">
-          <li class="popup-input--title">
-            <span>Người nhận: </span>
-            <input
-              v-model="stringIdCitizen"
-              type="text"
-              placeholder="Nhập Số CCCD"
-            />
-          </li>
-          <li class="popup-input--title">
-            <span>Nội dung:</span>
-            <textarea
-              v-model="description"
-              name=""
-              id=""
-              cols="30"
-              rows="10"
-            ></textarea>
-          </li>
-          <button @click.prevent="openPopupConfirm" class="popup-button">
-            Thêm thông báo
-          </button>
+          <div>
+            <div class="row">
+              <div class="content--item">
+                <p>Người nhận:</p>
+                <multiselect
+                  v-model="selectedCitizenId"
+                  :options="listCitizen"
+                  :multiple="true"
+                  :close-on-select="false"
+                  placeholder="Chọn công dân"
+                  label="name"
+                  @input="updateselectedCitizenId"
+                ></multiselect>
+
+                <span v-show="errors.has('idPoli')" class="err">{{
+                  errors.first("idPoli")
+                }}</span>
+              </div>
+            </div>
+            <div class="popup-input--title">
+              <span>Nội dung:</span>
+              <textarea
+                v-model="description"
+                name=""
+                id=""
+                cols="30"
+                rows="10"
+              ></textarea>
+            </div>
+            <button @click.prevent="openPopupConfirm" class="popup-button">
+              Thêm thông báo
+            </button>
+          </div>
         </ul>
       </div>
     </div>
+
     <PopupConfirm
       :title="'thêm tài khoản'"
       @action="postData"
@@ -111,19 +127,28 @@ export default {
       stringIdCitizen: "",
       listNotification: [],
       title: "thêm thông báo",
-      // curDate: [],
+      selectedCitizenId: [],
       date: "",
       isShowPopup: false,
       isShow: false,
       status: "",
       showNoti: "",
-      name:''
+      name: "",
+      listCitizen: [],
+      fUrl: "http://localhost:8080/api/citizen/listCitizen/",
+      url: "",
+      nameArea: "",
+      level: "",
     };
   },
   mounted() {
     this.author_id = localStorage.getItem("idPolicitian");
     this.fetchListNotification();
-    this.name = localStorage.getItem('name')
+    this.name = localStorage.getItem("name");
+    this.level = localStorage.getItem("level");
+    this.nameArea = localStorage.getItem("nameArea");
+    this.checkLevelManager();
+    this.fetchData();
   },
   methods: {
     async postData() {
@@ -192,6 +217,32 @@ export default {
       }
       return uniqueNames;
     },
+    async updateselectedCitizenId() {
+      if (this.selectedCitizenId !== null) {
+        // console.log( this.selectedCitizenId.name);
+        this.selectedCitizenId = this.selectedCitizenId.citizenId;
+      }
+    },
+    checkLevelManager() {
+      if (this.level == "city")
+        this.url = `${this.fUrl}city=${encodeURIComponent(this.nameArea)}`;
+      else if (this.level == "district")
+        this.url = `${this.fUrl}district=${encodeURIComponent(this.nameArea)}`;
+      else if (this.level == "town")
+        this.url = `${this.fUrl}town=${encodeURIComponent(this.nameArea)}`;
+      else
+        this.url = `${this.fUrl}quarter=${encodeURIComponent(this.nameArea)}`;
+    },
+    async fetchData() {
+      try {
+        await this.$axios.get(`${this.url}`).then((res) => {
+          this.listCitizen = res.data;
+          console.log(this.listCitizen);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>
@@ -208,7 +259,6 @@ export default {
   background-color: rgb(139, 142, 144);
   opacity: 0.8;
 }
-
 .title {
   font-size: 22px;
   position: absolute !important;
@@ -217,12 +267,10 @@ export default {
   top: 20px;
   color: #4b4545;
 }
-
 ul li {
   list-style: none;
   padding: 0px;
 }
-
 .display-block {
   display: block !important;
 }
@@ -235,15 +283,12 @@ ul li {
   position: relative;
   width: 97%;
 }
-
 .responsive-table .col-0 {
   flex-basis: 10%;
 }
-
 .responsive-table .col-1 {
   flex-basis: 15%;
 }
-
 .responsive-table .col-2 {
   flex-basis: 15%;
 }
@@ -255,11 +300,9 @@ ul li {
   padding: 2px 3px !important;
   margin: 0 !important;
 }
-
 .list-idCitizen--items {
   padding: 0;
 }
-
 .icon-plus {
   width: 16px;
   height: auto;
@@ -369,9 +412,14 @@ ul li {
   cursor: pointer;
   transition: all 0.2s ease;
 }
-
 .popup-button:hover {
   box-shadow: 3px 3px 10px 3px rgb(217, 217, 217);
   transform: scale(1.03);
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-bottom: 10px;
 }
 </style>

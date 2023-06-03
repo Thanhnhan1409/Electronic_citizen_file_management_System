@@ -1,16 +1,15 @@
 <template>
     <div class="container">
         <Navbar :userName = "name"/>
-        <InforCitizenNew :listInfor="list" />
-        <Criminalrecord :Criminalrecord="list.Criminalrecord"/>
+        <InforCitizenNew :listInfor="information" />
+        <Criminalrecord :Criminalrecord="information.Criminalrecord"/>
     </div>
 </template>
 <script>
-
 export default {
     data() {
         return {
-            list: {},
+            information: {},
             id: "",
             name:''
         };
@@ -26,9 +25,9 @@ export default {
                 await this.$axios
                     .get(`http://localhost:8080/api/citizen/listCitizen/id=${this.id}`)
                     .then((res) => {
-                    this.list = res["data"];
-                    localStorage.setItem("name", this.list.name);
-                    localStorage.setItem("idFamily", this.list.family);
+                    this.information = res["data"];
+                    localStorage.setItem("name", this.information.name);
+                    localStorage.setItem("idFamily", this.information.family);
                     this.name = localStorage.getItem('name');
                 });
             }

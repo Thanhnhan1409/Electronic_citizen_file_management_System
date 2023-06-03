@@ -2,7 +2,7 @@
   <div class="container-all">
     <Tableft />
     <nuxt-child />
-    <Navbar :userName="name" />
+    <!-- <Navbar :userName="name" /> -->
   </div>
 </template>
 
@@ -10,13 +10,13 @@
 export default {
   data() {
     return {
-      name: "",
+      // name: "",
     };
   },
-  mounted() {
-    setTimeout(() => {
-      this.name = localStorage.getItem("name");
-    }, 50000);
-  },
+  // mounted() {
+  //   setTimeout(() => {
+  //     this.name = localStorage.getItem("name");
+  //   }, 50000);
+  // },
 };
 </script>

@@ -29,6 +29,7 @@
               {{
                 object === "notification"
                   ? item.politician.politicianId
+                  // lỗi hiển thị item.citizen.name
                   : item.citizen.name
               }}
             </div>
@@ -71,7 +72,7 @@ export default {
 }
 
 .responsive-table .col-1 {
-  flex-basis: 15%;
+  flex-basis: 16%;
 }
 
 .responsive-table .col-2 {

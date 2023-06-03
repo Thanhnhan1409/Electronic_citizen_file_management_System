@@ -44,7 +44,6 @@ export default {
   mounted(){
     this.name = localStorage.getItem('name');
   },
-  // middleware:['auth'],
   methods: {
     async submit() {
       try {
@@ -58,7 +57,6 @@ export default {
             this.isShowPopup = false;
             setTimeout(() => {
               this.showNoti = "";
-            //this.$router.push("/poli/inforPoli");
               this.$router.push("/poli");
             }, 1500);
           });
