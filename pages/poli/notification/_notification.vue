@@ -68,9 +68,9 @@
                 <multiselect
                   v-model="selectedCitizenId"
                   :options="listCitizen"
+                  placeholder="Chọn công dân"
                   :multiple="true"
                   :close-on-select="false"
-                  placeholder="Chọn công dân"
                   label="name"
                   @input="updateselectedCitizenId"
                 ></multiselect>
@@ -153,7 +153,6 @@ export default {
   methods: {
     async postData() {
       try {
-        this.listIdCitizen = this.stringIdCitizen.split(", ");
         this.isShowPopup = false;
         console.log("danh sach ng duoc gui yeu cau" + this.listIdCitizen);
         await this.$axios
@@ -163,18 +162,16 @@ export default {
             author_id: this.author_id,
           })
           .then((res) => {
-            // this.isShowPopup = false;
             this.status = "thành công";
             this.showNoti = "Ok";
             setTimeout(() => {
               this.showNoti = "";
             }, 1500);
             this.list = res.data;
-            // this.$router.push("/poli/inforPoli");
+            this.fetchListNotification();
+            this.listIdCitizen = [];
           });
-        // this.hiddenPopup();
       } catch (error) {
-        // this.isShowPopup = false;
         this.status = "thất bại";
         this.showNoti = "Ok";
         setTimeout(() => {
@@ -217,11 +214,13 @@ export default {
       }
       return uniqueNames;
     },
-    async updateselectedCitizenId() {
+    async updateselectedCitizenId(value) {
       if (this.selectedCitizenId !== null) {
-        // console.log( this.selectedCitizenId.name);
-        this.selectedCitizenId = this.selectedCitizenId.citizenId;
+        console.log(this.selectedCitizenId);
+        this.listIdCitizen.push(this.selectedCitizenId[this.selectedCitizenId.length-1].citizen_id);
+        console.log(this.listIdCitizen);
       }
+      this.selectedCitizenId = value;
     },
     checkLevelManager() {
       if (this.level == "city")
