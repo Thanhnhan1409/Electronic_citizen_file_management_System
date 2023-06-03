@@ -41,7 +41,6 @@ export default {
   buildModules: [
     '@nuxtjs/composition-api/module',
     '@pinia/nuxt',
-    // '@pinia/nuxt',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -49,15 +48,22 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth',
     'nuxt-vue-multiselect',
+    '@pinia/nuxt',
   ],
 
-  
+  pinia: {
+    autoImports: [
+      // automatically imports `defineStore`
+      'defineStore', // import { defineStore } from 'pinia'
+      ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
+    ],
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     extend (config, { isDev, isClient }) {
       //
-    }
+    },
   },
 
   axios: {

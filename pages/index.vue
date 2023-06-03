@@ -44,7 +44,10 @@
             <span v-show="errors.has('Mật khẩu')" class="err">{{
               errors.first("Mật khẩu")
             }}</span>
-          <p class="err" v-show="errDesc" >*Hãy chắc rằng bạn đã nhập đúng tài khoản và mật khẩu. Xin vui lòng thử lại </p>
+            <p class="err" v-show="errDesc">
+              *Hãy chắc rằng bạn đã nhập đúng tài khoản và mật khẩu. Xin vui
+              lòng thử lại
+            </p>
             <button class="login">Đăng nhập</button>
           </div>
         </form>
@@ -63,6 +66,7 @@
 </template>
 
 <script>
+import { useListCityStore } from "@/store/listCity";
 export default {
   data() {
     return {
@@ -75,15 +79,16 @@ export default {
       status: "",
       showNoti: "",
       errDesc: false,
-
+      listCity: useListCityStore(),
     };
   },
   onmounted() {
     this.deleteToken();
   },
   mounted() {
-    this.id = localStorage.getItem("id");
+    // this.id = localStorage.getItem("id");
     this.deleteToken();
+
   },
   methods: {
     deleteToken: function () {
@@ -92,7 +97,7 @@ export default {
     async login() {
       try {
         localStorage.removeItem("auth._token.local");
-        this.errDesc=false;
+        this.errDesc = false;
         await this.$auth
           .loginWith("local", {
             data: {
@@ -101,24 +106,27 @@ export default {
             },
           })
           .then((res) => {
+            
+            this.getCity()
+
             localStorage.setItem("id", this.citizen_id);
             this.role = res.data.role;
-            localStorage.setItem('role','citizen')
+            localStorage.setItem("role", "citizen");
             for (let item of this.role) {
               if (item === "POLITICIAN") {
                 this.check = true;
-                localStorage.setItem('role','politician')
+                localStorage.setItem("role", "politician");
                 console.log(this.check);
                 this.status = "thành công";
                 this.showNoti = "Ok";
                 return setTimeout(() => {
                   this.showNoti = "";
-                  //this.$router.push("/poli/inforPoli");
                   this.$router.push("/poli");
                 }, 1000);
+                
                 break;
-              } else if (item === "ADMIN"){
-                localStorage.setItem('role','admin')
+              } else if (item === "ADMIN") {
+                localStorage.setItem("role", "admin");
                 this.status = "thành công";
                 this.showNoti = "Ok";
                 return setTimeout(() => {
@@ -128,21 +136,34 @@ export default {
               }
             }
             this.status = "thành công";
-                this.showNoti = "Ok";
-                setTimeout(() => {
-                  this.showNoti = "";
-                  this.$router.push("/citizen");
+            this.showNoti = "Ok";
+            return setTimeout(() => {
+              this.showNoti = "";
+              this.$router.push("/citizen");
             }, 1000);
             console.log("test ");
           });
       } catch (error) {
-        this.errDesc=true;
+        this.errDesc = true;
         this.status = "thất bại";
         this.showNoti = "Ok";
         setTimeout(() => {
           this.showNoti = "";
         }, 1500);
         console.error(error);
+      }
+    },
+    async getCity() {
+      try {
+        await this.$axios
+          .get(`http://localhost:8080/api/local/province`)
+          .then((res) => {
+            const list = useListCityStore()
+            list.setListCity(res.data);
+            console.log(list.getListCity);
+          });
+      } catch (error) {
+        console.log(error);
       }
     },
   },
@@ -163,15 +184,15 @@ html {
 
 .container {
   width: 100%;
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .content {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom:2.5px;
+  margin-bottom: 2.5px;
 }
 
 .logo-login {
@@ -198,14 +219,14 @@ img {
 
 .form h2 {
   font-size: 40px;
-  color: #127E23;
+  color: #127e23;
   text-align: center;
 }
 
 input {
   width: 260px;
   height: 25px;
-  border: 1px solid #127E23;
+  border: 1px solid #127e23;
   border-radius: 4px;
   margin: 10px 0;
 }
@@ -214,7 +235,7 @@ input {
   width: 283px;
   height: 35px;
   /* margin-top: 50px; */
-  background: #127E23;
+  background: #127e23;
   color: #fff;
   border: none;
   border-radius: 5px;

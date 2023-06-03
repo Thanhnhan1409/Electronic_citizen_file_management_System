@@ -117,13 +117,13 @@
 </template>
 
 <script>
+import {useListCitizenStore} from '@/store/listCitizen'
 export default {
   data() {
     return {
       listIdCitizen: [],
       description: "",
       author_id: null,
-      list: [],
       stringIdCitizen: "",
       listNotification: [],
       title: "thêm thông báo",
@@ -135,20 +135,13 @@ export default {
       showNoti: "",
       name: "",
       listCitizen: [],
-      fUrl: "http://localhost:8080/api/citizen/listCitizen/",
-      url: "",
-      nameArea: "",
-      level: "",
     };
   },
   mounted() {
     this.author_id = localStorage.getItem("idPolicitian");
     this.fetchListNotification();
     this.name = localStorage.getItem("name");
-    this.level = localStorage.getItem("level");
-    this.nameArea = localStorage.getItem("nameArea");
-    this.checkLevelManager();
-    this.fetchData();
+    this.getData()
   },
   methods: {
     async postData() {
@@ -167,7 +160,6 @@ export default {
             setTimeout(() => {
               this.showNoti = "";
             }, 1500);
-            this.list = res.data;
             this.fetchListNotification();
             this.listIdCitizen = [];
           });
@@ -222,25 +214,14 @@ export default {
       }
       this.selectedCitizenId = value;
     },
-    checkLevelManager() {
-      if (this.level == "city")
-        this.url = `${this.fUrl}city=${encodeURIComponent(this.nameArea)}`;
-      else if (this.level == "district")
-        this.url = `${this.fUrl}district=${encodeURIComponent(this.nameArea)}`;
-      else if (this.level == "town")
-        this.url = `${this.fUrl}town=${encodeURIComponent(this.nameArea)}`;
-      else
-        this.url = `${this.fUrl}quarter=${encodeURIComponent(this.nameArea)}`;
-    },
-    async fetchData() {
-      try {
-        await this.$axios.get(`${this.url}`).then((res) => {
-          this.listCitizen = res.data;
-          console.log(this.listCitizen);
-        });
-      } catch (error) {
-        console.log(error);
+    getData(){
+      const listCitizenStore = useListCitizenStore();
+      const storedData = localStorage.getItem('listCitizenData');
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        listCitizenStore.setListCitizen(parsedData);
       }
+      this.listCitizen = listCitizenStore.getListCitizen
     },
   },
 };
@@ -326,16 +307,13 @@ ul li {
   cursor: pointer;
   z-index: 3;
 }
-
 .add-notification:hover {
   transform: scale(1.05);
 }
-
 .add-notification p {
   margin: 0px;
   margin-left: 5px;
 }
-
 .add-notificaito--popup {
   width: 400px;
   height: auto;
@@ -350,7 +328,6 @@ ul li {
   /* display: none; */
   transition: all 0.2 ease;
 }
-
 .add-notificaito--popup svg {
   width: 12px;
   height: auto;
@@ -359,20 +336,16 @@ ul li {
   fill: rgb(107, 106, 106);
   cursor: pointer;
 }
-
 .popup-input {
   padding: 10px 30px;
 }
-
 .popup-content {
   transition: all 0.2s ease;
 }
-
 .popup-content h3 {
   text-align: center;
   padding-top: 10px;
 }
-
 .popup-input--title {
   display: flex;
   margin-top: 10px;
@@ -381,7 +354,6 @@ ul li {
 .popup-input--title span {
   width: 30%;
 }
-
 .popup-input--title input {
   border: none;
   width: 215px;
@@ -390,7 +362,6 @@ ul li {
   padding: 5px 7px;
   /* border-radius: 5px; */
 }
-
 .popup-input--title textarea {
   width: 210px;
   height: 50px;
@@ -398,7 +369,6 @@ ul li {
   padding: 5px 10px;
   /* border-radius: 10px; */
 }
-
 .popup-button {
   padding: 5px 10px;
   border: none;
@@ -415,10 +385,20 @@ ul li {
   box-shadow: 3px 3px 10px 3px rgb(217, 217, 217);
   transform: scale(1.03);
 }
-.row {
+/* .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 350px;
+  margin-bottom: 10px;
+} */
+.content--item {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
   margin-bottom: 10px;
+}
+.content--item p{
+  width: 47%;
 }
 </style>

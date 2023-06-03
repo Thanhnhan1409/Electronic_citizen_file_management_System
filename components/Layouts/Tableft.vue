@@ -404,7 +404,7 @@ export default {
     },
     pushToHomePage() {
       this.showPage = "";
-      if (this.role === "poli") {
+      if (this.role === "politician") {
         return this.$router.push("/poli");
       } else if (this.role === "admin") {
         return this.$router.push("/admin/listInforAll");

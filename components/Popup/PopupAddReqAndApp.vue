@@ -338,19 +338,15 @@ export default {
       }
     },
     async getCity() {
-      try {
-        await this.$axios
-          .get(`http://localhost:8080/api/local/province`)
-          .then((res) => {
-            this.listCity = res.data;
-            this.getDistrict();
-          });
-
-        // await this.filterPoli();
-        await this.fetchData();
-      } catch (error) {
-        console.log(error);
+      const listCityStore = useListCityStore();
+      
+      // Khôi phục dữ liệu từ localStorage
+      const storedData = localStorage.getItem('listCity');
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        listCityStore.setListCity(parsedData);
       }
+      this.listCity = listCityStore.getListCity
     },
     async getDistrict() {
       try {

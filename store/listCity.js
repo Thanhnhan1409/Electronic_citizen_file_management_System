@@ -13,4 +13,10 @@ export const useListCityStore = defineStore('listCity', {
       return this.listCity;
     },
   },
+  actions:{
+    setListCity(list){
+      this.listCity = list;
+      localStorage.setItem('listCity', JSON.stringify(list));
+    }
+  }
 });

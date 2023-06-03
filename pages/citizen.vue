@@ -1,23 +1,11 @@
 <template>
   <div class="container--citizen">
     <Tableft />
-    <!-- <Navbar :userName = "name" /> -->
     <nuxt-child />
   </div>
 </template>
     
-<script>
-export default {
-  data() {
-    return {
-      name: ''
-    }
-  },
-  mounted() {
-      this.name = localStorage.getItem("name");
-  },
-}
-</script>
+
 <style scoped src="~/static/asset/styles.css"></style>
 <!-- <style scoped>
 body {
