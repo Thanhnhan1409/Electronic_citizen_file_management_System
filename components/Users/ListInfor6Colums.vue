@@ -1,13 +1,7 @@
 <template>
   <div class="container-listInfor">
     <div class="list-appointment">
-      <h2
-        :class="
-          object === 'poli'
-            ? 'title-poli'
-            : 'title'
-        "
-      >
+      <h2 :class="object === 'poli' ? 'title-poli' : 'title'">
         Danh sách {{ title }}
       </h2>
       <ul class="responsive-table">
@@ -60,10 +54,7 @@
           v-for="(item, index) in listTmp"
           :key="index"
         >
-          <li
-            class="table-row display"
-            @click.prevent="handleClick(item)"
-          >
+          <li class="table-row display" @click.prevent="handleClick(item)">
             <div class="col col-0 content" data-label="STT">
               {{ index + 1 }}
             </div>
@@ -75,15 +66,22 @@
                   ? item.citizenId
                   : object === "poliListCitizen"
                   ? item.citizen_id
-                  : item.author.citizenId
+                  : object === "poliRequirement"
+                  ? item.author.citizenId
+                  : object === "requirement"
+                  ? item.recipient[getIndexItem(item.recipient)].politicianId
+                  : ""
               }}
             </div>
-            <div class="col col-2 content" data-label="Tên">
+            <div class="col col-2 content" data-label="Tên"
+            >
               {{
                 object === "poli"
                   ? item.citizen.name
-                  : object === "requirement" || object === "poliRequirement"
+                  : object === "poliRequirement"
                   ? item.author.name
+                  : object === "requirement"
+                  ? item.recipient[getIndexItem(item.recipient)].citizen.name
                   : item.name
               }}
             </div>
@@ -92,9 +90,11 @@
                 object === "poli"
                   ? item.levelManagerVN
                   : object === "family"
-                  ?  item.homeOwnerRelationship
-                  : object === 'poliListCitizen'
-                  ? item.gender? "Nam": "Nữ" 
+                  ? item.homeOwnerRelationship
+                  : object === "poliListCitizen"
+                  ? item.gender
+                    ? "Nam"
+                    : "Nữ"
                   : item.date
               }}
             </div>
@@ -137,14 +137,14 @@
                 >
                   Xóa
                 </li>
-                <PopupConfirm
-                  :title="'xóa yêu cầu'"
-                  @action="deleteRequirement(item.id_requirement)"
-                  v-show="isShowPopupDelete"
-                  @closePopup="closePopup"
-                >
-                </PopupConfirm>
               </ul>
+              <PopupConfirm
+                :title="'xóa yêu cầu'"
+                @action="deleteRequirement(item.id_requirement)"
+                v-show="isShowPopupDelete"
+                @closePopup="closePopup"
+              >
+              </PopupConfirm>
             </div>
             <div class="status col col-7" v-if="object === 'poliRequirement'">
               <svg
@@ -157,13 +157,23 @@
                 />
               </svg>
               <ul class="status-action">
-                <li @click.prevent="handleAccept" class="accept-status">Chấp nhận</li>
-                <li @click.prevent="handleDenied" class="deny-status">Từ chối</li>
-                <li @click.prevent="openPopUp(item)" >Chuyển tiếp</li>
-                
+                <li @click.prevent="handleAccept" class="accept-status">
+                  Chấp nhận
+                </li>
+                <li @click.prevent="handleDenied" class="deny-status">
+                  Từ chối
+                </li>
+                <li @click.prevent="openPopUp(item)">Chuyển tiếp</li>
+
                 <PopupConfirm
-                  :title="updatedStatus ==='denied'?  'đổi trạng thái sang từ chối': 'đổi trạng thái sang chấp nhận'"
-                  @action="updatedStatus ==='denied'? denied(item):Accept(item) "
+                  :title="
+                    updatedStatus === 'denied'
+                      ? 'đổi trạng thái sang từ chối'
+                      : 'đổi trạng thái sang chấp nhận'
+                  "
+                  @action="
+                    updatedStatus === 'denied' ? denied(item) : Accept(item)
+                  "
                   v-show="isShowPopup === true"
                   @closePopup="closePopup"
                 >
@@ -179,25 +189,27 @@
 
 <script>
 export default {
-  props: ["object", "listTmp", "title", "updatePopup","updateStatus"],
+  props: ["object", "listTmp", "title", "updatePopup", "updateStatus"],
   data() {
     return {
       isShowPopupDelete: false,
       status: "",
       showNoti: "",
-      updatedStatus:'',
-      isShowPopup:''
-
+      updatedStatus: "",
+      isShowPopup: "",
+      a: [],
     };
+  },
+  mounted(){
+    // this.getIndexItem()
   },
   methods: {
     handleClick(item) {
-      
       if (this.object === "family" || this.object === "poliListCitizen") {
-        localStorage.setItem("idViewInfor", item.citizenId)
+        localStorage.setItem("idViewInfor", item.citizenId);
         this.$emit("pushToDetailInfor", item.citizenId);
-      } else if ( this.object === "poli") {
-        localStorage.setItem("idViewInfor",item.citizen.citizenId)
+      } else if (this.object === "poli") {
+        localStorage.setItem("idViewInfor", item.citizen.citizenId);
         this.$emit("pushToDetailInfor", item.citizen.citizenId);
       }
     },
@@ -209,33 +221,37 @@ export default {
       this.isShowPopupDelete = false;
       this.isShowPopup = false;
     },
-    handleAccept(){
-      this.isShowPopup = true ;
-      this.updatedStatus = 'accept';
-
+    handleAccept() {
+      this.isShowPopup = true;
+      this.updatedStatus = "accept";
     },
-    handleDenied(){
-      this.isShowPopup = true ;
-      this.updatedStatus = 'denied';
+    handleDenied() {
+      this.isShowPopup = true;
+      this.updatedStatus = "denied";
     },
     openPopUp(item) {
       console.log("hehehe m co hien len noi kh");
 
-      this.$emit("openPopup",item)
+      this.$emit("openPopup", item);
     },
     Accept(item) {
       // this.updateStatus = "Chấp nhận";
-      this.$emit("accept",item)
-      this.isShowPopup=false;
+      this.$emit("accept", item);
+      this.isShowPopup = false;
       // this.renderAllReq();
     },
     denied(item) {
       // this.updateStatus = "Từ chối";
-      this.$emit("denied",item)
-      this.isShowPopup=false;
-
-
+      this.$emit("denied", item);
+      this.isShowPopup = false;
     },
+    getIndexItem(item){
+      if(this.object === 'requirement')
+      {
+        return item.length-1;
+      }
+      return ;
+    }
   },
 };
 </script>
@@ -365,7 +381,7 @@ export default {
   font-weight: 550;
 }
 .status-action .accept-status:hover {
-  color: #127E23;
+  color: #127e23;
   font-weight: 550;
 }
 .status-action .deny-status:hover {

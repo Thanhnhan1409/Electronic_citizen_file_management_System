@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Navbar :userName = "name" />
+    <Navbar :userName="name" />
 
     <ListInfor6Colums
       :listTmp="listRequirement"
@@ -9,10 +9,7 @@
       :title="'các yêu cầu đã gửi'"
       @deleteRequirement="deleteRequirement"
     />
-    <ButtonAdd 
-    :title="'Thêm yêu cầu'" 
-    @showAddApp="showAddReqf" 
-    />
+    <ButtonAdd :title="'Thêm yêu cầu'" @showAddApp="showAddReqf" />
     <PopupAddReqAndApp
       v-show="showAddReq"
       :requirement="requirement"
@@ -22,8 +19,8 @@
       @action="openPopupConfirm()"
     />
     <PopupConfirm
-      :title="'thêm yêu cầu' "
-      @action="addRequirement() "
+      :title="'thêm yêu cầu'"
+      @action="addRequirement()"
       v-show="isShowPopup"
       @closePopup="closePopup"
     >
@@ -31,11 +28,11 @@
     <Notification
       :status="status"
       :object="'yêu cầu'"
-      :action="activity === 'delete'? 'Xoá' : 'Thêm'"
+      :action="activity === 'delete' ? 'Xoá' : 'Thêm'"
       :isShowNoti="showNoti"
       v-if="showNoti == 'Ok'"
     >
-    </Notification> 
+    </Notification>
   </div>
 </template>
 
@@ -46,21 +43,21 @@ export default {
       listRequirement: {},
       id: null,
       requirement: {
-        recipient_id:[]
+        recipient_id: [],
       },
       showAddReq: false,
       isShowPopup: false,
       showNoti: "",
       isShowPopupDelete: false,
       idReq: null,
-      activity:'',
-      name:''
+      activity: "",
+      name: "",
     };
   },
   mounted() {
     this.id = localStorage.getItem("id");
     this.getListRequirement();
-    this.name = localStorage.getItem('name')
+    this.name = localStorage.getItem("name");
   },
   methods: {
     async getListRequirement() {
@@ -79,10 +76,10 @@ export default {
       try {
         this.isShowPopup = false;
         this.requirement.author_id = this.id;
-        this.requirement.date =  Date.now();
+        this.requirement.date = Date.now();
         this.requirement.recipient_id.splice();
-        this.requirement.recipient_id.push(this.requirement.idPoli)
-        console.log(this.requirement);
+        this.requirement.recipient_id.push(this.requirement.idPoli);
+        console.log("req" + this.requirement);
         await this.$axios
           .post(`http://localhost:8080/api/requirement/new`, this.requirement)
           .then((res) => {
@@ -90,11 +87,12 @@ export default {
             this.status = "thành công";
             this.showNoti = "Ok";
             this.isShowPopup = false;
+            this.requirement.recipient_id.splice(0, this.requirement.recipient_id.length);
             setTimeout(() => {
               this.showNoti = "";
             }, 1500);
           });
-        await this.getListRequirement()
+          await  this.getListRequirement();
       } catch (error) {
         this.isShowPopup = false;
         this.status = "thất bại";
@@ -113,7 +111,7 @@ export default {
           .delete(`http://localhost:8080/api/requirement/${id_requirement}`)
           .then((res) => {
             this.status = "thành công";
-            this.activity ='delete'
+            this.activity = "delete";
             this.showNoti = "Ok";
             this.isShowPopup = false;
             setTimeout(() => {

@@ -30,7 +30,8 @@ export default {
     '@plugins/vue-multiselect.js',
     {src: '~/plugins/vee-validate.js', ssr: true },
     {src: '~/plugins/validate.js', ssr: true },
-    { src: '~/plugins/before_unload.js', ssr: false }
+    { src: '~/plugins/before_unload.js', ssr: false },
+    { src: '~/plugins/pinia.js' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -38,14 +39,19 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/composition-api/module',
+    '@pinia/nuxt',
+    // '@pinia/nuxt',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth',
-    'nuxt-vue-multiselect'
+    'nuxt-vue-multiselect',
   ],
+
+  
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

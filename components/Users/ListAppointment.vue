@@ -121,15 +121,7 @@
               <ul class="status-action">
                 <li @click.prevent="openPopupUpdate(item)">
                   Cập nhật
-                  <!-- <PopupAddReqAndApp
-                    v-if="isShowPopupUpdate === true"
-                    :appointment="item"
-                    :title="'Cập nhật lịch hẹn'"
-                    :obj="'appointment'"
-                    @closePopup="closePopup"
-                    @action="openPopupConfirm"
-                    class="update-requirement"
-                  /> -->
+                 
                 </li>
                 <li
                   @click.prevent="isShowPopup = 'popupDelete'"

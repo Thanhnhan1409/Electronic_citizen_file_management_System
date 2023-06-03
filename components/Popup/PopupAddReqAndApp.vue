@@ -4,132 +4,202 @@
     <div class="popup-AddAppoint">
       <h3>{{ title }}</h3>
       <div class="content">
-        <div class="content--item" v-show="obj !== 'opinion'">
-          <p>
-            {{
-              obj === "poliForwardRequirement"
-                ? "ID CBCC chuyển tiếp:"
-                : "ID CBCC:"
-            }}
-          </p>
-          <input
-            :value="
-              obj === 'appointment'
-                ? appointment.politician_id
-                : obj === 'poliForwardRequirement'
-                ? idPoliForward.id
-                : obj === 'requirement'
-                ? requirement.idPoli
-                : obj === 'updateAppointment'
-                ? appointment.politician.politician_id
-                : ''
-            "
-            @input="
-              obj === 'appointment' || obj === 'updateAppointment'
-                ? (appointment.politician_id = $event.target.value)
-                : obj === 'poliForwardRequirement'
-                ? (idPoliForward.id = $event.target.value)
-                : obj === 'requirement'
-                ? (requirement.idPoli = $event.target.value)
-                : ''
-            "
-            type="text"
-            :class="{ input: true, 'is-danger': errors.has('idPoli') }"
-            placeholder="Nhập số ID CBCC"
-            name="Nhập nội dung"
-            id="input-idPoli"
-            autocomplete="on"
-          />
-          <span v-show="errors.has('idPoli')" class="err">{{
-            errors.first("idPoli")
-          }}</span>
+        <div class="row">
+          <div class="poli-level">
+            Cấp vụ
+            <multiselect
+              class="multiselect"
+              :options="listLevelPoli"
+              v-model="levelManager"
+              @input="fetchData"
+              placeholder="Chọn cấp vụ"
+              v-validate="'required'"
+              :class="{
+                input: true,
+                'is-danger': errors.has('Cấp vụ'),
+              }"
+              name="Cấp vụ"
+            ></multiselect>
+            <span v-show="errors.has('Cấp vụ')" class="err">{{
+              errors.first("Cấp vụ")
+            }}</span>
+          </div>
+
+          <div v-show="isShowCity">
+            Tỉnh
+            <multiselect
+              class="multiselect"
+              @input="getDistrict()"
+              :options="listCity"
+              v-model="inforSearch.city"
+              placeholder="Chọn tỉnh"
+              v-validate="'required'"
+              :class="{
+                input: true,
+                'is-danger': errors.has('Tỉnh'),
+              }"
+              name="Tỉnh"
+            ></multiselect>
+            <span v-show="errors.has('Tỉnh')" class="err">{{
+              errors.first("Tỉnh")
+            }}</span>
+          </div>
         </div>
 
-        <div
-          class="content--item"
-          v-show="obj === 'appointment' || obj === 'updateAppointment'"
-        >
-          <p>Ngày</p>
-          <input
-            :value=" obj === 'appointment' || obj === 'updateAppointment'
-                ? appointment.appointmentDate
-                : ''"
-            @input=" obj === 'appointment' || obj === 'updateAppointment'
-            ? (appointment.appointmentDate = $event.target.value)
-            : ''
-            "
-            type="date"
-            v-validate="'required'"
-            :class="{ input: true, 'is-danger': errors.has('Ngày') }"
-            name="Chọn ngày"
-            id="input-appointmentDate"
-            autocomplete="on"
-          />
-          <span v-show="errors.has('Ngày')" class="err">{{
-            errors.first("Ngày")
-          }}</span>
+        <div class="row">
+          <div v-show="isShowDistrict">
+            Huyện/Thành phố
+            <multiselect
+              class="multiselect"
+              @input="getWard()"
+              :options="listDistrict"
+              v-model="inforSearch.district"
+              placeholder="Chọn huyện/Thành phố"
+              v-validate="'required'"
+              :class="{
+                input: true,
+                'is-danger': errors.has('Huyện'),
+              }"
+              name="Huyện"
+            ></multiselect>
+            <span v-show="errors.has('Huyện')" class="err">{{
+              errors.first("Huyện")
+            }}</span>
+          </div>
+
+          <div v-show="isShowTown">
+            Xã/Thị trấn:
+            <multiselect
+              class="multiselect"
+              :options="listWard"
+              v-model="inforSearch.town"
+              placeholder="Chọn Xã/Thị trấn"
+              v-validate="'required'"
+              :class="{
+                input: true,
+                'is-danger': errors.has('Xã/Thị trấn'),
+              }"
+              name="Xã/Thị trấn"
+            ></multiselect>
+            <span v-show="errors.has('Xã/thị trấn')" class="err">{{
+              errors.first("Xã/thị trấn")
+            }}</span>
+          </div>
         </div>
 
-        <div
-          class="content--item"
-          v-show="obj === 'appointment' || obj === 'updateAppointment'"
-        >
-          <p>Thời gian bắt đầu:</p>
-          <input
-            :value="
-              obj === 'appointment' || obj === 'updateAppointment'
-                ? appointment.startTime
-                : ''
-            "
-            @input="
-              obj === 'appointment' || obj === 'updateAppointment'
-                ? (appointment.startTime = $event.target.value)
-                : ''
-            "
-            type="time"
-            v-validate="'required'"
-            :class="{
-              input: true,
-              'is-danger': errors.has('Thời gian bắt đầu'),
-            }"
-            name="Thời gian bắt đầu"
-            id="input-startTime"
-            autocomplete="on"
-          />
-          <span v-show="errors.has('Thời gian bắt đầu')" class="err">{{
-            errors.first("Thời gian bắt đầu")
-          }}</span>
+        <div class="row">
+          <div class="content--item" v-show="obj !== 'opinion'">
+            <p>
+              {{
+                obj === "poliForwardRequirement"
+                  ? "ID CBCC chuyển tiếp:"
+                  : "ID CBCC:"
+              }}
+            </p>
+            <multiselect
+              v-model="selectedPoliId"
+              :options="listPoli"
+              placeholder="Chọn cán bộ"
+              label="name"
+              @input="updateSelectedPoliId"
+            ></multiselect>
+
+            <span v-show="errors.has('idPoli')" class="err">{{
+              errors.first("idPoli")
+            }}</span>
+          </div>
+
+          <div
+            class="content--item"
+            v-show="obj === 'appointment' || obj === 'updateAppointment'"
+          >
+            <p>Ngày</p>
+            <input
+              :value="
+                obj === 'appointment' || obj === 'updateAppointment'
+                  ? appointment.appointmentDate
+                  : ''
+              "
+              @input="
+                obj === 'appointment' || obj === 'updateAppointment'
+                  ? (appointment.appointmentDate = $event.target.value)
+                  : ''
+              "
+              type="date"
+              v-validate="'required'"
+              :class="{ input: true, 'is-danger': errors.has('Ngày') }"
+              name="Chọn ngày"
+              id="input-appointmentDate"
+              autocomplete="on"
+            />
+            <span v-show="errors.has('Ngày')" class="err">{{
+              errors.first("Ngày")
+            }}</span>
+          </div>
         </div>
 
-        <div
-          class="content--item"
-          v-show="obj === 'appointment' || obj === 'updateAppointment'"
-        >
-          <p>Thời gian kết thúc:</p>
-          <input
-            :value="
-              obj === 'appointment' || obj === 'updateAppointment'
-                ? appointment.endTime
-                : ''
-            "
-            @input="
-              obj === 'appointment' || obj === 'updateAppointment'
-                ? (appointment.endTime = $event.target.value)
-                : ''
-            "
-            type="time"
-            v-validate="'required'"
-            :class="{
-              input: true,
-              'is-danger': errors.has('Thời gian kết thúc'),
-            }"
-            name="Thời gian kết thúc"
-            id="input-endTime"
-            autocomplete="on"
-          />
-          <span v-show="errors.has('Thời gian kết thúc')" class="err">{{
-            errors.first("Thời gian kết thúc")
-          }}</span>
+        <div class="row">
+          <div
+            class="content--item"
+            v-show="obj === 'appointment' || obj === 'updateAppointment'"
+          >
+            <p>Thời gian bắt đầu:</p>
+            <input
+              :value="
+                obj === 'appointment' || obj === 'updateAppointment'
+                  ? appointment.startTime
+                  : ''
+              "
+              @input="
+                obj === 'appointment' || obj === 'updateAppointment'
+                  ? (appointment.startTime = $event.target.value)
+                  : ''
+              "
+              type="time"
+              v-validate="'required'"
+              :class="{
+                input: true,
+                'is-danger': errors.has('Thời gian bắt đầu'),
+              }"
+              name="Thời gian bắt đầu"
+              id="input-startTime"
+              autocomplete="on"
+            />
+            <span v-show="errors.has('Thời gian bắt đầu')" class="err">{{
+              errors.first("Thời gian bắt đầu")
+            }}</span>
+          </div>
+
+          <div
+            class="content--item"
+            v-show="obj === 'appointment' || obj === 'updateAppointment'"
+          >
+            <p>Thời gian kết thúc:</p>
+            <input
+              :value="
+                obj === 'appointment' || obj === 'updateAppointment'
+                  ? appointment.endTime
+                  : ''
+              "
+              @input="
+                obj === 'appointment' || obj === 'updateAppointment'
+                  ? (appointment.endTime = $event.target.value)
+                  : ''
+              "
+              type="time"
+              v-validate="'required'"
+              :class="{
+                input: true,
+                'is-danger': errors.has('Thời gian kết thúc'),
+              }"
+              name="Thời gian kết thúc"
+              id="input-endTime"
+              autocomplete="on"
+            />
+            <span v-show="errors.has('Thời gian kết thúc')" class="err">{{
+              errors.first("Thời gian kết thúc")
+            }}</span>
+          </div>
         </div>
 
         <div class="content--item" v-show="obj !== 'poliForwardRequirement'">
@@ -164,6 +234,7 @@
           }}</span>
         </div>
       </div>
+
       <div class="icon-close">
         <svg
           @click.prevent="closePopUp()"
@@ -176,6 +247,7 @@
           />
         </svg>
       </div>
+
       <div class="popup--button">
         <button class="cancel" @click.prevent="closePopUp()">Hủy</button>
         <button class="confirm" @click.prevent="action()">Thêm</button>
@@ -194,12 +266,151 @@ export default {
     "title",
     "idPoliForward",
   ],
+  data() {
+    return {
+      idPolicitian: "",
+      listPoli: [],
+      listCity: [],
+      listDistrict: [],
+      listWard: [],
+      selectedPoliId: "",
+      listLevelPoli: ["Cả nước", "Tỉnh", "Huyện/Thành phố", "Xã/Thị trấn"],
+      inforSearch: {},
+      levelManager: "Cả nước",
+      isShowCity: false,
+      isShowDistrict: false,
+      isShowTown: false,
+      isShow: true,
+      idPolitician: null,
+    };
+  },
+  mounted() {
+    this.getCity();
+  },
   methods: {
     closePopUp() {
       this.$emit("closePopup");
     },
     action() {
       this.$emit("action");
+    },
+    async updateSelectedPoliId(value) {
+      if (this.selectedPoliId !== null) {
+        this.selectedPoliId = this.selectedPoliId.citizenId;
+        try {
+          await this.$axios
+            .get(
+              `http://localhost:8080/api/politician/citizenId=${this.selectedPoliId}`
+            )
+            .then((res) => {
+              this.idPolitician = res.data.politician_id;
+              if (this.obj === "poliForwardRequirement") {
+                this.idPoliForward.id = this.idPolitician;
+              } else if (this.obj === "requirement") {
+                this.requirement.idPoli = this.idPolitician;
+              } else if (this.obj === "updateAppointment") {
+                this.appointment.politician.politician_id = this.idPolitician;
+              } else if (this.obj === "appointment") {
+                this.appointment.politician_id = this.idPolitician;
+              }
+            });
+            this.selectedPoliId = value;
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
+    async fetchData() {
+      try {
+        this.checkLevel();
+        this.isShow = true;
+        let url = `http://localhost:8080/api/politician/listPolitician/country`;
+        if (this.levelManager !== "Cả nước") {
+          url = `http://localhost:8080/api/politician/listPolitician/?levelManageEncode=${
+            this.inforSearch.level
+          }&areaManageEncode=${encodeURIComponent(this.inforSearch.add)}`;
+        }
+        await this.$axios.get(url).then((res) => {
+          this.listPoli = res.data.map((poli) => poli.citizen);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getCity() {
+      try {
+        await this.$axios
+          .get(`http://localhost:8080/api/local/province`)
+          .then((res) => {
+            this.listCity = res.data;
+            this.getDistrict();
+          });
+
+        // await this.filterPoli();
+        await this.fetchData();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getDistrict() {
+      try {
+        console.log("district");
+        await this.$axios
+          .get(
+            `http://localhost:8080/api/local/district/province=${encodeURIComponent(
+              this.inforSearch.city
+            )}`
+          )
+          .then((res) => {
+            this.listDistrict = res.data;
+            this.getWard();
+          });
+        this.fetchData();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getWard() {
+      try {
+        console.log("ward");
+        await this.$axios
+          .get(
+            `http://localhost:8080/api/local/ward/?proCode=${encodeURIComponent(
+              this.inforSearch.city
+            )}&disCode=${encodeURIComponent(this.inforSearch.district)}`
+          )
+          .then((res) => {
+            this.listWard = res.data;
+          });
+        this.fetchData();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async checkLevel() {
+      if (this.levelManager === "Tỉnh") {
+        this.inforSearch.level = "city";
+        this.inforSearch.add = this.inforSearch.city;
+        this.isShowCity = true;
+        this.isShowDistrict = false;
+        this.isShowTown = false;
+      } else if (this.levelManager === "Huyện/Thành phố") {
+        this.inforSearch.level = "district";
+        this.inforSearch.add = this.inforSearch.district;
+        this.isShowCity = true;
+        this.isShowDistrict = true;
+        this.isShowTown = false;
+      } else if (this.levelManager === "Xã/Thị trấn") {
+        this.inforSearch.level = "ward";
+        this.inforSearch.add = this.inforSearch.town;
+        this.isShowCity = true;
+        this.isShowDistrict = true;
+        this.isShowTown = true;
+      } else {
+        this.isShowCity = false;
+        this.isShowDistrict = false;
+        this.isShowTown = false;
+      }
     },
   },
 };
@@ -221,15 +432,14 @@ export default {
   border: 1px solid black;
   background-color: #fff;
   position: absolute;
-  left: 25%;
-  top: 15%;
+  left: 21%;
+  top: 8%;
   padding: 40px 60px 20px;
   z-index: 99;
-  width: 350px;
+  width: 520px;
   border-radius: 5px;
   border: none;
   box-shadow: 3px 3px 10px 3px rgb(129, 129, 129);
-  /* display: block !important; */
   animation: popup-visible 0.3s ease forwards;
 }
 @keyframes popup-visible {
@@ -247,20 +457,36 @@ export default {
   text-align: center;
 }
 .content--item {
-  display: flex;
+  /* display: flex; */
   padding-bottom: 7px;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 .content--item input {
   padding: 4px 8px;
-  width: 160px;
-  border-radius: 5px;
+  width: 220px;
   border: 1px solid;
+  align-items: center;
+  border-radius: 6px;
+  border: solid 0.5px #dfe0eb;
+  background: #fff;
+  font-size: 14px;
+  height: 30px;
+  margin-top: 10px;
 }
 .content--item textarea {
-  min-width: 140px;
-  min-height: 50px;
+  min-width: 505px;
+  min-height: 70px;
   padding: 4px 8px;
+  padding: 4px 8px;
+  width: 220px;
+  border: 1px solid;
+  align-items: center;
+  border-radius: 6px;
+  border: solid 0.5px #dfe0eb;
+  background: #fff;
+  font-size: 14px;
+  height: 30px;
+  margin-top: 10px;
 }
 .icon-close {
   width: 20px;
@@ -282,14 +508,15 @@ export default {
   padding: 2px 0 0 5px;
 }
 .popup--button button {
-  margin-top: 15px;
-  padding: 5px 10px;
+  margin-top: 10px;
+  padding: 7px 10px;
   cursor: pointer;
-  width: 175px;
+  width: 275px;
   border: 0.3px solid black;
+  border-radius: 7px;
   transition: all 0.2s ease;
+  font-weight: 600;
 }
-
 .popup--button {
   display: flex;
   padding: 10px 0;
@@ -309,5 +536,17 @@ export default {
 .popup--button button:hover {
   opacity: 0.8;
   box-shadow: 2px 2px 10px 2px rgb(212, 213, 212);
+}
+.multiselect {
+  width: 238px;
+  height: 40px;
+  padding-top: 10px;
+  /* margin-left: 20px; */
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-bottom: 10px;
 }
 </style>
