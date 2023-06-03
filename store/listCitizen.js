@@ -19,6 +19,7 @@ export const useListCitizenStore = defineStore('listCitizen', {
   actions: {
     setListCitizen(newListCitizen) {
       this.listCitizen = newListCitizen;
+      localStorage.setItem('listCitizenData', JSON.stringify(newListCitizen));
     },
   },
 });

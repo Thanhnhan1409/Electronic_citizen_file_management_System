@@ -14,29 +14,23 @@
 </template>
 
 <script>
+import { useListCitizenStore } from "@/store/listCitizen";
 export default {
   data() {
     return {
-      listCitizen:[],
-      level: "",
-      nameArea: "",
-      url: "",
+      listCitizen: [],
       idPolicitian: null,
       idCitizen: null,
       idSearch: "",
       isShow: true,
-      fUrl: "http://localhost:8080/api/citizen/listCitizen/",
       urlDownloadPDF: "",
       name: "",
     };
   },
   mounted() {
     this.idPolicitian = localStorage.getItem("idPolicitian");
-    this.level = localStorage.getItem("level");
-    this.nameArea = localStorage.getItem("nameArea");
     this.name = localStorage.getItem("name");
-    this.checkLevelManager();
-    this.fetchData();
+    this.getListCitizen()
     this.urlDownloadPDF = `http://localhost:8080/api/citizen/export-to-pdf/citizen/poliId=${this.idPolicitian}`;
   },
   computed: {
@@ -76,28 +70,18 @@ export default {
       this.idSearch = id;
       this.isShow = false;
     },
-    checkLevelManager() {
-      if (this.level == "city")
-        this.url = `${this.fUrl}city=${encodeURIComponent(this.nameArea)}`;
-      else if (this.level == "district")
-        this.url = `${this.fUrl}district=${encodeURIComponent(this.nameArea)}`;
-      else if (this.level == "town")
-        this.url = `${this.fUrl}town=${encodeURIComponent(this.nameArea)}`;
-      else
-        this.url = `${this.fUrl}quarter=${encodeURIComponent(this.nameArea)}`;
-    },
     handleClick() {
       this.$router.push("/poli/viewInforCitizen/inforCitizen");
     },
-    async fetchData() {
-      try {
-        await this.$axios.get(`${this.url}`).then((res) => {
-          this.listCitizen =res.data;
-        });
-      } catch (error) {
-        console.log(error);
+    getListCitizen(){
+      const listCitizenStore = useListCitizenStore();
+      const storedData = localStorage.getItem('listCitizenData');
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        listCitizenStore.setListCitizen(parsedData);
       }
-    },
+      this.listCitizen = listCitizenStore.getListCitizen;
+    }
   },
 };
 </script>
