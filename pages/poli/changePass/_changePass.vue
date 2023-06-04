@@ -60,7 +60,7 @@ export default {
       changePass: {},
       isShowPopup: false,
       errDesc: false,
-      name:''
+      name:'',
     };
   },
   // middleware: 'auth',

@@ -257,6 +257,7 @@
 </template>
 
 <script>
+import { useListCityStore} from '@/store/listCity'
 export default {
   props: [
     "appointment",

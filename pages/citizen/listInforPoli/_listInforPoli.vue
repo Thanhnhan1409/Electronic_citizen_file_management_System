@@ -128,6 +128,7 @@ export default {
   mounted() {
     this.getCity();
     this.name = localStorage.getItem('name')
+    this.fetchData()
   },
   methods: {
     async fetchData() {

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Navbar :userName = "name" />
+    <Navbar :userName="name" />
     <div class="content">
       <form class="form">
         <h2>Đổi Mật khẩu</h2>
@@ -36,7 +36,9 @@
         <span v-show="errors.has('Mật khẩu mới')" class="err">{{
           errors.first("Mật khẩu mới")
         }}</span>
-        <p class="err" v-show="errDesc" >*Hãy chắc rằng bạn đã nhập đúng mật khẩu cũ. Xin vui lòng thử lại </p>
+        <p class="err" v-show="errDesc">
+          *Hãy chắc rằng bạn đã nhập đúng mật khẩu cũ. Xin vui lòng thử lại
+        </p>
         <button class="change" @click.prevent="isShowPopup = true">
           Đổi mật khẩu
         </button>
@@ -49,6 +51,14 @@
       @closePopup="closePopup"
     >
     </PopupConfirm>
+    <Notification
+      :status="status"
+      :object="'tài khoản'"
+      :action="'Đổi mật khẩu'"
+      :isShowNoti="showNoti"
+      v-if="showNoti == 'Ok'"
+    >
+    </Notification>
   </div>
 </template>
 
@@ -59,13 +69,15 @@ export default {
       changePass: {},
       isShowPopup: false,
       errDesc: false,
-      name : ''
+      name: "",
+      showNoti: "",
+      status: "",
     };
   },
   // middleware: 'auth',
   mounted() {
     this.changePass.citizen_id = localStorage.getItem("id");
-    this.name = localStorage.getItem('name')
+    this.name = localStorage.getItem("name");
   },
   methods: {
     async submit() {
@@ -73,7 +85,7 @@ export default {
         console.log("test1");
         console.log(this.changePass);
         this.isShowPopup = false;
-        this.errDesc=false;
+        this.errDesc = false;
         const result = await this.$validator.validateAll();
         await this.$axios
           .put(
@@ -81,15 +93,25 @@ export default {
             this.changePass
           )
           .then((res) => {
-            console.log("test2");
-            //index=>inforPoli
-            //this.$router.push("/poli/inforPoli");
-            this.$router.push("/poli");
+            const role = localStorage.getItem("role");
+            this.status = "thành công";
+            this.showNoti = "Ok";
+            setTimeout(() => {
+              this.showNoti = "";
+              if (role === "policitian") {
+                this.$router.push("/poli");
+              } else {
+                this.$router.push("/citizen");
+              }
+            }, 1000);
           });
-        console.log(this.changePass);
       } catch (error) {
-        this.errDesc=true;
-        console.log("test3");
+        this.errDesc = true;
+        this.status = "thất bại";
+        this.showNoti = "Ok";
+        setTimeout(() => {
+          this.showNoti = "";
+        }, 1500);
         console.log(error);
       }
     },
@@ -134,7 +156,6 @@ img {
 }
 
 .form {
-  margin-top: 80px;
   padding: 40px 30px;
   background-color: #fff;
   height: 400px;
