@@ -23,7 +23,7 @@
           }}</span>
         </div>
         <div v-show="isShowCity">
-          Tỉnh
+          Tỉnh/Thành phố
           <multiselect
             class="multiselect"
             @input="getDistrict()"
@@ -42,7 +42,7 @@
           }}</span>
         </div>
         <div v-show="isShowDistrict">
-          Huyện/Thành phố
+          Quận/Huyện
           <multiselect
             class="multiselect"
             @input="getWard()"
@@ -61,7 +61,7 @@
           }}</span>
         </div>
         <div v-show="isShowTown">
-          Xã/Thị trấn:
+          Xã/Phường:
           <multiselect
             class="multiselect"
             :options="listWard"

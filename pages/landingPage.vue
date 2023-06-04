@@ -5,12 +5,9 @@
         <img src="~/static/images/logo.jpg" alt="" />
         <h2>HỆ THỐNG QUẢN LÝ HỒ SƠ ĐIỆN TỬ CÔNG DÂN</h2>
       </div>
-      <!-- <div class="header-login"> -->
         <nuxt-link to="/" class="link">
-
           <button class="header-login" >Đăng nhập</button>
         </nuxt-link>
-      <!-- </div> -->
     </div>
     <div class="navbar">
       <nuxt-link to="/landingPage/home" class="link">
@@ -37,9 +34,7 @@
 </template>
 <style scoped src="../static/asset/styles.css"></style>
 <style scoped>
-.container-lp {
-  /* padding:10px 100px; */
-}
+
 .link {
   text-decoration: none;
 }

@@ -15,7 +15,7 @@
             'page-choose':
               pageParam == '/citizen' ||
               pageParam == '/poli' ||
-              pageParam == '/admin/listInforAll',
+              pageParam == '/admin/statistical',
           }"
         >
           <svg
@@ -23,7 +23,7 @@
               'fill-svg':
                 pageParam == '/citizen' ||
                 pageParam == '/poli' ||
-                pageParam == '/admin/listInforAll',
+                pageParam == '/admin/statistical',
             }"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 576 512"
@@ -33,14 +33,15 @@
               d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"
             />
           </svg>
-          Trang chủ
+          {{ role === "admin" ? "Thống kê" : "Trang Chủ" }}
         </li>
 
         <!-- view information -->
         <li
           class="manage--option"
           :class="{
-            'background-white': pathViewInformation() || showPageData === 'seeInfor',
+            'background-white':
+              pathViewInformation() || showPageData === 'seeInfor',
           }"
           @click.prevent="showPage = 'seeInfor'"
         >
@@ -52,7 +53,8 @@
           >
             <svg
               :class="{
-                'fill-svg': pathViewInformation() || showPageData === 'seeInfor',
+                'fill-svg':
+                  pathViewInformation() || showPageData === 'seeInfor',
               }"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"
@@ -64,7 +66,10 @@
             Xem thông tin
           </div>
 
-          <ul class="tableft__manage--options" v-show="pathViewInformation() || showPageData === 'seeInfor'">
+          <ul
+            class="tableft__manage--options"
+            v-show="pathViewInformation() || showPageData === 'seeInfor'"
+          >
             <li
               v-show="role === 'politician'"
               @click.prevent="$router.push('/poli/viewInforCitizen')"
@@ -103,7 +108,8 @@
           class="manage--option"
           v-show="role !== 'citizen'"
           v-bind:class="{
-            'background-white': pathManageInformation() ||  showPage == 'inforManager'
+            'background-white':
+              pathManageInformation() || showPage == 'inforManager',
           }"
           @click.prevent="showPage = 'inforManager'"
         >
@@ -115,7 +121,8 @@
           >
             <svg
               :class="{
-                'fill-svg': pathManageInformation() ||  showPage == 'inforManager',
+                'fill-svg':
+                  pathManageInformation() || showPage == 'inforManager',
               }"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 640 512"
@@ -127,7 +134,10 @@
             Quản lý thông tin
           </div>
 
-          <ul class="tableft__manage--options" v-show="pathManageInformation() ||  showPage == 'inforManager'">
+          <ul
+            class="tableft__manage--options"
+            v-show="pathManageInformation() || showPage == 'inforManager'"
+          >
             <li
               class="tableft__options--item"
               @click.prevent="pushToAddAccount"
@@ -157,12 +167,12 @@
             :class="{
               'page-choose':
                 pageParam == '/poli/requirement' ||
-                pageParam == '/citizen/requirements'
+                pageParam == '/citizen/requirements',
             }"
           >
             <svg
               :class="{
-                'fill-svg': pathRequirement() ,
+                'fill-svg': pathRequirement(),
               }"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
@@ -198,7 +208,8 @@
           class="manage--option"
           v-show="role !== 'admin'"
           v-bind:class="{
-            'background-white': pathNotification() || showPageData == 'notifications',
+            'background-white':
+              pathNotification() || showPageData == 'notifications',
           }"
           @click.prevent="showPage = 'notifications'"
         >
@@ -210,7 +221,8 @@
           >
             <svg
               :class="{
-                'fill-svg': pathNotification() || showPageData == 'notifications' ,
+                'fill-svg':
+                  pathNotification() || showPageData == 'notifications',
               }"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"
@@ -222,7 +234,10 @@
             Thông báo
           </div>
 
-          <ul class="tableft__manage--options" v-show="pathNotification() || showPageData == 'notifications'">
+          <ul
+            class="tableft__manage--options"
+            v-show="pathNotification() || showPageData == 'notifications'"
+          >
             <li
               v-show="role === 'politician'"
               @click="$router.push('/poli/notification')"
@@ -245,7 +260,8 @@
           class="manage--option"
           v-show="role !== 'admin'"
           v-bind:class="{
-            'background-white': pathAppointment() || showPageData === 'appointments'
+            'background-white':
+              pathAppointment() || showPageData === 'appointments',
           }"
           @click.prevent="showPage = 'appointments'"
         >
@@ -257,7 +273,8 @@
           >
             <svg
               :class="{
-                'fill-svg': pathAppointment() || showPageData === 'appointments' ,
+                'fill-svg':
+                  pathAppointment() || showPageData === 'appointments',
               }"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"
@@ -269,7 +286,10 @@
             Lịch hẹn
           </div>
 
-          <ul class="tableft__manage--options" v-show="pathAppointment() || showPageData === 'appointments'">
+          <ul
+            class="tableft__manage--options"
+            v-show="pathAppointment() || showPageData === 'appointments'"
+          >
             <li
               v-show="role === 'politician'"
               @click="$router.push('/poli/appointment')"
@@ -317,18 +337,14 @@
         <li
           class="tableft--option"
           @click.prevent="pushToStatistical"
-          v-show="role === 'politician' || role === 'admin'"
+          v-show="role === 'politician'"
           :class="{
-            'page-choose':
-              pageParam == '/poli/statistical' ||
-              pageParam == '/admin/statistical',
+            'page-choose': pageParam == '/poli/statistical',
           }"
         >
           <svg
             :class="{
-              'fill-svg':
-                pageParam == '/poli/statistical' ||
-                pageParam == '/admin/statistical',
+              'fill-svg': pageParam == '/poli/statistical',
             }"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 448 512"
@@ -407,17 +423,13 @@ export default {
       if (this.role === "politician") {
         return this.$router.push("/poli");
       } else if (this.role === "admin") {
-        return this.$router.push("/admin/listInforAll");
+        return this.$router.push("/admin/statistical");
       }
       return this.$router.push("/citizen");
     },
     pushToStatistical() {
       this.showPage = "";
-      if (this.role === "admin") {
-        this.$router.push("/admin/statistical");
-      } else {
-        this.$router.push("/poli/statistical");
-      }
+      this.$router.push("/poli/statistical");
     },
     pushToUpdateAccount() {
       if (this.role === "admin") {
@@ -455,7 +467,7 @@ export default {
         this.pageParam === "/admin/listInforAll" ||
         this.pageParam === "/poli/viewInforCitizen/inforCitizen" ||
         this.pageParam === "/citizen/family/inforMember" ||
-        this.pageParam === "/citizen/listInforPoli/inforPoli" 
+        this.pageParam === "/citizen/listInforPoli/inforPoli"
       )
         return true;
       return false;
@@ -464,7 +476,7 @@ export default {
       if (
         this.pageParam == "/poli/requirement" ||
         this.pageParam == "/citizen/requirements" ||
-        this.showPage == 'requirements'
+        this.showPage == "requirements"
       )
         return true;
       return false;
@@ -480,14 +492,13 @@ export default {
     pathNotification() {
       if (
         this.pageParam == "/poli/notification" ||
-        this.pageParam == "/citizen/notifications" 
+        this.pageParam == "/citizen/notifications"
       )
         return true;
       return false;
     },
     pathManageInformation() {
       if (
-        
         this.pageParam == "/admin/update" ||
         this.pageParam == "/admin/addAccount" ||
         this.pageParam == "/poli/update" ||

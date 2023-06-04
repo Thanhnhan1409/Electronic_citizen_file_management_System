@@ -26,7 +26,7 @@
           </div>
 
           <div v-show="isShowCity">
-            Tỉnh
+            Tỉnh/Thành phố
             <multiselect
               class="multiselect"
               @input="getDistrict()"
@@ -48,7 +48,7 @@
 
         <div class="row">
           <div v-show="isShowDistrict">
-            Huyện/Thành phố
+            Quận/Huyện
             <multiselect
               class="multiselect"
               @input="getWard()"
@@ -68,7 +68,7 @@
           </div>
 
           <div v-show="isShowTown">
-            Xã/Thị trấn:
+            Xã/Phường:
             <multiselect
               class="multiselect"
               :options="listWard"
@@ -257,6 +257,7 @@
 </template>
 
 <script>
+import { useListCityStore} from '@/store/listCity'
 export default {
   props: [
     "appointment",
