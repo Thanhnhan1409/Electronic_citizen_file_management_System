@@ -3,7 +3,7 @@
         <div class="overlay-hidden"></div>
         
         <div class="img--personal div-center">
-            <img  src="../../static/images/logo.png" alt="">
+            <img  :src="listInfor.imgUrl" alt="Hình ảnh">
             <span>{{ listInfor.name }}</span>
         </div>
         <div class="infor--content">
@@ -126,7 +126,9 @@ ul li{
 }
 .img--personal img{
     width: 120px;
-    height: 180px;
+    height: 140px;
+    padding: 10px;
+    border-radius: 10px;
 }
 .img--personal span{
     font-size: 18px;

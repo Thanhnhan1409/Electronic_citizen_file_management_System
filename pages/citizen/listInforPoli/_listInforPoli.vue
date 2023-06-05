@@ -106,7 +106,7 @@ export default {
       listWard: [],
       listInfor: {},
       idSearch: "",
-      listLevelPoli: ["Cả nước", "Tỉnh", "Huyện/Thành phố", "Xã/Thị trấn"],
+      listLevelPoli: ["Cả nước", "Tỉnh/Thành phố", "Quận/Huyện", "Xã/Phường"],
       inforSearch: {},
       levelManager: "Cả nước",
       isShowCity: false,

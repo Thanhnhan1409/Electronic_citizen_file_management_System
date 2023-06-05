@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <Search class="search-form" v-model="idSearch" @search="handleSearch" />
+
     <div class="content">
       <div class="filter-address">
         <div class="poli-level">
@@ -98,7 +99,9 @@
     </div>
   </div>
 </template>
+
 <script>
+import {useListCityStore } from "@/store/listCity"
 export default {
   data() {
     return {
@@ -113,7 +116,7 @@ export default {
       listWard: [],
       listInfor: {},
       idSearch: "",
-      listLevelPoli: ["Cả nước", "Tỉnh", "Huyện/Thành phố", "Xã/Thị trấn"],
+      listLevelPoli: ["Cả nước", "Tỉnh/Thành phố", "Quận/Huyện", "Xã/Phường"],
       inforSearch: {},
       levelManager: "Cả nước",
       isShowCity: false,

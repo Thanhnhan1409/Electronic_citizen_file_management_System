@@ -21,7 +21,7 @@
     </Notification>
   </div>
 </template>
-        
+
 <script>
 export default {
   data() {
@@ -33,7 +33,7 @@ export default {
       isShowPopup: false,
       status: "",
       showNoti: "",
-    };
+    }
   },
   mounted() {
     this.id = localStorage.getItem("admin_idCitizen");

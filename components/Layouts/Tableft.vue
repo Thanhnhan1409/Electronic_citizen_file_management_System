@@ -467,7 +467,8 @@ export default {
         this.pageParam === "/admin/listInforAll" ||
         this.pageParam === "/poli/viewInforCitizen/inforCitizen" ||
         this.pageParam === "/citizen/family/inforMember" ||
-        this.pageParam === "/citizen/listInforPoli/inforPoli"
+        this.pageParam === "/citizen/listInforPoli/inforPoli" || 
+        this.pageParam === "/admin/listInforAll/poliInfor"
       )
         return true;
       return false;

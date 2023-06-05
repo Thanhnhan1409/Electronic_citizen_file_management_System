@@ -131,7 +131,7 @@ export default {
                 this.showNoti = "Ok";
                 return setTimeout(() => {
                   this.showNoti = "";
-                  this.$router.push("/admin/listInforAll");
+                  this.$router.push("/admin/statistical");
                 }, 1000);
               }
             }
