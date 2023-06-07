@@ -259,7 +259,7 @@ export default {
         console.log(error);
       }
     },
-    async fetchData() {
+    async () {
       this.$emit("fetchData");
     },
     async fetchDataByDate() {

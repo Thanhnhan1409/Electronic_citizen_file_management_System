@@ -134,7 +134,7 @@
 export default{
     methods:{
         pushToLogin(){
-            this.$router.push('/')
+            this.$router.push('/login')
         }
     }
 }
@@ -146,7 +146,7 @@ export default{
   margin-bottom: 60px;
 }
 h2 {
-  padding: 50px 0;
+  padding: 30px 0;
   color: rgb(102, 100, 100);
   border-bottom: 2px solid #127e23;
 }

@@ -411,7 +411,7 @@ export default {
           .get(`http://localhost:8080/api/v1/auth/logout`)
           .then((res) => {
             console.log("test logout2");
-            this.$router.push("/");
+            this.$router.push("/login");
           });
       } catch (error) {
         console.log("test logout3");
@@ -467,7 +467,8 @@ export default {
         this.pageParam === "/admin/listInforAll" ||
         this.pageParam === "/poli/viewInforCitizen/inforCitizen" ||
         this.pageParam === "/citizen/family/inforMember" ||
-        this.pageParam === "/citizen/listInforPoli/inforPoli"
+        this.pageParam === "/citizen/listInforPoli/inforPoli" || 
+        this.pageParam === "/admin/listInforAll/poliInfor"
       )
         return true;
       return false;

@@ -9,7 +9,8 @@
     <ListInfor4Colums
       :isNoti="false"
       :listTmp="listOpinion"
-      :title="'ý kiến'"
+      :title="'các ý kiến đã góp ý'"
+      :object="'citizenOpinions'"
     />
     <PopupAddReqAndApp
       v-show="showAddOpinion == true"
@@ -24,16 +25,14 @@
       @action="postData"
       v-show="isShowPopup"
       @closePopup="closePopup"
-    >
-    </PopupConfirm>
+    />
     <Notification
       :status="status"
       :object="'ý kiến'"
       :action="'Thêm'"
       :isShowNoti="showNoti"
       v-if="showNoti == 'Ok'"
-    >
-    </Notification>
+    />
   </div>
 </template>
 

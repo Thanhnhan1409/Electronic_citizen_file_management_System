@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <Navbar :userName="name" />
-
     <ListInfor6Colums
       :listTmp="listRequirement"
       :object="'requirement'"

@@ -110,5 +110,6 @@ export default {
   actions: {},
 
   getters: {},
+  
 
 }

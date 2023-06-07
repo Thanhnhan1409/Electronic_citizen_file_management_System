@@ -1,7 +1,6 @@
 <template>
     <div class="container">
         <Navbar :userName = "name" />
-
         <ListInfor4Colums
         :object="'notification'"
         :listTmp="listTmp"
@@ -31,7 +30,6 @@ export default{
             .get(`http://localhost:8080/api/notification/citizenId=${this.id}`)
             .then((res)=>{
                 this.listTmp = res.data;
-                // this.name = res.data.politician.citizen.name;
                 console.log(this.listTmp);
             })
         }
@@ -40,6 +38,3 @@ export default{
 </script>
 
 <style scoped src="~/static/asset/styles.css"></style>
-<style>
-
-</style>

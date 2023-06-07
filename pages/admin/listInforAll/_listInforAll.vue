@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <Search class="search-form" v-model="idSearch" @search="handleSearch" />
+
     <div class="content">
       <div class="filter-address">
         <div class="poli-level">
@@ -98,7 +99,9 @@
     </div>
   </div>
 </template>
+
 <script>
+import {useListCityStore } from "@/store/listCity"
 export default {
   data() {
     return {
@@ -113,7 +116,7 @@ export default {
       listWard: [],
       listInfor: {},
       idSearch: "",
-      listLevelPoli: ["Cả nước", "Tỉnh", "Huyện/Thành phố", "Xã/Thị trấn"],
+      listLevelPoli: ["Cả nước", "Tỉnh/Thành phố", "Quận/Huyện", "Xã/Phường"],
       inforSearch: {},
       levelManager: "Cả nước",
       isShowCity: false,
@@ -291,21 +294,21 @@ export default {
       }
     },
     async checkLevel() {
-      if (this.levelManager === "Tỉnh") {
+      if (this.levelManager === "Tỉnh/Thành phố") {
         this.inforSearch.level = "city";
-        this.inforSearch.add = this.listInfor.city
+        this.inforSearch.add = this.inforSearch.city;
         this.isShowCity = true;
         this.isShowDistrict = false;
         this.isShowTown = false;
-      } else if (this.levelManager === "Huyện/Thành phố") {
+      } else if (this.levelManager === "Quận/Huyện") {
         this.inforSearch.level = "district";
-        this.inforSearch.add = this.listInfor.district 
+        this.inforSearch.add = this.inforSearch.district;
         this.isShowCity = true;
         this.isShowDistrict = true;
         this.isShowTown = false;
-      } else if (this.levelManager === "Xã/Thị trấn") {
+      } else if (this.levelManager === "Xã/Phường") {
         this.inforSearch.level = "ward";
-        this.inforSearch.add = this.listInfor.ward
+        this.inforSearch.add = this.inforSearch.town;
         this.isShowCity = true;
         this.isShowDistrict = true;
         this.isShowTown = true;
