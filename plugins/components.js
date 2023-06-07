@@ -14,14 +14,14 @@ import Criminalrecord from '@/components/Users/Criminalrecord.vue';
 import ListInforCitizen from '@/components/Users/ListInforCitizen.vue';
 import ListAppointment from '@/components/Users/ListAppointment.vue';
 import InforPoli from '@/components/Users/InforPoli.vue';
-import LandingPage from '@/components/LandingPages/LandingPage.vue';
+import HeaderLandingPage from '@/components/LandingPages/HeaderLandingPage.vue';
+import NavbarLandingPage from '@/components/LandingPages/NavbarLandingPage.vue';
 import PopupConfirm from '@/components/Popup/PopupConfirm.vue';
 import ListInfor6Colums from '@/components/Users/ListInfor6Colums.vue';
 import ListInfor4Colums from '@/components/Users/ListInfor4Colums.vue';
 import AddOrUpdatePoli from '@/components/Users/AddOrUpdatePoli.vue';
 import PopupAddReqAndApp from '@/components/Popup/PopupAddReqAndApp.vue';
 import ButtonAdd from '@/components/Items/ButtonAdd.vue';
-
 
 vue.component('PopupConfirm',PopupConfirm)
 vue.component('AddAccount',AddAccount)
@@ -35,7 +35,8 @@ vue.component('InforPoli',InforPoli)
 vue.component('Navbar',Navbar)
 vue.component('Notification', Notification)
 vue.component('FooterPage',FooterPage)
-vue.component('LandingPage',LandingPage)
+vue.component('HeaderLandingPage',HeaderLandingPage)
+vue.component('NavbarLandingPage',NavbarLandingPage)
 vue.component('ListInfor4Colums',ListInfor4Colums)
 vue.component('PopupAddReqAndApp',PopupAddReqAndApp)
 vue.component('ButtonAdd',ButtonAdd)

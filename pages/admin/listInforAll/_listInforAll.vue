@@ -294,21 +294,21 @@ export default {
       }
     },
     async checkLevel() {
-      if (this.levelManager === "Tỉnh") {
+      if (this.levelManager === "Tỉnh/Thành phố") {
         this.inforSearch.level = "city";
-        this.inforSearch.add = this.listInfor.city
+        this.inforSearch.add = this.inforSearch.city;
         this.isShowCity = true;
         this.isShowDistrict = false;
         this.isShowTown = false;
-      } else if (this.levelManager === "Huyện/Thành phố") {
+      } else if (this.levelManager === "Quận/Huyện") {
         this.inforSearch.level = "district";
-        this.inforSearch.add = this.listInfor.district 
+        this.inforSearch.add = this.inforSearch.district;
         this.isShowCity = true;
         this.isShowDistrict = true;
         this.isShowTown = false;
-      } else if (this.levelManager === "Xã/Thị trấn") {
+      } else if (this.levelManager === "Xã/Phường") {
         this.inforSearch.level = "ward";
-        this.inforSearch.add = this.listInfor.ward
+        this.inforSearch.add = this.inforSearch.town;
         this.isShowCity = true;
         this.isShowDistrict = true;
         this.isShowTown = true;

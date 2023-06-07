@@ -1,24 +1,22 @@
 <template>
   <div class="container">
-    <BackToList class="backtolist"></BackToList>
+    <BackToList class="backtolist"/>
     <button @click.prevent="isShowPopup=true" id="admin-delInfo">Xóa tài khoản</button>
-    <InforCitizenNew class="infor-citizen" :list-infor="listInfor"></InforCitizenNew>
-    <Criminalrecord :Criminalrecord="listInfor.Criminalrecord"></Criminalrecord>
+    <InforCitizenNew class="infor-citizen" :list-infor="listInfor"/>
+    <Criminalrecord :Criminalrecord="listInfor.Criminalrecord"/>
     <PopupConfirm
       :title="'xóa tài khoản'"
       @action="deleteCitizen()"
       v-show="isShowPopup"
       @closePopup="closePopup()"
-    >
-    </PopupConfirm>
+    />
     <Notification
       :status="status"
       :object="'tài khoản'"
       :action="'Xóa'"
       :isShowNoti="showNoti"
       v-if="showNoti == 'Ok'"
-    >
-    </Notification>
+    />
   </div>
 </template>
 

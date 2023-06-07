@@ -5,14 +5,14 @@
       <ul class="responsive-table">
         <li class="table-header">
           <div class="col col-0">STT</div>
-          <div class="col col-1">
-            {{ object === "notification" ? "ID CBCC" : "Tên" }}
+          <div class="col col-1"  v-show="object !== 'citizenOpinions'">
+            {{ object === "notification" ? "Tên CBCC" : "Tên" }}
           </div>
           <div class="col col-2" v-if="object === 'notification'">Tên</div>
           <div
             class="col col-3"
             :style="{
-              'flex-basis': object === 'notification' ? '35%' : '45 %',
+              'flex-basis': object === 'notification' ? '35%' :  object === 'citizenOpinions'? '75%' :  '45 %',
             }"
           >
             Nội dung
@@ -23,31 +23,37 @@
           v-for="(item, index) in listTmp"
           :key="index"
         >
-          <li class="table-row display">
+          <li class="table-row display" >
             <div class="col col-0" data-label="STT">{{ index + 1 }}</div>
-            <div class="col col-1" data-label="Số CCCD công dân">
+            <div class="col col-1" 
+            v-show="object !== 'citizenOpinions'"
+            data-label="Số CCCD công dân"
+            >
               {{
                 object === "notification"
-                  ? item.politician.politicianId
-                  // lỗi hiển thị item.citizen.name
+                  ? item.politician.citizen.name
+                  :object === 'citizenOpinions'
+                  ? ''
                   : item.citizen.name
               }}
             </div>
             <div
-              v-if="object === 'notification'"
+              v-show="object !== 'citizenOpinions'"
               class="col col-2"
               data-label="Tên"
             >
               {{
                 object === "notification"
                   ? item.politician.citizen.name
+                  :object === 'citizenOpinions'
+                  ? ''
                   : item.citizen.name
               }}
             </div>
             <div
               class="col col-3"
               :style="{
-                'flex-basis': object === 'notification' ? '35%' : '45 %',
+                'flex-basis': object === 'notification' ? '35%' : object === 'citizenOpinions'? '75%' : '45 %',
               }"
               data-label="Ngày"
             >

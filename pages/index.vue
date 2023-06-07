@@ -1,256 +1,163 @@
 <template>
-  <div class="container">
-    <div class="logo-login">
-      <img src="../static/images/logo.jpg" alt="" />
-      <h2>Hệ thống quản lý hồ sơ điện tử công dân</h2>
+  <div class="container-lp">
+    <HeaderLandingPage />
+    <NavbarLandingPage />
+    <div class="home">
+        <div class="content">
+        <img src="~/static/images/imageLP.jpg" alt="">
+        <p class="context-desc">Với quan điểm công khai, minh bạch, lấy người dân, doanh nghiệp làm trung tâm phục vụ, Hệ thống quản lý hồ sơ điện tử kết nối, cung cấp thông tin về thủ tục hành chính và dịch vụ công trực tuyến; hỗ trợ thực hiện, giám sát, đánh giá việc giải quyết thủ tục hành chính, dịch vụ công trực tuyến và tiếp nhận, xử lý phản ánh, kiến nghị của cá nhân, tổ chức trên toàn quốc.
+            <br>
+            <br>
+            Cá nhân, tổ chức dễ dàng truy cập Cổng Dịch vụ công Quốc gia tại địa chỉ duy nhất www.dichvucong.gov.vn theo nhu cầu người dùng từ máy tính, máy tính bảng hoặc điện thoại di động được kết nối internet để hưởng nhiều lợi ích từ Hệ thống quản lý hồ sơ điện tử, như:</p>
+        <div class="content--text">
+            <div class="content__text--items">
+                <div class="text--item">
+                    <!-- <img src="https://dichvucong.gov.vn/p/home/theme/img/gioithieu/login.svg" alt=""> -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" fill="none">
+                        <path opacity="0.2" d="M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80Z" fill="#127E23"/>
+                        <path d="M24 40.2254H47.4891" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10"/>
+                        <path d="M39.6594 32.3956L47.4891 40.2254L39.6594 48.0551" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M34.9615 23H53.7528V57.4507H34.9615" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                    </svg>
+                    <p>
+                        Sử dụng tài khoản đã cung cấp bởi các cán bộ ở địa phương từng khu vực để đăng nhập vào Hệ thống quản lý hồ sơ điện tử công dân
+                    </p>
+                </div>
+                <div class="text--item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" fill="none">
+                        <path opacity="0.2" d="M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80Z" fill="#127E23"/>
+                        <path d="M34.9515 35.2441H23" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M34.9515 45.4883H23" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M48.6103 55.7324H23" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M48.6103 25H23" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M48.6104 47.1956C52.3822 47.1956 55.4398 44.138 55.4398 40.3662C55.4398 36.5944 52.3822 33.5368 48.6104 33.5368C44.8386 33.5368 41.7809 36.5944 41.7809 40.3662C41.7809 44.138 44.8386 47.1956 48.6104 47.1956Z" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M59.7081 51.464L53.4387 45.1946" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                    </svg>
+                    <p>
+                        Tra cứu thông tin cá nhân, gia đình và các cán bộ công chức của địa phương và toàn cả nước tại xem thông tin; Gửi phản ánh kiến nghị liên quan đến việc giải quyết thủ tục hành chính, dịch vụ công;
+                    </p>
+                </div>
+                <div class="text--item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" fill="none">
+                        <path opacity="0.2" d="M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80Z" fill="#127E23"/>
+                        <path d="M25 20H56.0909V58H25V20Z" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M50.0455 28.6364H41.4091" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M50.0455 39H41.4091" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M50.0455 49.3636H41.4091" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M31.0455 28.6364L32.7727 30.3636L37.0909 26.0455" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M31.0455 39L32.7727 40.7273L37.0909 36.4091" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M33.6364 51.9545C35.0673 51.9545 36.2273 50.7946 36.2273 49.3636C36.2273 47.9327 35.0673 46.7727 33.6364 46.7727C32.2055 46.7727 31.0455 47.9327 31.0455 49.3636C31.0455 50.7946 32.2055 51.9545 33.6364 51.9545Z" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                    </svg>
+                    <p>
+                        Đề nghị hỗ trợ thực hiện thủ tục hành chính, dịch vụ công qua Tổng đài điện thoại 18001096 hoặc trực tuyến tại mục Hỗ trợ;
+                    </p>
+                </div>
+            </div>
+            <div class="content__text--items">
+                <div class="text--item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" fill="none">
+                        <path opacity="0.2" d="M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80Z" fill="#127E23"/>
+                        <path d="M25 20H56.0909V58H25V20Z" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M50.0455 28.6364H41.4091" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M50.0455 39H41.4091" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M50.0455 49.3636H41.4091" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M31.0455 28.6364L32.7727 30.3636L37.0909 26.0455" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M31.0455 39L32.7727 40.7273L37.0909 36.4091" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M33.6364 51.9545C35.0673 51.9545 36.2273 50.7946 36.2273 49.3636C36.2273 47.9327 35.0673 46.7727 33.6364 46.7727C32.2055 46.7727 31.0455 47.9327 31.0455 49.3636C31.0455 50.7946 32.2055 51.9545 33.6364 51.9545Z" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                    </svg>
+                    <p>
+                        Theo dõi trạng thái các yêu cầu, lịch hẹn xử lý hành chính với cán bộ công chức. Nhận thông báo và phản hồi ý kiến đến cán bộ cơ quan để cải thiện chất lượng.
+                    </p>
+                </div>
+                <div class="text--item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" fill="none">
+                        <path opacity="0.2" d="M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80Z" fill="#127E23"/>
+                        <path d="M33.6025 35.6099L46.3965 28.9754" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10"/>
+                        <path d="M33.6025 41.2681L46.3965 47.9026" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10"/>
+                        <path d="M28.1463 44.5854C31.5409 44.5854 34.2927 41.8335 34.2927 38.439C34.2927 35.0445 31.5409 32.2927 28.1463 32.2927C24.7518 32.2927 22 35.0445 22 38.439C22 41.8335 24.7518 44.5854 28.1463 44.5854Z" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M51.8536 32.2927C55.2481 32.2927 58 29.5409 58 26.1463C58 22.7518 55.2481 20 51.8536 20C48.4591 20 45.7073 22.7518 45.7073 26.1463C45.7073 29.5409 48.4591 32.2927 51.8536 32.2927Z" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M51.8536 56.878C55.2481 56.878 58 54.1262 58 50.7317C58 47.3372 55.2481 44.5854 51.8536 44.5854C48.4591 44.5854 45.7073 47.3372 45.7073 50.7317C45.7073 54.1262 48.4591 56.878 51.8536 56.878Z" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                    </svg>
+                    <p>
+                        Đăng nhập bằng tài khoản Hệ thống quản lý hồ sơ điện tử để đăng nhập để có thể xem thông tin cá nhân gia đình, cán bộ và tạo các yêu cầu xử lý hành chính; 
+                    </p>
+                </div>
+                <div class="text--item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" fill="none">
+                        <path opacity="0.2" d="M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80Z" fill="#127E23"/>
+                        <path d="M44.25 36.7778H52" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M44.25 43.6667H52" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M39.0834 47.1111H27.0278C27.0278 44.2574 29.3408 41.9445 32.1945 41.9445H33.9167C36.7704 41.9445 39.0834 44.2574 39.0834 47.1111Z" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M33.0557 39.3611C34.958 39.3611 36.5001 37.819 36.5001 35.9167C36.5001 34.0143 34.958 32.4722 33.0557 32.4722C31.1533 32.4722 29.6112 34.0143 29.6112 35.9167C29.6112 37.819 31.1533 39.3611 33.0557 39.3611Z" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M52 23C52 24.9022 50.4577 26.4444 48.5556 26.4444C46.6534 26.4444 45.1111 24.9022 45.1111 23H34.7778C34.7778 24.9022 33.2355 26.4444 31.3333 26.4444C29.4311 26.4444 27.8889 24.9022 27.8889 23H21V54H58.8889V23H52Z" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                    </svg>
+                    <p>
+                        Được hỗ trợ truy vấn thông tin của cá nhân, tổ chức lưu trữ tại các Cơ sở dữ liệu, Hệ thống thông tin đã tích hợp với Hệ thống quản lý hồ sơ điện tử như xem thông tin, gửi yêu cầu, đặt lịch hẹn, nhận thông báo,...;
+
+                    </p>
+                </div>
+            </div>
+            <div class="content__text--items">
+                <div class="text--item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" fill="none">
+                        <path opacity="0.2" d="M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80Z" fill="#127E23"/>
+                        <path d="M51.0682 25.8864H55.2728V57H25V25.8864H29.2046" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M34.25 41.8636L38.4545 46.0682L46.0227 38.5" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M44.3409 24.2045C44.3409 21.8828 42.4581 20 40.1364 20C37.8146 20 35.9318 21.8828 35.9318 24.2045H32.5682V29.25H47.7045V24.2045H44.3409Z" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                    </svg>
+                    <p>
+                        Thực hiện thủ tục hành chính tại nhiều tỉnh, thành phố chỉ cần đăng nhập trên Hệ thống quản lý hồ sơ điện tử;
+                    </p>
+                </div>
+                <div class="text--item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" fill="none">
+                        <path opacity="0.2" d="M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80Z" fill="#127E23"/>
+                        <path d="M50.707 41.619C50.2814 44.151 48.9723 46.4502 47.0121 48.1085C45.0519 49.7667 42.5675 50.6765 40 50.6765C37.4326 50.6765 34.9481 49.7667 32.988 48.1085C31.0278 46.4502 29.7187 44.151 29.2931 41.619" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M50.8572 35.2857C50.8572 34.3259 50.4759 33.4054 49.7972 32.7267C49.1185 32.0479 48.198 31.6667 47.2382 31.6667C46.2784 31.6667 45.3578 32.0479 44.6791 32.7267C44.0004 33.4054 43.6191 34.3259 43.6191 35.2857" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M36.381 35.2857C36.381 34.3259 35.9997 33.4054 35.321 32.7267C34.6423 32.0479 33.7218 31.6667 32.762 31.6667C31.8022 31.6667 30.8816 32.0479 30.2029 32.7267C29.5242 33.4054 29.1429 34.3259 29.1429 35.2857" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                        <path d="M40 57C50.4934 57 59 48.4934 59 38C59 27.5066 50.4934 19 40 19C29.5066 19 21 27.5066 21 38C21 48.4934 29.5066 57 40 57Z" stroke="#127E23" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="square"/>
+                    </svg>
+                    <p>
+                        Đánh giá sự hài lòng trong giải quyết thủ tục hành chính;
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="card">
-      <div class="content">
-        <form @submit.prevent="login">
-          <div class="form">
-            <h2>Đăng nhập</h2>
-            <p>Tài Khoản <small style="color: #c7422e">*</small></p>
-            <input
-              v-model="citizen_id"
-              type="text"
-              class="box"
-              v-validate="'required|min:1|max:255'"
-              :class="{
-                input: true,
-                'is-danger': errors.has('Tài khoản'),
-              }"
-              name="Tài khoản"
-              id=""
-              placeholder="Nhập số CCCD"
-              autocomplete="on"
-            />
-            <span v-show="errors.has('Tài khoản')" class="err">{{
-              errors.first("Tài khoản")
-            }}</span>
-            <p>Mật khẩu <small style="color: #c7422e">*</small></p>
-            <input
-              class="box"
-              :type="showPassword ? 'text' : 'password'"
-              v-model="password"
-              placeholder="Nhập mật khẩu"
-              autocomplete="on"
-              v-validate="'required|min:1|max:255'"
-              :class="{
-                input: true,
-                'is-danger': errors.has('Mật khẩu'),
-              }"
-              name="Mật khẩu"
-            />
-            <span v-show="errors.has('Mật khẩu')" class="err">{{
-              errors.first("Mật khẩu")
-            }}</span>
-            <p class="err" v-show="errDesc">
-              *Hãy chắc rằng bạn đã nhập đúng tài khoản và mật khẩu. Xin vui
-              lòng thử lại
-            </p>
-            <button class="login">Đăng nhập</button>
-          </div>
-        </form>
-      </div>
     </div>
-    <Notification
-      :status="status"
-      :object="'tài khoản'"
-      :action="'Đăng nhập'"
-      :isShowNoti="showNoti"
-      v-if="showNoti == 'Ok'"
-    >
-    </Notification>
     <FooterPage />
   </div>
 </template>
-
-<script>
-import { useListCityStore } from "@/store/listCity";
-export default {
-  data() {
-    return {
-      check: false,
-      citizen_id: "",
-      password: "",
-      showPassword: false,
-      list: {},
-      role: [],
-      status: "",
-      showNoti: "",
-      errDesc: false,
-      listCity: useListCityStore(),
-    };
-  },
-  onmounted() {
-    this.deleteToken();
-  },
-  mounted() {
-    // this.id = localStorage.getItem("id");
-    this.deleteToken();
-
-  },
-  methods: {
-    deleteToken: function () {
-      localStorage.removeItem("auth._token.local");
-    },
-    async login() {
-      try {
-        localStorage.removeItem("auth._token.local");
-        this.errDesc = false;
-        await this.$auth
-          .loginWith("local", {
-            data: {
-              citizen_id: this.citizen_id,
-              password: this.password,
-            },
-          })
-          .then((res) => {
-            
-            this.getCity()
-
-            localStorage.setItem("id", this.citizen_id);
-            this.role = res.data.role;
-            localStorage.setItem("role", "citizen");
-            for (let item of this.role) {
-              if (item === "POLITICIAN") {
-                this.check = true;
-                localStorage.setItem("role", "politician");
-                console.log(this.check);
-                this.status = "thành công";
-                this.showNoti = "Ok";
-                return setTimeout(() => {
-                  this.showNoti = "";
-                  this.$router.push("/poli");
-                }, 1000);
-                
-                break;
-              } else if (item === "ADMIN") {
-                localStorage.setItem("role", "admin");
-                this.status = "thành công";
-                this.showNoti = "Ok";
-                return setTimeout(() => {
-                  this.showNoti = "";
-                  this.$router.push("/admin/statistical");
-                }, 1000);
-              }
-            }
-            this.status = "thành công";
-            this.showNoti = "Ok";
-            return setTimeout(() => {
-              this.showNoti = "";
-              this.$router.push("/citizen");
-            }, 1000);
-            console.log("test ");
-          });
-      } catch (error) {
-        this.errDesc = true;
-        this.status = "thất bại";
-        this.showNoti = "Ok";
-        setTimeout(() => {
-          this.showNoti = "";
-        }, 1500);
-        console.error(error);
-      }
-    },
-    async getCity() {
-      try {
-        await this.$axios
-          .get(`http://localhost:8080/api/local/province`)
-          .then((res) => {
-            const list = useListCityStore()
-            list.setListCity(res.data);
-            console.log(list.getListCity);
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  },
-};
-</script>
-<style src="../static/asset/styles.css"></style>
-<style scoped>
+<style scoped src="../static/asset/styles.css"></style>
+<style>
 body {
-  padding: 0;
   margin: 0;
 }
+</style>
+<style scoped>
+.context-desc{
+    padding-top: 30px;
+}
+.content--text{
+    margin-top: 30px;
+}
+.content{
+    padding: 0px 190px;
+    margin-bottom: 100px;
+}
+.content img{
+    width: 100%;
+    height: auto;
 
-html {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
 }
-
-.container {
-  width: 100%;
-  padding: 0;
-  margin: 0;
+.content__text--items{
+    display: flex;
+    align-items: flex-start;
+    justify-content:flex-start;
+    padding-bottom: 20px;
+    gap: 3%;
 }
-
-.content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 2.5px;
-}
-
-.logo-login {
-  text-align: center;
-  padding-top: 20px;
-}
-
-img {
-  width: 100px;
-  height: auto;
-}
-
-.form {
-  padding: 10px 40px 40px;
-  background-color: #fff;
-  height: 380px;
-  width: 280px;
-  /* border: 0.5px solid black; */
-  border-radius: 10px;
-  box-shadow: 3px 3px 10px rgb(205, 204, 204);
-  margin-bottom: 50px;
-  position: relative;
-}
-
-.form h2 {
-  font-size: 40px;
-  color: #127e23;
-  text-align: center;
-}
-
-input {
-  width: 260px;
-  height: 25px;
-  border: 1px solid #127e23;
-  border-radius: 4px;
-  margin: 10px 0;
-}
-
-.login {
-  width: 283px;
-  height: 35px;
-  /* margin-top: 50px; */
-  background: #127e23;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 600;
-  position: absolute;
-  bottom: 40px;
-}
-.box {
-  padding: 5px 10px;
-}
-.err {
-  font-size: 12px;
-  display: flex;
-  justify-content: flex-start;
-  color: #ff4433;
+.text--item{
+    width: 31% ;
 }
 </style>

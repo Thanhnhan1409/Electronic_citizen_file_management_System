@@ -478,7 +478,6 @@ ul li {
   padding: 0;
   margin: 0;
 }
-
 .overlay-hidden {
   position: fixed;
   left: 0;
@@ -488,27 +487,22 @@ ul li {
   z-index: -1;
   background-color: rgb(239, 238, 238);
 }
-
 .div-center {
   display: flex;
   text-align: center;
   justify-content: flex-start;
   align-items: center;
 }
-
 .add-account__form--gender {
   margin-left: 20px;
   display: flex;
 }
-
 .add-account__form--gender input {
   margin-right: 10px;
 }
-
 .form--gender {
   display: flex;
 }
-
 .infor--content {
   margin: 0 30px;
   padding: 30px;
@@ -516,7 +510,6 @@ ul li {
   border-radius: 13px;
   box-shadow: 3px 2px 10px rgb(217, 213, 213);
 }
-
 .infor--content h2 {
   font-style: normal;
   font-weight: 600;
@@ -525,16 +518,13 @@ ul li {
   margin: 0;
   color: #4b4545;
 }
-
 .infor__content--items {
   padding: 30px 40px;
 }
-
 .content--item {
   padding: 10px 5px;
   border-bottom: 1.2px solid #cdcdcd;
 }
-
 .content--item div {
   font-style: normal;
   font-weight: 400;
@@ -542,12 +532,10 @@ ul li {
   line-height: 21px;
   color: #4b4545;
 }
-
 .left {
   width: 50%;
   text-align: initial;
 }
-
 input {
   border: none;
   border-bottom: 1px solid black;
@@ -570,14 +558,7 @@ input {
   display: flex;
   text-align: start;
 }
-/* .title {
-  margin: 20px 0;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 27px;
-  color: #4b4545;
-} */
+
 .content {
   margin: 0 30px;
   padding: 30px;

@@ -4,7 +4,7 @@
     <div class="popup-AddAppoint">
       <h3>{{ title }}</h3>
       <div class="content">
-        <div class="row">
+        <div class="row" v-show="obj !== 'opinion' ">
           <div class="poli-level">
             Cấp vụ
             <multiselect
@@ -46,8 +46,8 @@
           </div>
         </div>
 
-        <div class="row">
-          <div v-show="isShowDistrict">
+        <div class="row" v-show="obj !== 'opinion' ">
+          <div v-show="isShowDistrict && obj !== 'opinion' ">
             Quận/Huyện
             <multiselect
               class="multiselect"
@@ -87,8 +87,8 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="content--item" v-show="obj !== 'opinion'">
+        <div class="row" v-show="obj !== 'opinion'">
+          <div class="content--item">
             <p>
               {{
                 obj === "poliForwardRequirement"
@@ -340,14 +340,12 @@ export default {
     },
     async getCity() {
       const listCityStore = useListCityStore();
-      
-      // Khôi phục dữ liệu từ localStorage
       const storedData = localStorage.getItem('listCity');
       if (storedData) {
         const parsedData = JSON.parse(storedData);
         listCityStore.setListCity(parsedData);
       }
-      this.listCity = listCityStore.getListCity
+      this.listCity = listCityStore.getListCity;
     },
     async getDistrict() {
       try {
@@ -385,19 +383,19 @@ export default {
       }
     },
     async checkLevel() {
-      if (this.levelManager === "Tỉnh") {
+      if (this.levelManager === "Tỉnh/Thành phố") {
         this.inforSearch.level = "city";
         this.inforSearch.add = this.inforSearch.city;
         this.isShowCity = true;
         this.isShowDistrict = false;
         this.isShowTown = false;
-      } else if (this.levelManager === "Huyện/Thành phố") {
+      } else if (this.levelManager === "Quận/Huyện") {
         this.inforSearch.level = "district";
         this.inforSearch.add = this.inforSearch.district;
         this.isShowCity = true;
         this.isShowDistrict = true;
         this.isShowTown = false;
-      } else if (this.levelManager === "Xã/Thị trấn") {
+      } else if (this.levelManager === "Xã/Phường") {
         this.inforSearch.level = "ward";
         this.inforSearch.add = this.inforSearch.town;
         this.isShowCity = true;
@@ -454,9 +452,7 @@ export default {
   text-align: center;
 }
 .content--item {
-  /* display: flex; */
   padding-bottom: 7px;
-  /* justify-content: space-between; */
 }
 .content--item input {
   padding: 4px 8px;
@@ -538,12 +534,17 @@ export default {
   width: 238px;
   height: 40px;
   padding-top: 10px;
-  /* margin-left: 20px; */
 }
 .row {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
   margin-bottom: 10px;
+}
+.err {
+  font-size: 12px;
+  display: flex;
+  justify-content: flex-start;
+  color: #ff4433;
 }
 </style>
