@@ -30,7 +30,7 @@ export default {
   mounted() {
     this.idPolicitian = localStorage.getItem("idPolicitian");
     this.name = localStorage.getItem("name");
-    this.getListCitizen()
+    this.getListCitizen();
     this.urlDownloadPDF = `http://localhost:8080/api/citizen/export-to-pdf/citizen/poliId=${this.idPolicitian}`;
   },
   computed: {

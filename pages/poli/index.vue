@@ -43,6 +43,7 @@ export default {
           .then((res) => {
             this.list = res["data"];
               localStorage.setItem("name", this.list.name);
+              localStorage.setItem("idFamily", this.list.family);
           });
       } catch (error) {
         console.log(error);

@@ -1,20 +1,29 @@
 <template>
   <div class="container">
-    <Navbar :userName = "name" />
+    <Navbar :userName="name" />
     <div class="content">
-      <!-- <h2>Cập nhật thông tin cá nhân công dân</h2> -->
-      <Search
-        id="search-form"
-        v-model="idSearch"
-        @search="handleSearch"
-      ></Search>
+      <div class="content--item">
+        <p>Chọn công dân:</p>
+        <multiselect
+          class="multiselect"
+          v-model="selectedCitizenId"
+          :options="listCitizen"
+          placeholder="Chọn công dân"
+          label="name"
+          @input="updateselectedCitizenId()"
+        ></multiselect>
+
+        <span v-show="errors.has('idPoli')" class="err">{{
+          errors.first("idPoli")
+        }}</span>
+      </div>
+
       <AddAccount
         :list-infor="list"
         :action="'Cập nhật'"
         @openPopup="openPopup"
       >
       </AddAccount>
-      <!-- <button @click.prevent="isShowPopup = true" class="submit">Cập nhật</button> -->
     </div>
     <PopupConfirm
       :title="'cập nhật thông tin'"
@@ -35,19 +44,23 @@
 </template>
 
 <script>
+import { useListCitizenStore } from "@/store/listCitizen";
 export default {
   data() {
     return {
       list: {},
-      idSearch: "",
       isShowPopup: false,
       status: "",
       showNoti: "",
-      name:''
+      name: "",
+      listCitizen: [],
+      selectedCitizenId: "",
+      idCitizen: "",
     };
   },
-  mounted(){
+  mounted() {
     this.name = localStorage.getItem("name");
+    this.getListCitizen();
   },
   // middleware: 'nhan',
   methods: {
@@ -55,7 +68,7 @@ export default {
       try {
         await this.$axios
           .get(
-            `http://localhost:8080/api/citizen/listCitizen/id=${this.idSearch}`
+            `http://localhost:8080/api/citizen/listCitizen/id=${this.idCitizen}`
           )
           .then((res) => {
             this.list = res.data;
@@ -71,7 +84,7 @@ export default {
     },
     async submit() {
       try {
-        this.list.idFamily=this.list.family
+        this.list.idFamily = this.list.family;
         await this.$axios
           .put(`http://localhost:8080/api/citizen/update`, this.list)
           .then((res) => {
@@ -79,7 +92,7 @@ export default {
             this.showNoti = "Ok";
             setTimeout(() => {
               this.showNoti = "";
-              this.$router.push("/poli/viewInforCitizen")
+              this.$router.push("/poli/viewInforCitizen");
             }, 1500);
             this.list = res.data;
             this.isShowPopup = false;
@@ -94,29 +107,38 @@ export default {
         console.log(error);
       }
     },
-    handleSearch(id) {
-      this.idSearch = id;
-      this.fetchData();
-    },
     closePopup() {
       this.isShowPopup = false;
     },
     openPopup() {
       this.isShowPopup = true;
     },
+    getListCitizen() {
+      const listCitizenStore = useListCitizenStore();
+      const storedData = localStorage.getItem("listCitizenData");
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        listCitizenStore.setListCitizen(parsedData);
+      }
+      this.listCitizen = listCitizenStore.getListCitizen;
+    },
+    async updateselectedCitizenId(value) {
+      if (this.selectedCitizenId !== null) {
+        this.idCitizen = this.selectedCitizenId.citizenId;
+        this.selectedCitizenId = value;
+        this.fetchData();
+      }
+    },
   },
 };
 </script>
 <style src="../../../static/asset/styles.css"></style>
 <style scoped>
-
-
 img {
   width: 180px;
   height: 210px;
   margin-right: 20px;
 }
-
 input {
   padding: 5px;
   width: 200px;
@@ -124,8 +146,6 @@ input {
   border-radius: 8px;
   border: 0.8px solid black;
 }
-
-
 #search-form {
   /* padding: 80px; */
   position: absolute;
@@ -135,8 +155,29 @@ input {
   z-index: 3;
   margin: 0;
 }
-
-.content{
+.err {
+  font-size: 12px;
+  display: flex;
+  justify-content: flex-start;
+  color: #ff4433;
+}
+.content--item {
+  padding-bottom: 7px;
+  position: absolute;
+  top: 0px;
+  right: 40px;
+  width: fit-content;
+  z-index: 3;
+  margin: 0;
+  display: flex;
+    align-items: center;
+}
+.multiselect {
+  width: 238px;
+  height: 40px;
+  margin-left: 10px;
+}
+.content {
   position: relative;
   top: 65px;
 }

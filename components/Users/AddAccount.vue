@@ -1,7 +1,7 @@
 <template>
   <div class="container--addAcc">
     <div class="overlay-hidden"></div>
-    <h2 class="title">{{action }} thông tin cá nhân công dân</h2>
+    <h2 class="title">{{ action }} thông tin cá nhân công dân</h2>
     <button @click.prevent="openPopup" class="submit">{{ action }}</button>
     <div class="infor--content">
       <h2>Thông tin cá nhân</h2>
@@ -80,7 +80,7 @@
         </li>
         <li class="content--item div-center">
           <div style="text-align: start" class="left">
-            Dân tộc  
+            Dân tộc
             <small style="color: #c7422e">*</small>:
             <multiselect
               class="multiselect"
@@ -98,7 +98,7 @@
               errors.first("Dân tộc")
             }}</span>
           </div>
-          <div style="text-align: start;">
+          <div style="text-align: start">
             Quan hệ:
             <small style="color: #c7422e">*</small>:
             <multiselect
@@ -139,8 +139,8 @@
             }}</span>
           </div>
           <div style="text-align: start">
-           Huyện/Thành phố 
-           <small style="color: #c7422e">*</small>:
+            Huyện/Thành phố
+            <small style="color: #c7422e">*</small>:
             <multiselect
               class="multiselect"
               @input="getWard()"
@@ -157,7 +157,7 @@
             <span v-show="errors.has('Huyện')" class="err">{{
               errors.first("Huyện")
             }}</span>
-            </div>
+          </div>
         </li>
         <li class="content--item div-center">
           <div class="left">
@@ -212,7 +212,7 @@
             <span v-show="errors.has('Địa chỉ')" class="err">{{
               errors.first("Địa chỉ")
             }}</span>
-            </div>
+          </div>
           <div class="form-military">
             Tham gia NVQS <small style="color: #c7422e">*</small>:
             <form class="form-married--options">
@@ -247,8 +247,8 @@
             <span v-show="errors.has('Nghề nghiệp')" class="err">{{
               errors.first("Nghề nghiệp")
             }}</span>
-           </div>
-           <div>
+          </div>
+          <div>
             Tôn giáo: <small style="color: #c7422e">*</small>:
             <input
               type="text"
@@ -333,7 +333,7 @@
 </template>
 <script>
 export default {
-  props: ["listInfor", "action","title"],
+  props: ["listInfor", "action", "title"],
   data() {
     return {
       listCity: [],
@@ -398,20 +398,20 @@ export default {
         "Thái Đen",
         "Cống",
       ],
-      listRelationShip:[
-        'chủ hộ',
-        'vợ',
-        'con',
-        'bố',
-        'mẹ',
-        'cháu',
-        'em gái',
-        'chị gái',
-        'anh trai',
-        'em trai',
-        'ông',
-        'bà'
-      ]
+      listRelationShip: [
+        "chủ hộ",
+        "vợ",
+        "con",
+        "bố",
+        "mẹ",
+        "cháu",
+        "em gái",
+        "chị gái",
+        "anh trai",
+        "em trai",
+        "ông",
+        "bà",
+      ],
     };
   },
   mounted() {

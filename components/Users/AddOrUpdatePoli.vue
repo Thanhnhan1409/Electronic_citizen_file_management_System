@@ -1,96 +1,122 @@
 <template>
   <div class="container--updatePoli">
     <h2 class="title">{{ action }} thông tin cán bộ</h2>
+
     <div class="poli--content">
-    <button @click.prevent="openPopUp()" class="submit">{{ action }}</button>
+      <button @click.prevent="openPopUp()" class="submit">{{ action }}</button>
       <h2>Thông tin cán bộ:</h2>
       <ul class="poli__content--items">
-        <li class="content--item div-center">
-          Số CCCD:
-          <input 
-          type="text"  
-          v-model="listPoli.citizen_id"
-          v-validate="'required|min:1|max:255'"
-            :class="{
-              input: true,
-              'is-danger': errors.has('Số CCCD'),
-            }"
-            name="Số CCCD"
-          />
-          <span v-show="errors.has('Số CCCD')" class="err">{{
-            errors.first("Số CCCD")
-        }}</span>
-        </li>
-        <li class="content--item div-center">
-          Cấp vụ:
-          <multiselect
-              class="multiselect-level"
-              :options="listLevelManage"
-              @input="checkLevel()"
-              v-model="listTmp.levelManager"
-              placeholder="Chọn cấp vụ"
-              v-validate="'required'"
-              :class="{
-                input: true,
-                'is-danger': errors.has('Cấp vụ'),
-              }"
-              name="Cấp vụ"
-            ></multiselect>
-          <span v-show="errors.has('Cấp vụ')" class="err">{{
-            errors.first("Cấp vụ")
-          }}</span>
-        </li>
-        <li class="content--item div-center local">
-          <p> Khu vực</p>
-          
-          <div class="local-detail" >
-            <div class="text-left" >
-              Quốc gia: Việt Nam
+        <div class="filter-address">
+          <div class="row content--item">
+            <div class="left">
+              <p>Cấp vụ:</p>
+              <multiselect
+                class="multiselect"
+                :options="listLevelPoli"
+                v-model="levelManager"
+                @input="fetchData"
+                placeholder="Chọn cấp vụ"
+                v-validate="'required'"
+                :class="{
+                  input: true,
+                  'is-danger': errors.has('Cấp vụ'),
+                }"
+                name="Cấp vụ"
+              ></multiselect>
+              <span v-show="errors.has('Cấp vụ')" class="err">{{
+                errors.first("Cấp vụ")
+              }}</span>
             </div>
-            <div class="text-left" v-show="hasCity">
-            Tỉnh <small style="color: #c7422e">*</small>:
-            <multiselect
-              class="multiselect"
-              @input="getDistrict()"
-              :options="listCity"
-              v-model="listTmp.city"
-              placeholder="Chọn tỉnh"
-              v-validate="'required'"
-              :class="{
-                input: true,
-                'is-danger': errors.has('Tỉnh'),
-              }"
-              name="Tỉnh"
-            ></multiselect>
-            <span v-show="errors.has('Tỉnh')" class="err">{{
-              errors.first("Tỉnh")
-            }}</span>
+
+            <div>
+              <p v-show="action !== 'Cập nhật'">Công dân:</p>
+              <multiselect
+                class="multiselect"
+                v-model="selectedCitizenId"
+                :options="listCitizen"
+                placeholder="Chọn công dân"
+                label="name"
+                @input="updateselectedCitizenId()"
+                v-if="action !== 'Cập nhật'"
+              ></multiselect>
+              <div class="row">
+                <p class="margin-right" v-show="action === 'Cập nhật'">
+                  ID CBCC:
+                </p>
+                <p>{{ listPoli.politicianId }}</p>
+                <span v-show="errors.has('idPoli')" class="err">{{
+                  errors.first("idPoli")
+                }}</span>
+              </div>
+            </div>
           </div>
-          <div v-show="hasDistrict" class="text-left">
-            Huyện/Thành phố <small style="color: #c7422e">*</small>:
-            <multiselect
-              class="multiselect"
-              @input="getWard()"
-              :options="listDistrict"
-              v-model="listTmp.district"
-              placeholder="Chọn huyện/Thành phố"
-              v-validate="'required'"
-              :class="{
-                input: true,
-                'is-danger': errors.has('Huyện'),
-              }"
-              name="Huyện"
-            ></multiselect>
-            <span v-show="errors.has('Huyện')" class="err">{{
-              errors.first("Huyện")
-            }}</span>
+
+          <div class="row content--item" v-show="start">
+            <div class="left row">
+              <p class="margin-right" v-show="action === 'Cập nhật'">Cấp vụ:</p>
+              <p>{{ listPoli.levelManagerVN }}</p>
+              <span v-show="errors.has('idPoli')" class="err">{{
+                errors.first("idPoli")
+              }}</span>
+            </div>
+
+            <div class="row">
+              <p class="margin-right" style="margin-left: 170px ;" v-show="action === 'Cập nhật'">Khu vực:</p>
+              <p>{{ listPoli.areaManage }}</p>
+              <span v-show="errors.has('idPoli')" class="err">{{
+                errors.first("idPoli")
+              }}</span>
+            </div>
           </div>
-          <div v-show="hasTown" class="text-left">
-            Xã/Thị trấn <small style="color: #c7422e">*</small>:
+
+          <div class="row content--item">
+            <div class="left" v-show="isShowCity">
+              <p>Tỉnh/Thành phố:</p>
+              <multiselect
+                class="multiselect"
+                @input="getDistrict()"
+                :options="listCity"
+                v-model="listInfor.city"
+                placeholder="Chọn tỉnh"
+                v-validate="'required'"
+                :class="{
+                  input: true,
+                  'is-danger': errors.has('Tỉnh'),
+                }"
+                name="Tỉnh"
+              ></multiselect>
+              <span v-show="errors.has('Tỉnh')" class="err">{{
+                errors.first("Tỉnh")
+              }}</span>
+            </div>
+
+            <div v-show="isShowDistrict">
+              <p>Quận/Huyện:</p>
+              <multiselect
+                class="multiselect"
+                @input="getWard()"
+                :options="listDistrict"
+                v-model="listInfor.district"
+                placeholder="Chọn huyện/Thành phố"
+                v-validate="'required'"
+                :class="{
+                  input: true,
+                  'is-danger': errors.has('Huyện'),
+                }"
+                name="Huyện"
+              ></multiselect>
+              <span v-show="errors.has('Huyện')" class="err">{{
+                errors.first("Huyện")
+              }}</span>
+            </div>
+          </div>
+
+          <div class="content--item" v-show="isShowTown">
+            <p>Xã/phường:</p>
             <multiselect
               class="multiselect"
               :options="listWard"
-              v-model="listTmp.town"
+              v-model="listInfor.areaManage"
               placeholder="Chọn Xã/Thị trấn"
               v-validate="'required'"
               :class="{
@@ -103,26 +129,8 @@
               errors.first("Xã/thị trấn")
             }}</span>
           </div>
-          <div v-show="hasQuarter">
-            Khối/Thôn:
-            <input 
-            type="text" 
-            v-model="listTmp.quarter" 
-            v-validate="'required|min:1|max:255'"
-              :class="{
-                input: true,
-                'is-danger': errors.has('Khối/Thôn'),
-              }"
-              name="Khối/Thôn"
-            />
-            <span v-show="errors.has('Khối/Thôn')" class="err">{{
-              errors.first("Khối/Thôn")
-            }}</span>
-          </div>
-          </div>
-          
-        </li>
-        
+        </div>
+
         <li class="content--item div-center">
           Chức danh:
           <input
@@ -145,146 +153,142 @@
   </div>
 </template>
 <script>
+import { useListCityStore } from "@/store/listCity";
+
 export default {
   props: ["listPoli", "action"],
-  data(){
+  data() {
     return {
-      listLevelManage: [
-        'Quốc gia',
-        'Tỉnh',
-        'Huyện/Thành phố',
-        'Xã/Thị trấn',
-        'Khối/Thôn'
-    ],
-    listAreaManage:[],
-    hasCity:false,
-    hasDistrict: false,
-    hasQuarter: false,
-    hasTown: false,
-    listTmp:{},
-    listCity:[],
-    listDistrict:[],
-    listWard:[]
-    }
+      levelManager: "Cả nước",
+      isShowCity: false,
+      isShowDistrict: false,
+      isShowTown: false,
+      listLevelPoli: ["Cả nước", "Tỉnh/Thành phố", "Quận/Huyện", "Xã/Phường"],
+      listInfor: {},
+      listCity: [],
+      listDistrict: [],
+      listWard: [],
+      levelManager: "Cả nước",
+      inforSearch: {},
+      selectedCitizenId: "",
+      idCitizen: "",
+      listCitizen: [],
+      start: true,
+    };
   },
-  mounted(){
+  mounted() {
     this.getCity();
   },
-  methods:{
-    async openPopUp(){
-        console.log("hehhehheheh");
-        const result = await this.$validator.validateAll();
+  methods: {
+    async fetchData() {
+      try {
         this.checkLevel();
+        await this.$axios
+          .get(`http://localhost:8080/api/citizen/listCitizen/country`)
+          .then((res) => {
+            this.listCitizen = res.data;
+          });
+      } catch (error) {
+        console.log("test fectdata");
+        console.log(error);
+      }
+    },
+    async openPopUp() {
+      console.log("hehhehheheh");
+      const result = await this.$validator.validateAll();
+      this.checkLevel();
       this.$emit("openPopup");
     },
     async getCity() {
-      try {
-        await this.$axios
-          .get(`http://localhost:8080/api/local/province`)
-          .then((res) => {
-            this.listCity = res.data;
-          });
-      } catch (error) {
-        console.log(error);
+      const listCityStore = useListCityStore();
+      const storedData = localStorage.getItem("listCity");
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        listCityStore.setListCity(parsedData);
       }
+      this.listCity = listCityStore.getListCity;
+      console.log(this.listCity);
     },
     async getDistrict() {
       try {
         console.log("district");
         await this.$axios
           .get(
-            `http://localhost:8080/api/local/district/province=${encodeURIComponent(this.listTmp.city)}`
+            `http://localhost:8080/api/local/district/province=${encodeURIComponent(
+              this.listInfor.city
+            )}`
           )
           .then((res) => {
             this.listDistrict = res.data;
+            this.getWard();
           });
+        this.fetchData();
       } catch (error) {
         console.log(error);
       }
     },
     async getWard() {
-        try {
-          console.log("ward");
-          await this.$axios
-            .get(
-              `http://localhost:8080/api/local/ward/?proCode=${encodeURIComponent(this.listTmp.city)}&disCode=${encodeURIComponent(this.listTmp.district)}`
-            )
-            .then((res) => {
-              this.listWard = res.data;
-            });
-        } catch (error) {
-          console.log(error);
-        }
+      try {
+        console.log("ward");
+        await this.$axios
+          .get(
+            `http://localhost:8080/api/local/ward/?proCode=${encodeURIComponent(
+              this.listInfor.city
+            )}&disCode=${encodeURIComponent(this.listInfor.district)}`
+          )
+          .then((res) => {
+            this.listWard = res.data;
+          });
+        this.fetchData();
+      } catch (error) {
+        console.log(error);
+      }
     },
-    checkLevel(){
-      console.log("a");
-      
-      if(this.listTmp.levelManager == 'Quốc gia')
-        {
-          console.log("tinh");
-          this.listPoli.areaManage = 'Việt Nam';
-          this.listPoli.levelManager = 'country';
-          this.hasCity = false;
-          this.hasDistrict= false;
-          this.hasQuarter = false;
-          this.hasTown = false;
-        }
-      else if(this.listTmp.levelManager == 'Tỉnh')
-        {
-          console.log("tinh");
-          this.listPoli.levelManager = 'city'
-          this.listPoli.areaManage = this.listTmp.city;
-          this.hasCity = true;
-          this.hasDistrict= false;
-          this.hasQuarter = false;
-          this.hasTown = false;
-        }
-      else if(this.listTmp.levelManager == 'Huyện/Thành phố')
-        {
-      console.log("b");
-
-          this.listPoli.areaManage = this.listTmp.District;
-          this.listPoli.levelManager = 'district'
-          this.hasCity = true;
-          this.hasDistrict= true;
-          this.hasQuarter = false;
-          this.hasTown = false;
-        }
-        else if(this.listTmp.levelManager == 'Xã/Thị trấn')
-        {
-          this.listPoli.areaManage = this.listTmp.town;
-          this.listPoli.levelManager = 'town'
-          this.hasCity = true;
-          this.hasDistrict= true;
-          this.hasTown = true;
-          this.hasQuarter = false;
-        }
-        else if(this.listTmp.levelManager == 'Khối/Thôn')
-        {
-      console.log("d");
-
-          this.listPoli.areaManage = this.listTmp.quarter;
-          this.listPoli.levelManager = 'quarter'
-          this.hasCity = true;
-          this.hasDistrict= true;
-          this.hasQuarter = true;
-          this.hasTown = true;
-        }
-        else
-        {
-          this.hasDistrict= false;
-          this.hasQuarter = false;
-          this.hasTown = false;
-        }
-    }
-  }
+    async checkLevel() {
+      this.start = false
+      if (this.levelManager === "Tỉnh/Thành phố") {
+        this.listPoli.levelManager = this.inforSearch.level = "city";
+        this.inforSearch.add = this.inforSearch.city;
+        this.listPoli.areaManage = this.listInfor.city;
+        this.isShowCity = true;
+        this.isShowDistrict = false;
+        this.isShowTown = false;
+      } else if (this.levelManager === "Quận/Huyện") {
+        this.listPoli.levelManager = this.inforSearch.level = "district";
+        this.inforSearch.add = this.inforSearch.district;
+        this.listPoli.areaManage = this.listInfor.district;
+        this.isShowCity = true;
+        this.isShowDistrict = true;
+        this.isShowTown = false;
+      } else if (this.levelManager === "Xã/Phường") {
+        this.inforSearch.level = "ward";
+        this.listPoli.levelManager = "town";
+        this.inforSearch.add = this.inforSearch.town;
+        this.listPoli.areaManage = this.listInfor.ward;
+        this.isShowCity = true;
+        this.isShowDistrict = true;
+        this.isShowTown = true;
+      } else {
+        this.listPoli.areaManage = "Việt Nam";
+        this.listPoli.levelManager = "country";
+        this.isShowCity = false;
+        this.isShowDistrict = false;
+        this.isShowTown = false;
+      }
+    },
+    updateselectedCitizenId(value) {
+      if (this.selectedCitizenId !== null) {
+        this.listPoli.citizen_id = this.selectedCitizenId.citizenId;
+        this.selectedCitizenId = value;
+      }
+    },
+  },
 };
 </script>
 
 <style scoped src="~/static/asset/styles.css"></style>
 <style scoped>
-
-.container--updatePoli{
+.container--updatePoli {
   margin-top: 10px;
 }
 .poli--content {
@@ -344,27 +348,25 @@ export default {
   color: #ff4433;
   margin-left: 10px;
 }
-.multiselect{
+.multiselect {
   width: 350px;
   height: 40px;
-  padding:10px 0 20px 20px;
+  padding: 10px 0 20px 20px;
 }
-.local{
+.local {
   display: block;
-    text-align: left
-}
-.text-left{
   text-align: left;
-  padding-top: 10px;
 }
-.local-detail{
-  padding: 20px 0 20px 50px;
+.row {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: stretch;
 }
-.local-detail div{
-  padding-bottom: 10px;
+.left {
+  width: 50%;
 }
-.multiselect-level{
-  /* padding-bottom: 10px; */
-  margin-bottom: 10px;
+.margin-right{
+  margin-right: 10px;
 }
 </style>

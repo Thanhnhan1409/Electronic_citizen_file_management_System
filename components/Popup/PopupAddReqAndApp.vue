@@ -4,7 +4,7 @@
     <div class="popup-AddAppoint">
       <h3>{{ title }}</h3>
       <div class="content">
-        <div class="row" v-show="obj !== 'opinion' ">
+        <div class="row" v-show="obj !== 'opinion' && obj !== 'updateAppointment' ">
           <div class="poli-level">
             Cấp vụ
             <multiselect
@@ -25,7 +25,7 @@
             }}</span>
           </div>
 
-          <div v-show="isShowCity">
+          <div v-show="isShowCity  && obj !== 'updateAppointment'" >
             Tỉnh/Thành phố
             <multiselect
               class="multiselect"
@@ -46,8 +46,8 @@
           </div>
         </div>
 
-        <div class="row" v-show="obj !== 'opinion' ">
-          <div v-show="isShowDistrict && obj !== 'opinion' ">
+        <div class="row" v-show="obj !== 'opinion' && obj !== 'updateAppointment' ">
+          <div v-show="isShowDistrict && obj !== 'opinion'  ">
             Quận/Huyện
             <multiselect
               class="multiselect"
@@ -92,8 +92,8 @@
             <p>
               {{
                 obj === "poliForwardRequirement"
-                  ? "ID CBCC chuyển tiếp:"
-                  : "ID CBCC:"
+                  ? "CBCC chuyển tiếp:"
+                  : "CBCC:"
               }}
             </p>
             <multiselect
@@ -102,8 +102,23 @@
               placeholder="Chọn cán bộ"
               label="name"
               @input="updateSelectedPoliId"
+              v-show="obj !== 'updateAppointment'"
             ></multiselect>
-
+            <input 
+            type="text"
+            :value="
+                  obj === 'updateAppointment'
+                  ? appointment.politician.citizen.name
+                  : ''
+              "
+              @input="
+                  obj === 'updateAppointment'
+                  ? (appointment.politician.citizen.name = $event.target.value)
+                  : ''
+              "
+            v-show=" obj === 'updateAppointment'"
+            disabled="true"
+            >
             <span v-show="errors.has('idPoli')" class="err">{{
               errors.first("idPoli")
             }}</span>
@@ -215,7 +230,7 @@
                 : opinion.description
             "
             @input="
-              obj === 'appointment'
+              obj === 'appointment' || obj === 'updateAppointment'
                 ? (appointment.description = $event.target.value)
                 : obj === 'requirement'
                 ? (requirement.description = $event.target.value)
@@ -310,7 +325,7 @@ export default {
               } else if (this.obj === "requirement") {
                 this.requirement.idPoli = this.idPolitician;
               } else if (this.obj === "updateAppointment") {
-                this.appointment.politician.politician_id = this.idPolitician;
+                this.selectedPoliId = this.appointment.politician.politician_id;
               } else if (this.obj === "appointment") {
                 this.appointment.politician_id = this.idPolitician;
               }
@@ -428,7 +443,7 @@ export default {
   background-color: #fff;
   position: absolute;
   left: 21%;
-  top: 8%;
+  top: 4%;
   padding: 40px 60px 20px;
   z-index: 99;
   width: 520px;
