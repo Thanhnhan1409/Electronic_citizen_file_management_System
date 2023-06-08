@@ -6,7 +6,7 @@
         <li class="table-header">
           <div class="col col-0">STT</div>
           <div class="col col-1"  v-show="object !== 'citizenOpinions'">
-            {{ object === "notification" ? "Tên CBCC" : "Tên" }}
+            {{ object === "notification" ? "ID CBCC" : "Tên" }}
           </div>
           <div class="col col-2" v-if="object === 'notification'">Tên</div>
           <div
@@ -31,14 +31,14 @@
             >
               {{
                 object === "notification"
-                  ? item.politician.citizen.name
+                  ? item.politician.politician_id
                   :object === 'citizenOpinions'
                   ? ''
                   : item.citizen.name
               }}
             </div>
             <div
-              v-show="object !== 'citizenOpinions'"
+              v-show="object !== 'citizenOpinions' && object !== 'opinion' "
               class="col col-2"
               data-label="Tên"
             >

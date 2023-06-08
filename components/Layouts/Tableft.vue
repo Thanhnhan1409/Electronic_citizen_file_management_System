@@ -508,20 +508,6 @@ export default {
         return true;
       return false;
     },
-    // test() {
-    //   this.showPage = "";
-    //   this.$router.push("/citizen/requirements");
-    // },
-    // test2(){
-    //   this.showPage = "";
-    //     const elements = document.getElementsByClassName(
-    //     "tableft__manage--options"
-    //   );
-    //   for (let i = 0; i < elements.length; i++) {
-    //     elements[i].classList.add("disable");
-    //   }
-    //   this.$router.push("/citizen/listInforPoli");
-    // },
   },
 };
 </script>
@@ -555,14 +541,12 @@ export default {
   color: #fff;
   z-index: 9;
 }
-
 .tableft h3 {
   font-size: 16px;
   text-align: center;
   padding: 5px 10px;
   margin-bottom: 10px;
 }
-
 .tableft__manage--options {
   position: relative;
   left: -10px;
@@ -620,7 +604,6 @@ svg {
   border-top: 1px solid #fff;
   color: #fff;
 }
-
 .tableft-logout svg {
   width: 20px;
   height: auto;
@@ -629,7 +612,6 @@ svg {
   fill: #127e23;
   width: 14px;
 }
-
 .tableft-logout:hover {
   background-color: #fff;
   color: #127e23;
@@ -637,7 +619,6 @@ svg {
   font-weight: 600;
   width: 162px;
 }
-
 .tableft-logout:hover svg {
   fill: #127e23;
   transform: scale(1.2);

@@ -1,6 +1,98 @@
 <template>
   <div class="container">
     <BackToList />
+    <div class="filter-address">
+      <div class="content--item">
+        <multiselect
+          class="multiselect"
+          :options="listLevelPoli"
+          v-model="levelManager"
+          @input="fetchData"
+          placeholder="Chọn cấp vụ"
+          v-validate="'required'"
+          :class="{
+            input: true,
+            'is-danger': errors.has('Cấp vụ'),
+          }"
+          name="Cấp vụ"
+        ></multiselect>
+        <span v-show="errors.has('Cấp vụ')" class="err">{{
+          errors.first("Cấp vụ")
+        }}</span>
+      </div>
+
+      <div class="content--item" v-show="isShowCity">
+        <multiselect
+          class="multiselect"
+          @input="getDistrict()"
+          :options="listCity"
+          v-model="listInfor.city"
+          placeholder="Chọn tỉnh"
+          v-validate="'required'"
+          :class="{
+            input: true,
+            'is-danger': errors.has('Tỉnh'),
+          }"
+          name="Tỉnh"
+        ></multiselect>
+        <span v-show="errors.has('Tỉnh')" class="err">{{
+          errors.first("Tỉnh")
+        }}</span>
+      </div>
+
+      <div class="content--item" v-show="isShowDistrict">
+        <multiselect
+          class="multiselect"
+          @input="getWard()"
+          :options="listDistrict"
+          v-model="listInfor.district"
+          placeholder="Chọn huyện/Thành phố"
+          v-validate="'required'"
+          :class="{
+            input: true,
+            'is-danger': errors.has('Huyện'),
+          }"
+          name="Huyện"
+        ></multiselect>
+        <span v-show="errors.has('Huyện')" class="err">{{
+          errors.first("Huyện")
+        }}</span>
+      </div>
+
+      <div class="content--item" v-show="isShowTown">
+        <multiselect
+          class="multiselect"
+          :options="listWard"
+          v-model="listInfor.ward"
+          placeholder="Chọn Xã/Thị trấn"
+          v-validate="'required'"
+          :class="{
+            input: true,
+            'is-danger': errors.has('Xã/Thị trấn'),
+          }"
+          name="Xã/Thị trấn"
+        ></multiselect>
+        <span v-show="errors.has('Xã/thị trấn')" class="err">{{
+          errors.first("Xã/thị trấn")
+        }}</span>
+      </div>
+
+      <div class="content--item">
+        <multiselect
+          class="multiselect"
+          v-model="selectedCitizenId"
+          :options="listCitizen"
+          placeholder="Chọn công dân"
+          label="name"
+          @input="updateselectedCitizenId"
+        ></multiselect>
+
+        <span v-show="errors.has('idPoli')" class="err">{{
+          errors.first("idPoli")
+        }}</span>
+      </div>
+    </div>
+
     <div class="content">
       <nuxt-link to="/admin/update/updateInforPoli">
         <div class="update--role">
@@ -16,7 +108,6 @@
           </svg>
         </div>
       </nuxt-link>
-      <Search class="search" v-model="idSearch" @search="handleSearch" />
 
       <AddAccount
         :listInfor="list"
@@ -28,21 +119,21 @@
         @action="submit()"
         v-show="isShowPopup"
         @closePopup="closePopup()"
-      >
-      </PopupConfirm>
+      />
       <Notification
         :status="status"
         :object="'tài khoản'"
         :action="'Cập nhật'"
         :isShowNoti="showNoti"
         v-if="showNoti == 'Ok'"
-      >
-      </Notification>
+      />
     </div>
   </div>
 </template>
 
 <script>
+import { useListCityStore } from "@/store/listCity";
+
 export default {
   data() {
     return {
@@ -53,15 +144,33 @@ export default {
       isShowPopup: false,
       status: "",
       showNoti: "",
+      levelManager: "Cả nước",
+      isShowCity: false,
+      isShowDistrict: false,
+      isShowTown: false,
+      isShow: true,
+      listLevelPoli: ["Cả nước", "Tỉnh/Thành phố", "Quận/Huyện", "Xã/Phường"],
+      listInfor: {},
+      listCity: [],
+      listDistrict: [],
+      listWard: [],
+      levelManager: "Cả nước",
+      inforSearch: {},
+      selectedCitizenId: "",
+      idCitizen: "",
+      listCitizen: [],
     };
   },
-  // middleware: 'nhan',
+  mounted() {
+    this.fetchData();
+    this.getCity();
+  },
   methods: {
-    async fetchData() {
+    async fetchDataSingle() {
       try {
         await this.$axios
           .get(
-            `http://localhost:8080/api/citizen/listCitizen/id=${this.idSearch}`
+            `http://localhost:8080/api/citizen/listCitizen/id=${this.idCitizen}`
           )
           .then((res) => {
             this.list = res.data;
@@ -71,6 +180,33 @@ export default {
             this.list.city = res.data.location.city;
             this.list.idFamily = res.data.family;
           });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async fetchData() {
+      try {
+        this.checkLevel();
+        const fUrl = "http://localhost:8080/api/citizen/listCitizen/";
+        let url = `http://localhost:8080/api/citizen/listCitizen/country`;
+        if (this.levelManager === "Cả nước") {
+          await this.$axios.get(url).then((res) => {
+            this.listCitizen = res.data;
+          });
+        } else {
+          if (this.levelManager === "Tỉnh") {
+            url = `${fUrl}city=${encodeURIComponent(this.inforSearch.add)}`;
+          } else if (this.levelManager === "Huyện/Thành phố") {
+            url = `${fUrl}district=${encodeURIComponent(this.inforSearch.add)}`;
+          } else if (this.levelManager === "Xã/Thị trấn") {
+            url = `${fUrl}town=${encodeURIComponent(this.inforSearch.add)}`;
+          }
+          if (this.inforSearch.add !== "") {
+            await this.$axios.get(url).then((res) => {
+              this.listCitizen = res.data;
+            });
+          }
+        }
       } catch (error) {
         console.log(error);
       }
@@ -104,15 +240,88 @@ export default {
         console.log(error);
       }
     },
-    handleSearch(id) {
-      this.idSearch = id;
-      this.fetchData();
-    },
     closePopup() {
       this.isShowPopup = false;
     },
     openPopup() {
       this.isShowPopup = true;
+    },
+    async getCity() {
+      const listCityStore = useListCityStore();
+      const storedData = localStorage.getItem("listCity");
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        listCityStore.setListCity(parsedData);
+      }
+      this.listCity = listCityStore.getListCity;
+      console.log(this.listCity);
+    },
+    async getDistrict() {
+      try {
+        console.log("district");
+        await this.$axios
+          .get(
+            `http://localhost:8080/api/local/district/province=${encodeURIComponent(
+              this.listInfor.city
+            )}`
+          )
+          .then((res) => {
+            this.listDistrict = res.data;
+            this.getWard();
+          });
+        this.fetchData();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getWard() {
+      try {
+        console.log("ward");
+        await this.$axios
+          .get(
+            `http://localhost:8080/api/local/ward/?proCode=${encodeURIComponent(
+              this.listInfor.city
+            )}&disCode=${encodeURIComponent(this.listInfor.district)}`
+          )
+          .then((res) => {
+            this.listWard = res.data;
+          });
+        this.fetchData();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async checkLevel() {
+      if (this.levelManager === "Tỉnh/Thành phố") {
+        this.inforSearch.level = "city";
+        this.inforSearch.add = this.inforSearch.city;
+        this.isShowCity = true;
+        this.isShowDistrict = false;
+        this.isShowTown = false;
+      } else if (this.levelManager === "Quận/Huyện") {
+        this.inforSearch.level = "district";
+        this.inforSearch.add = this.inforSearch.district;
+        this.isShowCity = true;
+        this.isShowDistrict = true;
+        this.isShowTown = false;
+      } else if (this.levelManager === "Xã/Phường") {
+        this.inforSearch.level = "ward";
+        this.inforSearch.add = this.inforSearch.town;
+        this.isShowCity = true;
+        this.isShowDistrict = true;
+        this.isShowTown = true;
+      } else {
+        this.isShowCity = false;
+        this.isShowDistrict = false;
+        this.isShowTown = false;
+      }
+    },
+    async updateselectedCitizenId(value) {
+      if (this.selectedCitizenId !== null) {
+        this.idCitizen = this.selectedCitizenId.citizenId;
+        this.selectedCitizenId = value;
+        this.fetchDataSingle();
+      }
     },
   },
 };
@@ -134,13 +343,6 @@ input {
   border: 0.8px solid black;
 }
 
-.search {
-  position: absolute;
-  top: -40px;
-  left: -250px;
-  width: fit-content;
-}
-
 @keyframes icon-nextPage {
   from {
     transform: translateX(0px);
@@ -158,7 +360,7 @@ input {
   font-weight: 600;
   top: 30px;
   right: 40px;
-  z-index: 2;
+  z-index: 4;
   padding: 7px 15px;
   border-radius: 5px;
   display: flex;
@@ -179,5 +381,27 @@ input {
 }
 .content {
   margin-top: 140px;
+}
+.filter-address {
+  display: flex;
+  gap: 2%;
+  position: absolute;
+  top: -20px;
+  padding-top: 40px;
+  z-index: 3;
+  width: 80%;
+  left: 90px;
+}
+.multiselect {
+  margin-top: 10px;
+}
+.content--item {
+  padding-bottom: 7px;
+  position: relative;
+  top: 0px;
+  right: 40px;
+  width: fit-content;
+  z-index: 3;
+  margin: 0;
 }
 </style>

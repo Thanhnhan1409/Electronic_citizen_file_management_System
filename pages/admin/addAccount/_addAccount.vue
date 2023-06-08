@@ -47,9 +47,9 @@ export default {
   data() {
     return {
       list: {
-        //set pw lại nơi Be
         password: "123",
-        nationality: 'Việt Nam'
+        criminalRecord:'',
+        nationality: "Việt Nam"
       },
       isShowPopup: false,
       status: "",
@@ -62,6 +62,7 @@ export default {
       try {
         console.log(this.list);
         this.isShowPopup = false;
+        this.list.idFamily= this.list.family;
         await this.$axios
           .post("http://localhost:8080/api/v1/auth/register", this.list)
           .then((res) => {

@@ -234,6 +234,9 @@ export default {
       this.$router.push("/admin/listInforAll/citizenInfor");
     },
     checkLevelManager(item) {
+      if (item.levelManager === "country") {
+        return "Quốc gia";
+      }
       if (item.levelManager === "city") {
         return "Tỉnh";
       }

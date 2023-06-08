@@ -106,6 +106,14 @@
                   @closePopup="closePopup"
                 >
                 </PopupConfirm>
+                <Notification
+                :status="status"
+                :object="'trạng thái lịch hẹn'"
+                :action=" 'Cập nhật'"
+                :isShowNoti="showNoti"
+                v-if="showNoti == 'OkStatus'"
+              >
+              </Notification>
               </ul>
             </div>
             <div class="status col col-8" v-if="object !== 'poliAppointment'">
@@ -119,10 +127,7 @@
                 />
               </svg>
               <ul class="status-action">
-                <li @click.prevent="openPopupUpdate(item)">
-                  Cập nhật
-                 
-                </li>
+                <li @click.prevent="openPopupUpdate(item)">Cập nhật</li>
                 <li
                   @click.prevent="isShowPopup = 'popupDelete'"
                   class="deny-status"
@@ -152,19 +157,27 @@
                 @closePopup="closePopup"
               >
               </PopupConfirm>
+              <Notification
+                :status="status"
+                :object="'lịch hẹn'"
+                :action="'Cập nhật'"
+                :isShowNoti="showNotiUpdate"
+                v-if="showNotiUpdate == 'Ok'"
+              >
+              </Notification>
+              <Notification
+                :status="status"
+                :object="'lịch hẹn'"
+                :action="isShowPopup === 'popupUpdate' ? 'Cập nhật' : 'Xóa'"
+                :isShowNoti="showNoti"
+                v-if="showNoti == 'Ok'"
+              >
+              </Notification>
             </div>
           </li>
         </ul>
       </ul>
     </div>
-    <Notification
-      :status="status"
-      :object="'lịch hẹn'"
-      :action="isShowPopup === 'popupUpdate' ? 'Cập nhật' : 'Xóa'"
-      :isShowNoti="showNoti"
-      v-if="showNoti == 'Ok'"
-    >
-    </Notification>
   </div>
 </template>
 
@@ -184,6 +197,7 @@ export default {
       isShowPopupUpdate: false,
       dataTmp: {},
       idCitizen: null,
+      showNotiUpdate: "",
     };
   },
   mounted() {
@@ -200,7 +214,6 @@ export default {
       this.listTmp.splice(0, this.listTmp.length);
       for (let i = 0; i < this.listAppointment.length; i++)
         this.listTmp.push(this.listAppointment[i]);
-      console.log("all" + this.listTmp);
     },
     renderWaitingAppointment() {
       this.listTmp.splice(0, this.listTmp.length);
@@ -208,14 +221,12 @@ export default {
         if (this.listAppointment[i].status == "Đang xử lý") {
           this.listTmp.push(this.listAppointment[i]);
         }
-      console.log("wait" + this.listTmp);
     },
     renderAcceptAppointment() {
       this.listTmp.splice(0, this.listTmp.length);
       for (let i = 0; i < this.listAppointment.length; i++)
         if (this.listAppointment[i].status == "Chấp nhận")
           this.listTmp.push(this.listAppointment[i]);
-      console.log("accept" + this.listTmp);
     },
     renderDeniedAppointment() {
       this.listTmp.splice(0, this.listTmp.length);
@@ -223,10 +234,8 @@ export default {
         if (this.listAppointment[i].status == "Từ chối") {
           this.listTmp.push(this.listAppointment[i]);
         }
-      console.log("denied" + this.listTmp);
     },
     renderAppointment() {
-      console.log(this.status);
       if (this.status == "Tất cả") this.renderAllAppointment();
       else if (this.status == "Đang xử lý") this.renderWaitingAppointment();
       else if (this.status == "Chấp nhận") this.renderAcceptAppointment();
@@ -243,8 +252,9 @@ export default {
             }
           )
           .then((res) => {
+            this.fetchData();
             this.status = "thành công";
-            this.showNoti = "Ok";
+            this.showNoti = "OkStatus";
             setTimeout(() => {
               this.showNoti = "";
             }, 1500);
@@ -252,19 +262,18 @@ export default {
           });
       } catch (error) {
         this.status = "thất bại";
-        this.showNoti = "Ok";
+        this.showNoti = "OkStatus";
         setTimeout(() => {
           this.showNoti = "";
         }, 1500);
         console.log(error);
       }
     },
-    async () {
+    async() {
       this.$emit("fetchData");
     },
     async fetchDataByDate() {
       try {
-        console.log(this.date);
         await this.$axios
           .get(
             `http://localhost:8080/api/appointment/listAppointment/?poliId=${this.idPoli}&dateString=${this.date}`
@@ -272,8 +281,6 @@ export default {
           .then((res) => {
             this.listTmp.splice(0, this.listTmp.length);
             this.listTmp = res["data"];
-            console.log("date" + this.listTmp);
-            console.log("aaaa");
           });
       } catch (error) {
         console.log(error);
@@ -297,6 +304,7 @@ export default {
       try {
         this.isShowPopup = "";
         item.citizen_id = this.idCitizen;
+        item.politician_id = item.politician.politicianId;
         await this.$axios
           .put(
             `http://localhost:8080/api/appointment/update/id=${item.id}`,
@@ -305,22 +313,21 @@ export default {
           .then((res) => {
             this.fetchData();
             this.status = "thành công";
-            this.showNoti = "Ok";
+            this.showNotiUpdate = "Ok";
             setTimeout(() => {
-              this.showNoti = "";
+              this.showNotiUpdate = "";
             }, 1500);
           });
       } catch (error) {
         this.status = "thất bại";
-        this.showNoti = "Ok";
+        this.showNotiUpdate = "Ok";
         setTimeout(() => {
-          this.showNoti = "";
+          this.showNotiUpdate = "";
         }, 1500);
         console.log(error);
       }
     },
     async deleteApp(item) {
-      //   this.$emit("delete", item);
       try {
         this.isShowPopup = "";
         await this.$axios
@@ -354,6 +361,9 @@ export default {
     openPopupConfirm() {
       this.isShowPopupUpdate = false;
       this.isShowPopup = "popupUpdate";
+    },
+    fetchData() {
+      this.$emit("fetchData");
     },
   },
 };
@@ -490,8 +500,8 @@ export default {
 .update-requirement {
   position: fixed;
   /* display: block; */
-  left: 38%;
-  top: 30%;
+  left: 34%;
+  top: 10%;
   z-index: 99;
 }
 /* .update-requirement:hover {

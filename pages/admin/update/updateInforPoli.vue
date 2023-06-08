@@ -1,7 +1,19 @@
 <template>
   <div class="container">
-    <BackToList class="backtolist"/>
+    <BackToList class="backtolist" />
     <Search class="search" v-model="idSearch" @search="handleSearch" />
+    <div class="content--item">
+      <multiselect
+        v-model="selectedPoliId"
+        :options="listPolicitian"
+        placeholder="Chọn cán bộ"
+        label="name"
+        @input="updateselectedPoliId"
+      ></multiselect>
+      <span v-show="errors.has('idPoli')" class="err">{{
+        errors.first("idPoli")
+      }}</span>
+    </div>
     <div class="infor">
       <AddOrUpdatePoli
         :listPoli="listPoli"
@@ -37,26 +49,55 @@ export default {
       isShowPopup: false,
       status: "",
       showNoti: "",
+      selectedPoliId: "",
+      idPolicitian: "",
+      listPolicitian: [],
+      // levelManager: "Cả nước",
+      // isShowCity: false,
+      // isShowDistrict: false,
+      // isShowTown: false,
+      // isShow: true,
+      // listLevelPoli: ["Cả nước", "Tỉnh/Thành phố", "Quận/Huyện", "Xã/Phường"],
+      // listInfor: {},
+      // listCity: [],
+      // listDistrict: [],
+      // listWard: [],
+      levelManager: "Cả nước",
+      inforSearch: {},
+      selectedCitizenId: "",
+      idCitizen: "",
+      listCitizen: [],
     };
   },
   mounted() {
-    this.id = localStorage.getItem("idCitizen");
+    this.fetchListDataPoli();
+    this.id = localStorage.getItem("idPolicitian");
     // this.name = localStorage.getItem('nameCitizen');
     // this.listPoli.citizen_id = this.idSearch;
   },
   methods: {
     async fetchDataPoli() {
       try {
-        console.log("inforPoli");
         await this.$axios
           .get(
-            `http://localhost:8080/api/politician/citizenId=${this.idSearch}`
+            `http://localhost:8080/api/politician/citizenId=${this.idPolicitian}`
           )
           .then((res) => {
-            console.log(this.listPoli);
-            this.listPoli = res["data"];
+            this.listPoli = res.data;
+            console.log("poli" + this.listPoli);
             this.listPoli.citizen_id = this.idSearch;
-            console.log(this.listPoli);
+            this.listPoli.levelManagerVN = this.checkLevelManager(this.listPoli);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async fetchListDataPoli() {
+      try {
+        await this.$axios
+          .get(`http://localhost:8080/api/politician/listPolitician/country`)
+          .then((res) => {
+            this.listPolicitian = res.data.map((item) => item.citizen);
           });
       } catch (error) {
         console.log(error);
@@ -64,7 +105,7 @@ export default {
     },
     async updatePoliInfor() {
       try {
-        console.log("id"+ this.listPoli.citizen_id);
+        console.log("id" + this.listPoli.citizen_id);
         console.log("area" + this.listPoli.areaManage);
         console.log("level" + this.listPoli.levelManager);
         console.log("positon" + this.listPoli.position);
@@ -79,7 +120,6 @@ export default {
             )}&positionEncode=${encodeURIComponent(this.listPoli.position)}`
           )
           .then((res) => {
-            // alert("Cập nhật thành công!");
             this.listPoli = res["data"];
             this.status = "thành công";
             this.showNoti = "Ok";
@@ -88,7 +128,6 @@ export default {
               this.showNoti = "";
               this.$router.push("/admin/listInforAll/_listInforAll");
             }, 1500);
-            // this.$router.push("/admin/listInforAll/_listInforAll");
           });
       } catch (error) {
         this.status = "thất bại";
@@ -99,6 +138,20 @@ export default {
         console.log(error);
       }
     },
+    checkLevelManager(item) {
+      if (item.levelManager === "city") {
+        return "Tỉnh";
+      }
+      if (item.levelManager === "district") {
+        return "Huyện/Thành phố";
+      }
+      if (item.levelManager === "ward") {
+        return "Thị trấn/Xã";
+      }
+      if (item.levelManager === "quarter") {
+        return "Khối/Làng";
+      }
+    },
     handleSearch(id) {
       this.idSearch = id;
       this.fetchDataPoli();
@@ -106,9 +159,16 @@ export default {
     closePopup() {
       this.isShowPopup = false;
     },
-    openPopup(){
-        console.log("hehhe");
+    openPopup() {
+      console.log("hehhe");
       this.isShowPopup = true;
+    },
+    async updateselectedPoliId(value) {
+      if (this.selectedPoliId !== null) {
+        this.idPolicitian = this.selectedPoliId.citizenId;
+        this.selectedPoliId = value;
+        this.fetchDataPoli();
+      }
     },
   },
 };
@@ -133,8 +193,20 @@ export default {
   position: relative;
   top: 60px;
 }
-.backtolist{
+.backtolist {
   position: absolute;
   top: 60px;
+}
+.multiselect {
+  margin-top: 10px;
+}
+.content--item {
+  padding-bottom: 7px;
+  position: absolute;
+  top: 80px;
+  left: 40px;
+  width: fit-content;
+  z-index: 3;
+  margin: 0;
 }
 </style>

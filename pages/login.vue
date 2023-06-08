@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="logo-login">
-      <img src="../static/images/logo.jpg" alt="" />
+      <img src="../static/images/logo.jpg" alt=""  @click="$router.push('/')" />
       <h2>Hệ thống quản lý hồ sơ điện tử công dân</h2>
     </div>
     <div class="card">
@@ -198,6 +198,7 @@ html {
 img {
   width: 100px;
   height: auto;
+  cursor: pointer;
 }
 .form {
   padding: 10px 40px 40px;

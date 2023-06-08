@@ -24,12 +24,12 @@
         </li>
         <ul
           class="responsive-table content"
-          v-for="(item, id) in this.listNotification"
+          v-for="(item, id) in listNotification"
           :key="id"
         >
           <li class="table-row display">
             <div class="col col-0" data-label="STT">{{ item.id }}</div>
-            <div class="col col-1" data-label="Số CCCD Người nhận">
+            <div class="col col-1 list-Citizen" data-label="Số CCCD Người nhận">
               <ul
                 class="list-idCitizen--items"
                 v-for="(tmp, index) in uniqueNames(item.citizens)"
@@ -64,7 +64,12 @@
           <div>
             <div class="row">
               <div class="content--item">
-                <p>Người nhận:</p>
+                <p>
+                  Người nhận:
+                  <button class="choose-all" @click="toggleBackgroundColor()">
+                    Chọn tất cả
+                  </button>
+                </p>
                 <multiselect
                   v-model="selectedCitizenId"
                   :options="listCitizen"
@@ -73,6 +78,7 @@
                   :close-on-select="false"
                   label="name"
                   @input="updateselectedCitizenId"
+                  :disabled="!multiselectDisabled"
                 ></multiselect>
 
                 <span v-show="errors.has('idPoli')" class="err">{{
@@ -117,7 +123,7 @@
 </template>
 
 <script>
-import {useListCitizenStore} from '@/store/listCitizen'
+import { useListCitizenStore } from "@/store/listCitizen";
 export default {
   data() {
     return {
@@ -135,13 +141,14 @@ export default {
       showNoti: "",
       name: "",
       listCitizen: [],
+      multiselectDisabled: true,
     };
   },
   mounted() {
     this.author_id = localStorage.getItem("idPolicitian");
     this.fetchListNotification();
     this.name = localStorage.getItem("name");
-    this.getData()
+    this.getData();
   },
   methods: {
     async postData() {
@@ -179,7 +186,7 @@ export default {
             `http://localhost:8080/api/notification/politicianId=${this.author_id}`
           )
           .then((res) => {
-            this.listNotification.splice(0, this.listNotification.length);
+            this.listNotification = [];
             this.listNotification = res.data;
             this.stringIdCitizen = "";
             this.description = "";
@@ -209,19 +216,29 @@ export default {
     async updateselectedCitizenId(value) {
       if (this.selectedCitizenId !== null) {
         console.log(this.selectedCitizenId);
-        this.listIdCitizen.push(this.selectedCitizenId[this.selectedCitizenId.length-1].citizen_id);
+        this.listIdCitizen.push(
+          this.selectedCitizenId[this.selectedCitizenId.length - 1].citizen_id
+        );
         console.log(this.listIdCitizen);
       }
       this.selectedCitizenId = value;
     },
-    getData(){
+    getData() {
       const listCitizenStore = useListCitizenStore();
-      const storedData = localStorage.getItem('listCitizenData');
+      const storedData = localStorage.getItem("listCitizenData");
       if (storedData) {
         const parsedData = JSON.parse(storedData);
         listCitizenStore.setListCitizen(parsedData);
       }
-      this.listCitizen = listCitizenStore.getListCitizen
+      this.listCitizen = listCitizenStore.getListCitizen;
+    },
+    toggleBackgroundColor() {
+      const button = document.querySelector(".choose-all");
+      button.classList.toggle("selected");
+      this.multiselectDisabled = !this.multiselectDisabled;
+      this.listIdCitizen = [];
+      if (this.multiselectDisabled == false)
+        this.listIdCitizen = this.listCitizen.map((item) => item.citizen_id);
     },
   },
 };
@@ -286,10 +303,8 @@ ul li {
 .icon-plus {
   width: 16px;
   height: auto;
-  /* fill: #fff; */
   margin-left: 7px;
 }
-
 .add-notification {
   box-shadow: 3px 3px 10px 2px rgb(231, 226, 226);
   position: absolute;
@@ -325,7 +340,6 @@ ul li {
   left: 40%;
   background-color: #ffffff;
   z-index: 20;
-  /* display: none; */
   transition: all 0.2 ease;
 }
 .add-notificaito--popup svg {
@@ -350,7 +364,6 @@ ul li {
   display: flex;
   margin-top: 10px;
 }
-
 .popup-input--title span {
   width: 30%;
 }
@@ -360,20 +373,18 @@ ul li {
   border-bottom: 1px solid rgb(59, 59, 59);
   margin-left: 10px;
   padding: 5px 7px;
-  /* border-radius: 5px; */
 }
 .popup-input--title textarea {
   width: 210px;
   height: 50px;
   margin-left: 10px;
   padding: 5px 10px;
-  /* border-radius: 10px; */
 }
 .popup-button {
   padding: 5px 10px;
   border: none;
   margin-top: 20px;
-  background-color: green;
+  background-color: #127e23;
   border-radius: 5px;
   color: #ffffff;
   position: relative;
@@ -385,20 +396,30 @@ ul li {
   box-shadow: 3px 3px 10px 3px rgb(217, 217, 217);
   transform: scale(1.03);
 }
-/* .row {
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  width: 350px;
-  margin-bottom: 10px;
-} */
 .content--item {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
   margin-bottom: 10px;
 }
-.content--item p{
+.content--item p {
   width: 47%;
+}
+.choose-all {
+  padding: 2px 5px;
+  border-radius: 5px;
+  margin-top: 5px;
+  color: #127e23;
+  background-color: #ffffff;
+  border: 1px solid #127e23;
+}
+.selected {
+  background-color: #127e23;
+  color: #ffffff;
+  border: none;
+}
+.list-Citizen{
+  max-height: 100px;
+  overflow-y: auto;
 }
 </style>
