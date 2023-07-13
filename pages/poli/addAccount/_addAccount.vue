@@ -41,6 +41,7 @@ export default {
       name:''
     };
   },
+  middleware: "auth",
   mounted(){
     this.name = localStorage.getItem('name');
   },

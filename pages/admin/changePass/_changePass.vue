@@ -68,7 +68,7 @@ export default {
       errDesc: false,
     };
   },
-  // middleware: 'auth',
+  middleware: 'auth',
   mounted() {
     this.changePass.citizen_id = localStorage.getItem("id");
   },

@@ -20,7 +20,7 @@ export default {
       title: "đăng xuất",
     };
   },
-  // middleware: "auth",
+  middleware: "auth",
   mounted() {
     this.id = localStorage.getItem("idViewInfor");
     this.fetchData();

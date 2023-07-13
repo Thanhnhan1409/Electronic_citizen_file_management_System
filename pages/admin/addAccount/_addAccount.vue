@@ -56,7 +56,7 @@ export default {
       showNoti: "",
     };
   },
-  // middleware: 'main',
+  middleware: "auth",
   methods: {
     async submit() {
       try {

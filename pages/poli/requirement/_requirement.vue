@@ -70,6 +70,7 @@ export default {
       name:''
     };
   },
+  middleware: "auth",
   mounted() {
     this.idPoli = localStorage.getItem("idPolicitian");
     this.fetchData();

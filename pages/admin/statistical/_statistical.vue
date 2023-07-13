@@ -123,6 +123,7 @@ export default {
             count: []
         }
     },
+    middleware: "auth",
     mounted() {
         this.idPoli = localStorage.getItem('idPolicitian');
         this.getOpinions()

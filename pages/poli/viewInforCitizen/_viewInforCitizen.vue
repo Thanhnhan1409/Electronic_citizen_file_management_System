@@ -65,6 +65,7 @@ export default {
       );
     },
   },
+  middleware: "auth",
   methods: {
     handleSearch(id) {
       this.idSearch = id;

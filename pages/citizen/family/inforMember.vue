@@ -20,6 +20,7 @@ export default {
         this.fetchData();
         this.name = localStorage.getItem('name')
     },
+    middleware: "auth",
     methods: {
         async fetchData() {
             try {
