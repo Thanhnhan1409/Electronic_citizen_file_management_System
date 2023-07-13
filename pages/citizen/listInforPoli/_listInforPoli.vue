@@ -125,6 +125,7 @@ export default {
       );
     },
   },
+  middleware: "auth",
   mounted() {
     this.getCity();
     this.name = localStorage.getItem('name')

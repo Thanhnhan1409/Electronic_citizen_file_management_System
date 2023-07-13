@@ -119,6 +119,7 @@ export default {
       name:''
     };
   },
+  middleware: "auth",
   computed: {
     countMarriedData(){
       return this.countListMarried

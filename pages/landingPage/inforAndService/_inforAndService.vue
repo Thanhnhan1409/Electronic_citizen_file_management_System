@@ -144,6 +144,7 @@ export default{
 .container-services {
   padding: 0px 190px;
   margin-bottom: 60px;
+  height: 67vh;
 }
 h2 {
   padding: 50px 0;

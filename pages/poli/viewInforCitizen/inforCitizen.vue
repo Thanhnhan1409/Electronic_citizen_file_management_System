@@ -37,6 +37,7 @@ export default {
       name:''
     };
   },
+  middleware: "auth",
   mounted() {
     this.id = localStorage.getItem("idViewInfor");
     this.fetchDataCitizen();

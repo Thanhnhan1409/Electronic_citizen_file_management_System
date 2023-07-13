@@ -69,11 +69,10 @@ export default {
       listCitizen: [],
     };
   },
+  middleware: "auth",
   mounted() {
     this.fetchListDataPoli();
     this.id = localStorage.getItem("idPolicitian");
-    // this.name = localStorage.getItem('nameCitizen');
-    // this.listPoli.citizen_id = this.idSearch;
   },
   methods: {
     async fetchDataPoli() {

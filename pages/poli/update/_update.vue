@@ -62,7 +62,7 @@ export default {
     this.name = localStorage.getItem("name");
     this.getListCitizen();
   },
-  // middleware: 'nhan',
+  middleware: "auth",
   methods: {
     async fetchData() {
       try {
