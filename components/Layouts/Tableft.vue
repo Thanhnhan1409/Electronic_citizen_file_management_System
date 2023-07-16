@@ -603,6 +603,7 @@ svg {
   text-decoration: none;
   border-top: 1px solid #fff;
   color: #fff;
+  cursor: pointer;
 }
 .tableft-logout svg {
   width: 20px;

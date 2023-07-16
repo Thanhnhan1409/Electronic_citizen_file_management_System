@@ -54,7 +54,6 @@ export default {
       name:''
     };
   },
-  middleware: "auth",
   mounted() {
     this.id = localStorage.getItem("id");
     this.fetchListApp();

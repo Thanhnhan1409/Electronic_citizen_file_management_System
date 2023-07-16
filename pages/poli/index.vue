@@ -27,7 +27,6 @@ export default {
 
     };
   },
-  middleware: "auth",
   mounted() {
     this.id = localStorage.getItem("id");
     this.fetchData();

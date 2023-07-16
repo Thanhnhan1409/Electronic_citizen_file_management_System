@@ -33,7 +33,6 @@ export default {
       showNoti: "",
     }
   },
-  middleware: "auth",
   mounted() {
     this.id = localStorage.getItem("admin_idCitizen");
     this.fetchDataCitizen();

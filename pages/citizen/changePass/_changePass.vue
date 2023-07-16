@@ -74,7 +74,6 @@ export default {
       status: "",
     };
   },
-  middleware: 'auth',
   mounted() {
     this.changePass.citizen_id = localStorage.getItem("id");
     this.name = localStorage.getItem("name");

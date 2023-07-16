@@ -165,7 +165,6 @@ export default {
     this.fetchData();
     this.getCity();
   },
-  middleware: "auth",
   methods: {
     async fetchDataSingle() {
       try {

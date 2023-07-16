@@ -45,7 +45,6 @@ export default {
       urlDownloadPDF:""
     };
   },
-  middleware: "auth",
   mounted() {
     this.nameArea = localStorage.getItem("nameArea");
     this.getListMilitarier();

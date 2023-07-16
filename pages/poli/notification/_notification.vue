@@ -144,7 +144,6 @@ export default {
       multiselectDisabled: true,
     };
   },
-  middleware: "auth",
   mounted() {
     this.author_id = localStorage.getItem("idPolicitian");
     this.fetchListNotification();

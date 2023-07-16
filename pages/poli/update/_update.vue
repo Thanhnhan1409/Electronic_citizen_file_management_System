@@ -62,7 +62,6 @@ export default {
     this.name = localStorage.getItem("name");
     this.getListCitizen();
   },
-  middleware: "auth",
   methods: {
     async fetchData() {
       try {

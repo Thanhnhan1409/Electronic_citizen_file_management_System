@@ -69,7 +69,6 @@ export default {
       listCitizen: [],
     };
   },
-  middleware: "auth",
   mounted() {
     this.fetchListDataPoli();
     this.id = localStorage.getItem("idPolicitian");

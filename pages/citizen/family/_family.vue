@@ -20,7 +20,6 @@ export default {
             name:''
         }
     },
-    middleware: "auth",
     mounted(){
         this.idFamily = localStorage.getItem('idFamily')
         this.getListFamily();
