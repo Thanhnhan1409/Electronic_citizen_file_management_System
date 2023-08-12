@@ -5,7 +5,7 @@ The Citizen Management System is a comprehensive web application developed to ma
 
 ### Project Context
 
-This product development process originates from the subject Programming Project 3. Currently, communicating and processing information with government agencies is sometimes difficult and cumbersome. Therefore, I have chosen this topic to provide a convenient solution, enhance convenience and create transparency in the management of personal information.
+The process of developing this product started with the idea of me and my friend. Currently, communicating and processing information with government agencies is sometimes difficult and cumbersome. Therefore, I chose this topic to offer a convenient solution, improve convenience and create transparency in the management of personal information.
 
 ### Project Timeline
 
